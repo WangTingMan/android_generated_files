@@ -11,6 +11,8 @@
 #include <utils/NativeHandle.h>
 #include <utils/misc.h>
 
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace base {
@@ -27,16 +29,26 @@ namespace V1_0 {
  * java.lang.Object.notify(), for example.) However, the behavior of these
  * functions cannot be overridden (with the exception of the "debug" method).
  */
-struct IBase : virtual public ::android::RefBase {
+struct LIBHIDL_EXPORT IBase : virtual public ::android::RefBase {
     /**
      * Type tag for use in template logic that indicates this is a 'pure' class.
      */
     typedef ::android::hardware::details::i_tag _hidl_tag;
 
+    IBase();
+
+    ~IBase();
+
+private:
+
     /**
      * Fully qualified interface name: "android.hidl.base@1.0::IBase"
      */
     static const char* descriptor;
+
+public:
+
+    static const char* getDescriptorName();
 
     /**
      * Returns whether this object's implementation is outside of the current process.
@@ -191,7 +203,7 @@ static inline std::string toString(const ::android::sp<::android::hidl::base::V1
 
 static inline std::string toString(const ::android::sp<::android::hidl::base::V1_0::IBase>& o) {
     std::string os = "[class or subclass of ";
-    os += ::android::hidl::base::V1_0::IBase::descriptor;
+    os += ::android::hidl::base::V1_0::IBase::getDescriptorName();
     os += "]";
     os += o->isRemote() ? "@remote" : "@local";
     return os;

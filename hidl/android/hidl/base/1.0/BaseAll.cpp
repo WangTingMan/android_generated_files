@@ -23,26 +23,35 @@ namespace V1_0 {
 
 const char* IBase::descriptor("android.hidl.base@1.0::IBase");
 
+IBase::IBase() = default;
+
+IBase::~IBase() = default;
+
+const char* IBase::getDescriptorName()
+{
+    return descriptor;
+}
+
 __attribute__((constructor)) static void static_constructor() {
-    ::android::hardware::details::getBnConstructorMap().set(IBase::descriptor,
+    ::android::hardware::details::getBnConstructorMap().set(IBase::getDescriptorName(),
             [](void *iIntf) -> ::android::sp<::android::hardware::IBinder> {
                 return new BnHwBase(static_cast<IBase *>(iIntf));
             });
-    ::android::hardware::details::getBsConstructorMap().set(IBase::descriptor,
+    ::android::hardware::details::getBsConstructorMap().set(IBase::getDescriptorName(),
             [](void *iIntf) -> ::android::sp<::android::hidl::base::V1_0::IBase> {
                 return new BsBase(static_cast<IBase *>(iIntf));
             });
 };
 
 __attribute__((destructor))static void static_destructor() {
-    ::android::hardware::details::getBnConstructorMap().erase(IBase::descriptor);
-    ::android::hardware::details::getBsConstructorMap().erase(IBase::descriptor);
+    ::android::hardware::details::getBnConstructorMap().erase(IBase::getDescriptorName());
+    ::android::hardware::details::getBsConstructorMap().erase(IBase::getDescriptorName());
 };
 
 // Methods from ::android::hidl::base::V1_0::IBase follow.
 ::android::hardware::Return<void> IBase::interfaceChain(interfaceChain_cb _hidl_cb){
     _hidl_cb({
-        ::android::hidl::base::V1_0::IBase::descriptor,
+        ::android::hidl::base::V1_0::IBase::getDescriptorName(),
     });
     return ::android::hardware::Void();}
 
@@ -52,7 +61,7 @@ __attribute__((destructor))static void static_destructor() {
     return ::android::hardware::Void();}
 
 ::android::hardware::Return<void> IBase::interfaceDescriptor(interfaceDescriptor_cb _hidl_cb){
-    _hidl_cb(::android::hidl::base::V1_0::IBase::descriptor);
+    _hidl_cb(::android::hidl::base::V1_0::IBase::getDescriptorName());
     return ::android::hardware::Void();}
 
 ::android::hardware::Return<void> IBase::getHashChain(getHashChain_cb _hidl_cb){
@@ -143,7 +152,7 @@ void BpHwBase::onLastStrongRef( const void* id )
 
     const ::android::hardware::hidl_vec<::android::hardware::hidl_string>* _hidl_out_descriptors;
 
-    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::descriptor);
+    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::getDescriptorName());
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(256067662 /* interfaceChain */, _hidl_data, &_hidl_reply);
@@ -226,7 +235,7 @@ _hidl_error:
     ::android::status_t _hidl_err;
     ::android::hardware::Status _hidl_status;
 
-    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::descriptor);
+    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::getDescriptorName());
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_err = _hidl_data.writeNativeHandleNoDup(fd);
@@ -314,7 +323,7 @@ _hidl_error:
 
     const ::android::hardware::hidl_string* _hidl_out_descriptor;
 
-    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::descriptor);
+    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::getDescriptorName());
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(256136003 /* interfaceDescriptor */, _hidl_data, &_hidl_reply);
@@ -390,7 +399,7 @@ _hidl_error:
 
     const ::android::hardware::hidl_vec<::android::hardware::hidl_array<uint8_t, 32>>* _hidl_out_hashchain;
 
-    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::descriptor);
+    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::getDescriptorName());
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(256398152 /* getHashChain */, _hidl_data, &_hidl_reply);
@@ -460,7 +469,7 @@ _hidl_error:
     ::android::status_t _hidl_err;
     ::android::hardware::Status _hidl_status;
 
-    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::descriptor);
+    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::getDescriptorName());
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(256462420 /* setHALInstrumentation */, _hidl_data, &_hidl_reply, 1 /* oneway */);
@@ -506,7 +515,7 @@ _hidl_error:
     ::android::status_t _hidl_err;
     ::android::hardware::Status _hidl_status;
 
-    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::descriptor);
+    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::getDescriptorName());
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(256921159 /* ping */, _hidl_data, &_hidl_reply);
@@ -565,7 +574,7 @@ _hidl_error:
 
     ::android::hidl::base::V1_0::DebugInfo* _hidl_out_info;
 
-    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::descriptor);
+    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::getDescriptorName());
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(257049926 /* getDebugInfo */, _hidl_data, &_hidl_reply);
@@ -624,7 +633,7 @@ _hidl_error:
     ::android::status_t _hidl_err;
     ::android::hardware::Status _hidl_status;
 
-    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::descriptor);
+    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBase::getDescriptorName());
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(257120595 /* notifySyspropsChanged */, _hidl_data, &_hidl_reply, 1 /* oneway */);
@@ -740,7 +749,7 @@ BnHwBase::~BnHwBase() {
 
 bool BnHwBase::checkSubclass( const void* subclassID ) const
 {
-    return subclassID == IBase::descriptor;
+    return subclassID == IBase::getDescriptorName();
 }
 
 // Methods from ::android::hidl::base::V1_0::IBase follow.
@@ -755,7 +764,7 @@ bool BnHwBase::checkSubclass( const void* subclassID ) const
     #endif // __ANDROID_DEBUGGABLE__
 
     ::android::status_t _hidl_err = ::android::OK;
-    if (!_hidl_data.enforceInterface(BnHwBase::Pure::descriptor)) {
+    if (!_hidl_data.enforceInterface(BnHwBase::Pure::getDescriptorName())) {
         _hidl_err = ::android::BAD_TYPE;
         return _hidl_err;
     }
@@ -838,7 +847,7 @@ bool BnHwBase::checkSubclass( const void* subclassID ) const
     #endif // __ANDROID_DEBUGGABLE__
 
     ::android::status_t _hidl_err = ::android::OK;
-    if (!_hidl_data.enforceInterface(BnHwBase::Pure::descriptor)) {
+    if (!_hidl_data.enforceInterface(BnHwBase::Pure::getDescriptorName())) {
         _hidl_err = ::android::BAD_TYPE;
         return _hidl_err;
     }
@@ -922,7 +931,7 @@ bool BnHwBase::checkSubclass( const void* subclassID ) const
     #endif // __ANDROID_DEBUGGABLE__
 
     ::android::status_t _hidl_err = ::android::OK;
-    if (!_hidl_data.enforceInterface(BnHwBase::Pure::descriptor)) {
+    if (!_hidl_data.enforceInterface(BnHwBase::Pure::getDescriptorName())) {
         _hidl_err = ::android::BAD_TYPE;
         return _hidl_err;
     }
@@ -992,7 +1001,7 @@ bool BnHwBase::checkSubclass( const void* subclassID ) const
     #endif // __ANDROID_DEBUGGABLE__
 
     ::android::status_t _hidl_err = ::android::OK;
-    if (!_hidl_data.enforceInterface(BnHwBase::Pure::descriptor)) {
+    if (!_hidl_data.enforceInterface(BnHwBase::Pure::getDescriptorName())) {
         _hidl_err = ::android::BAD_TYPE;
         return _hidl_err;
     }
@@ -1064,7 +1073,7 @@ bool BnHwBase::checkSubclass( const void* subclassID ) const
     #endif // __ANDROID_DEBUGGABLE__
 
     ::android::status_t _hidl_err = ::android::OK;
-    if (!_hidl_data.enforceInterface(BnHwBase::Pure::descriptor)) {
+    if (!_hidl_data.enforceInterface(BnHwBase::Pure::getDescriptorName())) {
         _hidl_err = ::android::BAD_TYPE;
         return _hidl_err;
     }
@@ -1109,7 +1118,7 @@ bool BnHwBase::checkSubclass( const void* subclassID ) const
     #endif // __ANDROID_DEBUGGABLE__
 
     ::android::status_t _hidl_err = ::android::OK;
-    if (!_hidl_data.enforceInterface(BnHwBase::Pure::descriptor)) {
+    if (!_hidl_data.enforceInterface(BnHwBase::Pure::getDescriptorName())) {
         _hidl_err = ::android::BAD_TYPE;
         return _hidl_err;
     }
@@ -1171,7 +1180,7 @@ bool BnHwBase::checkSubclass( const void* subclassID ) const
     #endif // __ANDROID_DEBUGGABLE__
 
     ::android::status_t _hidl_err = ::android::OK;
-    if (!_hidl_data.enforceInterface(BnHwBase::Pure::descriptor)) {
+    if (!_hidl_data.enforceInterface(BnHwBase::Pure::getDescriptorName())) {
         _hidl_err = ::android::BAD_TYPE;
         return _hidl_err;
     }

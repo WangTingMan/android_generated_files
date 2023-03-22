@@ -65,7 +65,7 @@ __attribute__((destructor))static void static_destructor() {
         ::android::hidl::manager::V1_2::IServiceManager::descriptor,
         ::android::hidl::manager::V1_1::IServiceManager::descriptor,
         ::android::hidl::manager::V1_0::IServiceManager::descriptor,
-        ::android::hidl::base::V1_0::IBase::descriptor,
+        ::android::hidl::base::V1_0::IBase::getDescriptorName(),
     });
     return ::android::hardware::Void();}
 

@@ -8,12 +8,15 @@
 
 #include <hidl/HidlPassthroughSupport.h>
 #include <hidl/TaskRunner.h>
+
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace base {
 namespace V1_0 {
 
-struct BsBase : IBase, ::android::hardware::details::HidlInstrumentor {
+struct LIBHIDL_EXPORT BsBase : IBase, ::android::hardware::details::HidlInstrumentor {
     explicit BsBase(const ::android::sp<IBase> impl);
 
     /**

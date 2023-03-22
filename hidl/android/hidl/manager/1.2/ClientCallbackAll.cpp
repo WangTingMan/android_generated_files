@@ -44,7 +44,7 @@ __attribute__((destructor))static void static_destructor() {
 ::android::hardware::Return<void> IClientCallback::interfaceChain(interfaceChain_cb _hidl_cb){
     _hidl_cb({
         ::android::hidl::manager::V1_2::IClientCallback::descriptor,
-        ::android::hidl::base::V1_0::IBase::descriptor,
+        ::android::hidl::base::V1_0::IBase::getDescriptorName(),
     });
     return ::android::hardware::Void();}
 

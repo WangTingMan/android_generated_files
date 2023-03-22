@@ -5,12 +5,16 @@
 
 #include <android/hidl/base/1.0/IHwBase.h>
 
+#include <hwbinder/libhidl_export.h>
+
+#include <mutex>
+
 namespace android {
 namespace hidl {
 namespace base {
 namespace V1_0 {
 
-struct BpHwBase : public ::android::hardware::BpInterface<IBase>, public ::android::hardware::details::HidlInstrumentor {
+struct LIBHIDL_EXPORT BpHwBase : public ::android::hardware::BpInterface<IBase>, public ::android::hardware::details::HidlInstrumentor {
     explicit BpHwBase(const ::android::sp<::android::hardware::IBinder> &_hidl_impl);
 
     /**

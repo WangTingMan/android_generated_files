@@ -3,12 +3,14 @@
 
 #include <android/hidl/base/1.0/IHwBase.h>
 
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace base {
 namespace V1_0 {
 
-struct BnHwBase : public ::android::hardware::BHwBinder, public ::android::hardware::details::HidlInstrumentor {
+struct LIBHIDL_EXPORT BnHwBase : public ::android::hardware::BHwBinder, public ::android::hardware::details::HidlInstrumentor {
     explicit BnHwBase(const ::android::sp<IBase> &_hidl_impl);
     explicit BnHwBase(const ::android::sp<IBase> &_hidl_impl, const std::string& HidlInstrumentor_package, const std::string& HidlInstrumentor_interface);
 
