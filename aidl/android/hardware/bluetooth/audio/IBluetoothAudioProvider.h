@@ -21,7 +21,7 @@ namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace audio {
-class IBluetoothAudioProvider : public ::ndk::ICInterface {
+class ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS_API IBluetoothAudioProvider : public ::ndk::ICInterface {
 public:
   static const char* descriptor;
   IBluetoothAudioProvider();
@@ -52,7 +52,7 @@ public:
 private:
   static std::shared_ptr<IBluetoothAudioProvider> default_impl;
 };
-class IBluetoothAudioProviderDefault : public IBluetoothAudioProvider {
+class ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS_API IBluetoothAudioProviderDefault : public IBluetoothAudioProvider {
 public:
   ::ndk::ScopedAStatus endSession() override;
   ::ndk::ScopedAStatus startSession(const std::shared_ptr<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioPort>& in_hostIf, const ::aidl::android::hardware::bluetooth::audio::AudioConfiguration& in_audioConfig, const std::vector<::aidl::android::hardware::bluetooth::audio::LatencyMode>& in_supportedLatencyModes, ::aidl::android::hardware::common::fmq::MQDescriptor<int8_t, ::aidl::android::hardware::common::fmq::SynchronizedReadWrite>* _aidl_return) override;

@@ -14,12 +14,14 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace audio {
-class IBluetoothAudioPort : public ::ndk::ICInterface {
+class ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS_API IBluetoothAudioPort : public ::ndk::ICInterface {
 public:
   static const char* descriptor;
   IBluetoothAudioPort();
@@ -52,7 +54,7 @@ public:
 private:
   static std::shared_ptr<IBluetoothAudioPort> default_impl;
 };
-class IBluetoothAudioPortDefault : public IBluetoothAudioPort {
+class ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS_API IBluetoothAudioPortDefault : public IBluetoothAudioPort {
 public:
   ::ndk::ScopedAStatus getPresentationPosition(::aidl::android::hardware::bluetooth::audio::PresentationPosition* _aidl_return) override;
   ::ndk::ScopedAStatus startStream(bool in_isLowLatency) override;

@@ -16,7 +16,7 @@ namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace audio {
-class BnBluetoothAudioProviderFactory : public ::ndk::BnCInterface<IBluetoothAudioProviderFactory> {
+class ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS_API BnBluetoothAudioProviderFactory : public ::ndk::BnCInterface<IBluetoothAudioProviderFactory> {
 public:
   BnBluetoothAudioProviderFactory();
   virtual ~BnBluetoothAudioProviderFactory();
@@ -26,7 +26,7 @@ protected:
   ::ndk::SpAIBinder createBinder() override;
 private:
 };
-class IBluetoothAudioProviderFactoryDelegator : public BnBluetoothAudioProviderFactory {
+class ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS_API IBluetoothAudioProviderFactoryDelegator : public BnBluetoothAudioProviderFactory {
 public:
   explicit IBluetoothAudioProviderFactoryDelegator(const std::shared_ptr<IBluetoothAudioProviderFactory> &impl) : _impl(impl) {
      int32_t _impl_ver = 0;

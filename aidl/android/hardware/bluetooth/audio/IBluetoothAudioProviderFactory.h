@@ -18,7 +18,7 @@ namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace audio {
-class IBluetoothAudioProviderFactory : public ::ndk::ICInterface {
+class ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS_API IBluetoothAudioProviderFactory : public ::ndk::ICInterface {
 public:
   static inline const std::string descriptor = "android.hardware.bluetooth.audio.IBluetoothAudioProviderFactory";
   IBluetoothAudioProviderFactory();
@@ -41,7 +41,7 @@ public:
 private:
   static std::shared_ptr<IBluetoothAudioProviderFactory> default_impl;
 };
-class IBluetoothAudioProviderFactoryDefault : public IBluetoothAudioProviderFactory {
+class ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS_API IBluetoothAudioProviderFactoryDefault : public IBluetoothAudioProviderFactory {
 public:
   ::ndk::ScopedAStatus getProviderCapabilities(::aidl::android::hardware::bluetooth::audio::SessionType in_sessionType, std::vector<::aidl::android::hardware::bluetooth::audio::AudioCapabilities>* _aidl_return) override;
   ::ndk::ScopedAStatus openProvider(::aidl::android::hardware::bluetooth::audio::SessionType in_sessionType, std::shared_ptr<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider>* _aidl_return) override;

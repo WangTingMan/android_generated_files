@@ -7,6 +7,7 @@
 #include <hidl/Static.h>
 #include <hwbinder/ProcessState.h>
 #include <utils/Trace.h>
+#include <utils/AutoHolder.h>
 #include <android/hidl/manager/1.0/IServiceManager.h>
 #include <android/hardware/bluetooth/audio/2.1/BpHwBluetoothAudioProvider.h>
 #include <android/hardware/bluetooth/audio/2.1/BnHwBluetoothAudioProvider.h>
@@ -38,6 +39,8 @@ __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IBluetoothAudioProvider::descriptor);
     ::android::hardware::details::getBsConstructorMap().erase(IBluetoothAudioProvider::descriptor);
 }
+
+static AutoHolder holder(static_constructor, static_destructor);
 
 // Methods from ::android::hardware::bluetooth::audio::V2_0::IBluetoothAudioProvider follow.
 // no default implementation for: ::android::hardware::Return<void> IBluetoothAudioProvider::startSession(const ::android::sp<::android::hardware::bluetooth::audio::V2_0::IBluetoothAudioPort>& hostIf, const ::android::hardware::bluetooth::audio::V2_0::AudioConfiguration& audioConfig, startSession_cb _hidl_cb)
