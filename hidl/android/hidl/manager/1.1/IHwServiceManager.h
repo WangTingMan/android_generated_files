@@ -12,6 +12,8 @@
 #include <hwbinder/IBinder.h>
 #include <hwbinder/Parcel.h>
 
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace manager {

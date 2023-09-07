@@ -3,12 +3,14 @@
 
 #include <android/hidl/manager/1.2/IHwClientCallback.h>
 
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace manager {
 namespace V1_2 {
 
-struct BnHwClientCallback : public ::android::hidl::base::V1_0::BnHwBase {
+struct LIBHIDL_EXPORT BnHwClientCallback : public ::android::hidl::base::V1_0::BnHwBase {
     explicit BnHwClientCallback(const ::android::sp<IClientCallback> &_hidl_impl);
     explicit BnHwClientCallback(const ::android::sp<IClientCallback> &_hidl_impl, const std::string& HidlInstrumentor_package, const std::string& HidlInstrumentor_interface);
 

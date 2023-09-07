@@ -5,12 +5,14 @@
 
 #include <android/hidl/manager/1.0/IHwServiceNotification.h>
 
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace manager {
 namespace V1_0 {
 
-struct BpHwServiceNotification : public ::android::hardware::BpInterface<IServiceNotification>, public ::android::hardware::details::HidlInstrumentor {
+struct LIBHIDL_EXPORT BpHwServiceNotification : public ::android::hardware::BpInterface<IServiceNotification>, public ::android::hardware::details::HidlInstrumentor {
     explicit BpHwServiceNotification(const ::android::sp<::android::hardware::IBinder> &_hidl_impl);
 
     /**

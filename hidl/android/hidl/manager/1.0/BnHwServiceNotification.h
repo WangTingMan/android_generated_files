@@ -3,12 +3,14 @@
 
 #include <android/hidl/manager/1.0/IHwServiceNotification.h>
 
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace manager {
 namespace V1_0 {
 
-struct BnHwServiceNotification : public ::android::hidl::base::V1_0::BnHwBase {
+struct LIBHIDL_EXPORT BnHwServiceNotification : public ::android::hidl::base::V1_0::BnHwBase {
     explicit BnHwServiceNotification(const ::android::sp<IServiceNotification> &_hidl_impl);
     explicit BnHwServiceNotification(const ::android::sp<IServiceNotification> &_hidl_impl, const std::string& HidlInstrumentor_package, const std::string& HidlInstrumentor_interface);
 

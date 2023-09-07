@@ -14,6 +14,10 @@
 #include <android/hidl/base/1.0/BpHwBase.h>
 #include <hidl/ServiceManagement.h>
 
+#ifndef SCHED_NORMAL
+#define SCHED_NORMAL 0
+#endif
+
 namespace android {
 namespace hidl {
 namespace manager {
@@ -1038,20 +1042,18 @@ _hidl_error:
 
 BnHwServiceManager::BnHwServiceManager(const ::android::sp<IServiceManager> &_hidl_impl)
         : ::android::hidl::base::V1_0::BnHwBase(_hidl_impl, "android.hidl.manager@1.0", "IServiceManager") { 
-#if 0
             _hidl_mImpl = _hidl_impl;
-            auto prio = ::android::hardware::details::gServicePrioMap.get(_hidl_impl, {SCHED_NORMAL, 0});
+#if 0
+            auto prio = ::android::hardware::details::gServicePrioMap->get(_hidl_impl, {SCHED_NORMAL, 0});
             mSchedPolicy = prio.sched_policy;
             mSchedPriority = prio.prio;
-            setRequestingSid(::android::hardware::details::gServiceSidMap.get(_hidl_impl, false));
-#endif
+            setRequestingSid(::android::hardware::details::gServiceSidMap->get(_hidl_impl, false));
             assert( 0 );
+#endif
 }
 
 BnHwServiceManager::~BnHwServiceManager() {
-#if 0
-    ::android::hardware::details::gBnMap.eraseIfEqual(_hidl_mImpl.get(), this);
-#endif
+    ::android::hardware::details::gBnMap->eraseIfEqual(_hidl_mImpl.get(), this);
     assert( 0 );
 }
 

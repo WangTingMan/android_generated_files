@@ -7,13 +7,15 @@
 #include <android/hidl/manager/1.0/IServiceManager.h>
 
 #include <hidl/HidlPassthroughSupport.h>
-#include <hidl/TaskRunner.h>
+#include <hidl/TaskRunner.h> 
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace manager {
 namespace V1_0 {
 
-struct BsServiceManager : IServiceManager, ::android::hardware::details::HidlInstrumentor {
+struct LIBHIDL_EXPORT BsServiceManager : IServiceManager, ::android::hardware::details::HidlInstrumentor {
     explicit BsServiceManager(const ::android::sp<IServiceManager> impl);
 
     typedef IServiceManager Pure;

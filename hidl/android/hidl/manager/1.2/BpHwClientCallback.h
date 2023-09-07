@@ -5,12 +5,14 @@
 
 #include <android/hidl/manager/1.2/IHwClientCallback.h>
 
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace manager {
 namespace V1_2 {
 
-struct BpHwClientCallback : public ::android::hardware::BpInterface<IClientCallback>, public ::android::hardware::details::HidlInstrumentor {
+struct LIBHIDL_EXPORT BpHwClientCallback : public ::android::hardware::BpInterface<IClientCallback>, public ::android::hardware::details::HidlInstrumentor {
     explicit BpHwClientCallback(const ::android::sp<::android::hardware::IBinder> &_hidl_impl);
 
     /**

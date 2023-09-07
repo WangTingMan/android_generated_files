@@ -3,12 +3,14 @@
 
 #include <android/hidl/manager/1.0/IHwServiceManager.h>
 
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace manager {
 namespace V1_0 {
 
-struct BnHwServiceManager : public ::android::hidl::base::V1_0::BnHwBase {
+struct LIBHIDL_EXPORT BnHwServiceManager : public ::android::hidl::base::V1_0::BnHwBase {
     explicit BnHwServiceManager(const ::android::sp<IServiceManager> &_hidl_impl);
     explicit BnHwServiceManager(const ::android::sp<IServiceManager> &_hidl_impl, const std::string& HidlInstrumentor_package, const std::string& HidlInstrumentor_interface);
 

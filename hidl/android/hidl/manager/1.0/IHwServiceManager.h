@@ -13,17 +13,19 @@
 #include <hwbinder/IBinder.h>
 #include <hwbinder/Parcel.h>
 
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace manager {
 namespace V1_0 {
-::android::status_t readEmbeddedFromParcel(
+LIBHIDL_EXPORT::android::status_t readEmbeddedFromParcel(
         const ::android::hidl::manager::V1_0::IServiceManager::InstanceDebugInfo &obj,
         const ::android::hardware::Parcel &parcel,
         size_t parentHandle,
         size_t parentOffset);
 
-::android::status_t writeEmbeddedToParcel(
+LIBHIDL_EXPORT::android::status_t writeEmbeddedToParcel(
         const ::android::hidl::manager::V1_0::IServiceManager::InstanceDebugInfo &obj,
         ::android::hardware::Parcel *parcel,
         size_t parentHandle,

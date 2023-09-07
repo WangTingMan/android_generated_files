@@ -13,6 +13,8 @@
 #include <utils/NativeHandle.h>
 #include <utils/misc.h>
 
+#include <hwbinder/libhidl_export.h>
+
 #ifdef _MSC_VER
 #ifdef PASSTHROUGH
 #undef PASSTHROUGH
@@ -40,7 +42,7 @@ namespace V1_0 {
  *   Instance name: "manager"
  *   Fully-qualified instance name: "android.hidl.manager@1.0::IServiceManager/manager"
  */
-struct IServiceManager : public ::android::hidl::base::V1_0::IBase {
+struct LIBHIDL_EXPORT IServiceManager : public ::android::hidl::base::V1_0::IBase {
     /**
      * Type tag for use in template logic that indicates this is a 'pure' class.
      */

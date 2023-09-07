@@ -7,13 +7,15 @@
 #include <android/hidl/manager/1.0/IServiceNotification.h>
 
 #include <hidl/HidlPassthroughSupport.h>
-#include <hidl/TaskRunner.h>
+#include <hidl/TaskRunner.h> 
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace manager {
 namespace V1_0 {
 
-struct BsServiceNotification : IServiceNotification, ::android::hardware::details::HidlInstrumentor {
+struct LIBHIDL_EXPORT BsServiceNotification : IServiceNotification, ::android::hardware::details::HidlInstrumentor {
     explicit BsServiceNotification(const ::android::sp<IServiceNotification> impl);
 
     typedef IServiceNotification Pure;

@@ -733,7 +733,7 @@ _hidl_error:
 BnHwBase::BnHwBase(const ::android::sp<IBase> &_hidl_impl)
         : ::android::hardware::details::HidlInstrumentor("android.hidl.base@1.0", "IBase") { 
             _hidl_mImpl = _hidl_impl;
-            //auto prio = ::android::hardware::details::gServicePrioMap.get(_hidl_impl, {SCHED_NORMAL, 0});
+            //auto prio = ::android::hardware::details::gServicePrioMap->get(_hidl_impl, {SCHED_NORMAL, 0});
             //mSchedPolicy = prio.sched_policy;
             //mSchedPriority = prio.prio;
 }
@@ -744,7 +744,7 @@ BnHwBase::BnHwBase(const ::android::sp<IBase> &_hidl_impl, const std::string &Hi
 }
 
 BnHwBase::~BnHwBase() {
-    //::android::hardware::details::gBnMap.eraseIfEqual(_hidl_mImpl.get(), this);
+    ::android::hardware::details::gBnMap->eraseIfEqual(_hidl_mImpl.get(), this);
 }
 
 bool BnHwBase::checkSubclass( const void* subclassID ) const

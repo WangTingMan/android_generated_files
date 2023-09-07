@@ -5,12 +5,14 @@
 
 #include <android/hidl/manager/1.1/IHwServiceManager.h>
 
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace manager {
 namespace V1_1 {
 
-struct BpHwServiceManager : public ::android::hardware::BpInterface<IServiceManager>, public ::android::hardware::details::HidlInstrumentor {
+struct LIBHIDL_EXPORT BpHwServiceManager : public ::android::hardware::BpInterface<IServiceManager>, public ::android::hardware::details::HidlInstrumentor {
     explicit BpHwServiceManager(const ::android::sp<::android::hardware::IBinder> &_hidl_impl);
 
     /**

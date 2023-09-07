@@ -11,12 +11,14 @@
 #include <utils/NativeHandle.h>
 #include <utils/misc.h>
 
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace manager {
 namespace V1_2 {
 
-struct IClientCallback : public ::android::hidl::base::V1_0::IBase {
+struct LIBHIDL_EXPORT IClientCallback : public ::android::hidl::base::V1_0::IBase {
     /**
      * Type tag for use in template logic that indicates this is a 'pure' class.
      */

@@ -12,12 +12,14 @@
 #include <utils/NativeHandle.h>
 #include <utils/misc.h>
 
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace manager {
 namespace V1_1 {
 
-struct IServiceManager : public ::android::hidl::manager::V1_0::IServiceManager {
+struct LIBHIDL_EXPORT IServiceManager : public ::android::hidl::manager::V1_0::IServiceManager {
     /**
      * Type tag for use in template logic that indicates this is a 'pure' class.
      */
