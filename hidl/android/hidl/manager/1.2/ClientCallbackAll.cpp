@@ -30,12 +30,12 @@ __attribute__((constructor)) static void static_constructor() {
             [](void *iIntf) -> ::android::sp<::android::hidl::base::V1_0::IBase> {
                 return new BsClientCallback(static_cast<IClientCallback *>(iIntf));
             });
-};
+}
 
 __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IClientCallback::descriptor);
     ::android::hardware::details::getBsConstructorMap().erase(IClientCallback::descriptor);
-};
+}
 
 // Methods from ::android::hidl::manager::V1_2::IClientCallback follow.
 // no default implementation for: ::android::hardware::Return<void> IClientCallback::onClients(const ::android::sp<::android::hidl::base::V1_0::IBase>& registered, bool hasClients)
@@ -44,9 +44,10 @@ __attribute__((destructor))static void static_destructor() {
 ::android::hardware::Return<void> IClientCallback::interfaceChain(interfaceChain_cb _hidl_cb){
     _hidl_cb({
         ::android::hidl::manager::V1_2::IClientCallback::descriptor,
-        ::android::hidl::base::V1_0::IBase::getDescriptorName(),
+        ::android::hidl::base::V1_0::IBase::getDescriptorName()
     });
-    return ::android::hardware::Void();}
+    return ::android::hardware::Void();
+}
 
 ::android::hardware::Return<void> IClientCallback::debug(const ::android::hardware::hidl_handle& fd, const ::android::hardware::hidl_vec<::android::hardware::hidl_string>& options){
     (void)fd;
@@ -64,8 +65,6 @@ __attribute__((destructor))static void static_destructor() {
     std::array<uint8_t, 32> valus2{ 236,127,215,158,208,45,250,133,188,73,148,38,173,174,62,190,35,239,5,36,243,205,105,87,19,147,36,184,59,24,202,76 } /* ec7fd79ed02dfa85bc499426adae3ebe23ef0524f3cd6957139324b83b18ca4c */;
     ::android::hardware::hidl_vec<::android::hardware::hidl_array<uint8_t, 32>> hid_{ valus1, valus2 };
     _hidl_cb( hid_ );
-     //   (uint8_t[32]){165,112,253,67,106,237,94,238,234,36,149,185,38,126,127,156,72,8,213,30,253,76,155,160,145,59,145,2,235,147,174,237} /* a570fd436aed5eeeea2495b9267e7f9c4808d51efd4c9ba0913b9102eb93aeed */,
-     //   (uint8_t[32]){236,127,215,158,208,45,250,133,188,73,148,38,173,174,62,190,35,239,5,36,243,205,105,87,19,147,36,184,59,24,202,76} /* ec7fd79ed02dfa85bc499426adae3ebe23ef0524f3cd6957139324b83b18ca4c */});
     return ::android::hardware::Void();
 }
 
@@ -83,13 +82,17 @@ __attribute__((destructor))static void static_destructor() {
 }
 
 ::android::hardware::Return<void> IClientCallback::getDebugInfo(getDebugInfo_cb _hidl_cb){
-    _hidl_cb({ -1 /* pid */, 0 /* ptr */, 
+    ::android::hidl::base::V1_0::DebugInfo info = {};
+    info.pid = -1;
+    info.ptr = 0;
+    info.arch = 
     #if defined(__LP64__)
     ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_64BIT
     #else
     ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_32BIT
     #endif
-    });
+    ;
+    _hidl_cb(info);
     return ::android::hardware::Void();
 }
 
@@ -117,15 +120,14 @@ BpHwClientCallback::BpHwClientCallback(const ::android::sp<::android::hardware::
           ::android::hardware::details::HidlInstrumentor("android.hidl.manager@1.2", "IClientCallback") {
 }
 
-void BpHwClientCallback::onLastStrongRef( const void* id )
-{
-    std::unique_lock<std::mutex> locker( _hidl_mMutex );
-    _hidl_mDeathRecipients.clear();
-    locker.unlock();
+void BpHwClientCallback::onLastStrongRef(const void* id) {
+    {
+        std::unique_lock<std::mutex> lock(_hidl_mMutex);
+        _hidl_mDeathRecipients.clear();
+    }
 
-    BpInterface<IClientCallback>::onLastStrongRef( id );
+    BpInterface<IClientCallback>::onLastStrongRef(id);
 }
-
 // Methods from ::android::hidl::manager::V1_2::IClientCallback follow.
 ::android::hardware::Return<void> BpHwClientCallback::_hidl_onClients(::android::hardware::IInterface *_hidl_this, ::android::hardware::details::HidlInstrumentor *_hidl_this_instrumentor, const ::android::sp<::android::hidl::base::V1_0::IBase>& registered, bool hasClients) {
     #ifdef __ANDROID_DEBUGGABLE__
@@ -149,6 +151,7 @@ void BpHwClientCallback::onLastStrongRef( const void* id )
     ::android::hardware::Parcel _hidl_data;
     ::android::hardware::Parcel _hidl_reply;
     ::android::status_t _hidl_err;
+    ::android::status_t _hidl_transact_err;
     ::android::hardware::Status _hidl_status;
 
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwClientCallback::descriptor);
@@ -170,8 +173,12 @@ void BpHwClientCallback::onLastStrongRef( const void* id )
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     ::android::hardware::ProcessState::self()->startThreadPool();
-    _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(1 /* onClients */, _hidl_data, &_hidl_reply, 1u /* oneway */);
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+    _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(1 /* onClients */, _hidl_data, &_hidl_reply, 0 /* flags */ | 1u /* oneway */);
+    if (_hidl_transact_err != ::android::OK) 
+    {
+        _hidl_err = _hidl_transact_err;
+        goto _hidl_error;
+    }
 
     #ifdef __ANDROID_DEBUGGABLE__
     if (UNLIKELY(mEnableInstrumentation)) {
@@ -182,7 +189,6 @@ void BpHwClientCallback::onLastStrongRef( const void* id )
     }
     #endif // __ANDROID_DEBUGGABLE__
 
-    _hidl_status.setFromStatusT(_hidl_err);
     return ::android::hardware::Return<void>();
 
 _hidl_error:
@@ -271,21 +277,15 @@ _hidl_error:
 
 BnHwClientCallback::BnHwClientCallback(const ::android::sp<IClientCallback> &_hidl_impl)
         : ::android::hidl::base::V1_0::BnHwBase(_hidl_impl, "android.hidl.manager@1.2", "IClientCallback") { 
-#if 0
             _hidl_mImpl = _hidl_impl;
-            auto prio = ::android::hardware::details::gServicePrioMap.get(_hidl_impl, {SCHED_NORMAL, 0});
+            auto prio = ::android::hardware::getMinSchedulerPolicy(_hidl_impl);
             mSchedPolicy = prio.sched_policy;
             mSchedPriority = prio.prio;
-            setRequestingSid(::android::hardware::details::gServiceSidMap.get(_hidl_impl, false));
-#endif
-            assert( 0 );
+            setRequestingSid(::android::hardware::getRequestingSid(_hidl_impl));
 }
 
 BnHwClientCallback::~BnHwClientCallback() {
-#if 0
-    ::android::hardware::details::gBnMap.eraseIfEqual(_hidl_mImpl.get(), this);
-#endif
-    assert( 0 );
+    ::android::hardware::details::gBnMap->eraseIfEqual(_hidl_mImpl.get(), this);
 }
 
 // Methods from ::android::hidl::manager::V1_2::IClientCallback follow.
@@ -359,16 +359,17 @@ BnHwClientCallback::~BnHwClientCallback() {
     return ::android::hardware::Void();
 }
 ::android::hardware::Return<void> BnHwClientCallback::getDebugInfo(getDebugInfo_cb _hidl_cb) {
-    _hidl_cb({
-        ::android::hardware::details::getPidIfSharable(),
-        ::android::hardware::details::debuggable()? reinterpret_cast<uint64_t>(this) : 0 /* ptr */,
-        #if defined(__LP64__)
-        ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_64BIT
-        #else
-        ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_32BIT
-        #endif
-
-    });
+    ::android::hidl::base::V1_0::DebugInfo info = {};
+    info.pid = ::android::hardware::details::getPidIfSharable();
+    info.ptr = ::android::hardware::details::debuggable()? reinterpret_cast<uint64_t>(this) : 0;
+    info.arch = 
+    #if defined(__LP64__)
+    ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_64BIT
+    #else
+    ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_32BIT
+    #endif
+    ;
+    _hidl_cb(info);
     return ::android::hardware::Void();
 }
 
@@ -383,11 +384,6 @@ BnHwClientCallback::~BnHwClientCallback() {
     switch (_hidl_code) {
         case 1 /* onClients */:
         {
-            bool _hidl_is_oneway = _hidl_flags & 1u /* oneway */;
-            if (_hidl_is_oneway != true) {
-                return ::android::UNKNOWN_ERROR;
-            }
-
             _hidl_err = ::android::hidl::manager::V1_2::BnHwClientCallback::_hidl_onClients(this, _hidl_data, _hidl_reply, _hidl_cb);
             break;
         }

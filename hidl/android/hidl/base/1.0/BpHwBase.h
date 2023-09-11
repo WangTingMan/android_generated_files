@@ -7,8 +7,6 @@
 
 #include <hwbinder/libhidl_export.h>
 
-#include <mutex>
-
 namespace android {
 namespace hidl {
 namespace base {

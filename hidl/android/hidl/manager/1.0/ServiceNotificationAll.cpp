@@ -30,12 +30,12 @@ __attribute__((constructor)) static void static_constructor() {
             [](void *iIntf) -> ::android::sp<::android::hidl::base::V1_0::IBase> {
                 return new BsServiceNotification(static_cast<IServiceNotification *>(iIntf));
             });
-};
+}
 
 __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IServiceNotification::descriptor);
     ::android::hardware::details::getBsConstructorMap().erase(IServiceNotification::descriptor);
-};
+}
 
 // Methods from ::android::hidl::manager::V1_0::IServiceNotification follow.
 // no default implementation for: ::android::hardware::Return<void> IServiceNotification::onRegistration(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name, bool preexisting)
@@ -44,9 +44,10 @@ __attribute__((destructor))static void static_destructor() {
 ::android::hardware::Return<void> IServiceNotification::interfaceChain(interfaceChain_cb _hidl_cb){
     _hidl_cb({
         ::android::hidl::manager::V1_0::IServiceNotification::descriptor,
-        ::android::hidl::base::V1_0::IBase::getDescriptorName(),
+        ::android::hidl::base::V1_0::IBase::getDescriptorName()
     });
-    return ::android::hardware::Void();}
+    return ::android::hardware::Void();
+}
 
 ::android::hardware::Return<void> IServiceNotification::debug(const ::android::hardware::hidl_handle& fd, const ::android::hardware::hidl_vec<::android::hardware::hidl_string>& options){
     (void)fd;
@@ -81,13 +82,17 @@ __attribute__((destructor))static void static_destructor() {
 }
 
 ::android::hardware::Return<void> IServiceNotification::getDebugInfo(getDebugInfo_cb _hidl_cb){
-    _hidl_cb({ -1 /* pid */, 0 /* ptr */, 
+    ::android::hidl::base::V1_0::DebugInfo info = {};
+    info.pid = -1;
+    info.ptr = 0;
+    info.arch = 
     #if defined(__LP64__)
     ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_64BIT
     #else
     ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_32BIT
     #endif
-    });
+    ;
+    _hidl_cb(info);
     return ::android::hardware::Void();
 }
 
@@ -115,15 +120,14 @@ BpHwServiceNotification::BpHwServiceNotification(const ::android::sp<::android::
           ::android::hardware::details::HidlInstrumentor("android.hidl.manager@1.0", "IServiceNotification") {
 }
 
-void BpHwServiceNotification::onLastStrongRef( const void* id )
-{
-    std::unique_lock<std::mutex> locker( _hidl_mMutex );
-    _hidl_mDeathRecipients.clear();
-    locker.unlock();
+void BpHwServiceNotification::onLastStrongRef(const void* id) {
+    {
+        std::unique_lock<std::mutex> lock(_hidl_mMutex);
+        _hidl_mDeathRecipients.clear();
+    }
 
-    BpInterface<IServiceNotification>::onLastStrongRef( id );
+    BpInterface<IServiceNotification>::onLastStrongRef(id);
 }
-
 // Methods from ::android::hidl::manager::V1_0::IServiceNotification follow.
 ::android::hardware::Return<void> BpHwServiceNotification::_hidl_onRegistration(::android::hardware::IInterface *_hidl_this, ::android::hardware::details::HidlInstrumentor *_hidl_this_instrumentor, const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name, bool preexisting) {
     #ifdef __ANDROID_DEBUGGABLE__
@@ -148,6 +152,7 @@ void BpHwServiceNotification::onLastStrongRef( const void* id )
     ::android::hardware::Parcel _hidl_data;
     ::android::hardware::Parcel _hidl_reply;
     ::android::status_t _hidl_err;
+    ::android::status_t _hidl_transact_err;
     ::android::hardware::Status _hidl_status;
 
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwServiceNotification::descriptor);
@@ -182,8 +187,12 @@ void BpHwServiceNotification::onLastStrongRef( const void* id )
     _hidl_err = _hidl_data.writeBool(preexisting);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
-    _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(1 /* onRegistration */, _hidl_data, &_hidl_reply, 1u /* oneway */);
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+    _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(1 /* onRegistration */, _hidl_data, &_hidl_reply, 0 /* flags */ | 1u /* oneway */);
+    if (_hidl_transact_err != ::android::OK) 
+    {
+        _hidl_err = _hidl_transact_err;
+        goto _hidl_error;
+    }
 
     #ifdef __ANDROID_DEBUGGABLE__
     if (UNLIKELY(mEnableInstrumentation)) {
@@ -194,7 +203,6 @@ void BpHwServiceNotification::onLastStrongRef( const void* id )
     }
     #endif // __ANDROID_DEBUGGABLE__
 
-    _hidl_status.setFromStatusT(_hidl_err);
     return ::android::hardware::Return<void>();
 
 _hidl_error:
@@ -283,21 +291,15 @@ _hidl_error:
 
 BnHwServiceNotification::BnHwServiceNotification(const ::android::sp<IServiceNotification> &_hidl_impl)
         : ::android::hidl::base::V1_0::BnHwBase(_hidl_impl, "android.hidl.manager@1.0", "IServiceNotification") { 
-#if 0
             _hidl_mImpl = _hidl_impl;
-            auto prio = ::android::hardware::details::gServicePrioMap.get(_hidl_impl, {SCHED_NORMAL, 0});
+            auto prio = ::android::hardware::getMinSchedulerPolicy(_hidl_impl);
             mSchedPolicy = prio.sched_policy;
             mSchedPriority = prio.prio;
-            setRequestingSid(::android::hardware::details::gServiceSidMap.get(_hidl_impl, false));
-#endif
-            assert( 0 );
+            setRequestingSid(::android::hardware::getRequestingSid(_hidl_impl));
 }
 
 BnHwServiceNotification::~BnHwServiceNotification() {
-#if 0
-    ::android::hardware::details::gBnMap.eraseIfEqual(_hidl_mImpl.get(), this);
-#endif
-    assert( 0 );
+    ::android::hardware::details::gBnMap->eraseIfEqual(_hidl_mImpl.get(), this);
 }
 
 // Methods from ::android::hidl::manager::V1_0::IServiceNotification follow.
@@ -393,16 +395,17 @@ BnHwServiceNotification::~BnHwServiceNotification() {
     return ::android::hardware::Void();
 }
 ::android::hardware::Return<void> BnHwServiceNotification::getDebugInfo(getDebugInfo_cb _hidl_cb) {
-    _hidl_cb({
-        ::android::hardware::details::getPidIfSharable(),
-        ::android::hardware::details::debuggable()? reinterpret_cast<uint64_t>(this) : 0 /* ptr */,
-        #if defined(__LP64__)
-        ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_64BIT
-        #else
-        ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_32BIT
-        #endif
-
-    });
+    ::android::hidl::base::V1_0::DebugInfo info = {};
+    info.pid = ::android::hardware::details::getPidIfSharable();
+    info.ptr = ::android::hardware::details::debuggable()? reinterpret_cast<uint64_t>(this) : 0;
+    info.arch = 
+    #if defined(__LP64__)
+    ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_64BIT
+    #else
+    ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_32BIT
+    #endif
+    ;
+    _hidl_cb(info);
     return ::android::hardware::Void();
 }
 
@@ -417,11 +420,6 @@ BnHwServiceNotification::~BnHwServiceNotification() {
     switch (_hidl_code) {
         case 1 /* onRegistration */:
         {
-            bool _hidl_is_oneway = _hidl_flags & 1u /* oneway */;
-            if (_hidl_is_oneway != true) {
-                return ::android::UNKNOWN_ERROR;
-            }
-
             _hidl_err = ::android::hidl::manager::V1_0::BnHwServiceNotification::_hidl_onRegistration(this, _hidl_data, _hidl_reply, _hidl_cb);
             break;
         }

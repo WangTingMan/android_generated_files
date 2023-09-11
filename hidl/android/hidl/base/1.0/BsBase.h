@@ -8,7 +8,6 @@
 
 #include <hidl/HidlPassthroughSupport.h>
 #include <hidl/TaskRunner.h>
-
 #include <hwbinder/libhidl_export.h>
 
 namespace android {

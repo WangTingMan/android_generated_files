@@ -35,21 +35,12 @@ struct LIBHIDL_EXPORT IBase : virtual public ::android::RefBase {
      */
     typedef ::android::hardware::details::i_tag _hidl_tag;
 
-    IBase();
-
-    ~IBase();
-
-private:
-
     /**
      * Fully qualified interface name: "android.hidl.base@1.0::IBase"
      */
-    static const char* descriptor;
-
-public:
+    static constexpr const char* descriptor = "android.hidl.base@1.0::IBase";
 
     static const char* getDescriptorName();
-
     /**
      * Returns whether this object's implementation is outside of the current process.
      */
@@ -203,7 +194,7 @@ static inline std::string toString(const ::android::sp<::android::hidl::base::V1
 
 static inline std::string toString(const ::android::sp<::android::hidl::base::V1_0::IBase>& o) {
     std::string os = "[class or subclass of ";
-    os += ::android::hidl::base::V1_0::IBase::getDescriptorName();
+    os += ::android::hidl::base::V1_0::IBase::descriptor;
     os += "]";
     os += o->isRemote() ? "@remote" : "@local";
     return os;

@@ -6,6 +6,8 @@
 #include <utils/NativeHandle.h>
 #include <utils/misc.h>
 
+#include <hwbinder/libhidl_export.h>
+
 namespace android {
 namespace hidl {
 namespace base {

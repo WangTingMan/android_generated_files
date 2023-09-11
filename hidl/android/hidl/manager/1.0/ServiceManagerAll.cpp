@@ -14,10 +14,6 @@
 #include <android/hidl/base/1.0/BpHwBase.h>
 #include <hidl/ServiceManagement.h>
 
-#ifndef SCHED_NORMAL
-#define SCHED_NORMAL 0
-#endif
-
 namespace android {
 namespace hidl {
 namespace manager {
@@ -106,12 +102,12 @@ __attribute__((constructor)) static void static_constructor() {
             [](void *iIntf) -> ::android::sp<::android::hidl::base::V1_0::IBase> {
                 return new BsServiceManager(static_cast<IServiceManager *>(iIntf));
             });
-};
+}
 
 __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IServiceManager::descriptor);
     ::android::hardware::details::getBsConstructorMap().erase(IServiceManager::descriptor);
-};
+}
 
 // Methods from ::android::hidl::manager::V1_0::IServiceManager follow.
 // no default implementation for: ::android::hardware::Return<::android::sp<::android::hidl::base::V1_0::IBase>> IServiceManager::get(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name)
@@ -127,9 +123,10 @@ __attribute__((destructor))static void static_destructor() {
 ::android::hardware::Return<void> IServiceManager::interfaceChain(interfaceChain_cb _hidl_cb){
     _hidl_cb({
         ::android::hidl::manager::V1_0::IServiceManager::descriptor,
-        ::android::hidl::base::V1_0::IBase::getDescriptorName(),
+        ::android::hidl::base::V1_0::IBase::getDescriptorName()
     });
-    return ::android::hardware::Void();}
+    return ::android::hardware::Void();
+}
 
 ::android::hardware::Return<void> IServiceManager::debug(const ::android::hardware::hidl_handle& fd, const ::android::hardware::hidl_vec<::android::hardware::hidl_string>& options){
     (void)fd;
@@ -164,13 +161,17 @@ __attribute__((destructor))static void static_destructor() {
 }
 
 ::android::hardware::Return<void> IServiceManager::getDebugInfo(getDebugInfo_cb _hidl_cb){
-    _hidl_cb({ -1 /* pid */, 0 /* ptr */, 
+    ::android::hidl::base::V1_0::DebugInfo info = {};
+    info.pid = -1;
+    info.ptr = 0;
+    info.arch = 
     #if defined(__LP64__)
     ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_64BIT
     #else
     ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_32BIT
     #endif
-    });
+    ;
+    _hidl_cb(info);
     return ::android::hardware::Void();
 }
 
@@ -198,15 +199,14 @@ BpHwServiceManager::BpHwServiceManager(const ::android::sp<::android::hardware::
           ::android::hardware::details::HidlInstrumentor("android.hidl.manager@1.0", "IServiceManager") {
 }
 
-void BpHwServiceManager::onLastStrongRef( const void* id )
-{
-    std::unique_lock<std::mutex> locker( _hidl_mMutex );
-    _hidl_mDeathRecipients.clear();
-    locker.unlock();
+void BpHwServiceManager::onLastStrongRef(const void* id) {
+    {
+        std::unique_lock<std::mutex> lock(_hidl_mMutex);
+        _hidl_mDeathRecipients.clear();
+    }
 
-    BpInterface<IServiceManager>::onLastStrongRef( id );
+    BpInterface<IServiceManager>::onLastStrongRef(id);
 }
-
 // Methods from ::android::hidl::manager::V1_0::IServiceManager follow.
 ::android::hardware::Return<::android::sp<::android::hidl::base::V1_0::IBase>> BpHwServiceManager::_hidl_get(::android::hardware::IInterface *_hidl_this, ::android::hardware::details::HidlInstrumentor *_hidl_this_instrumentor, const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name) {
     #ifdef __ANDROID_DEBUGGABLE__
@@ -230,6 +230,7 @@ void BpHwServiceManager::onLastStrongRef( const void* id )
     ::android::hardware::Parcel _hidl_data;
     ::android::hardware::Parcel _hidl_reply;
     ::android::status_t _hidl_err;
+    ::android::status_t _hidl_transact_err;
     ::android::hardware::Status _hidl_status;
 
     ::android::sp<::android::hidl::base::V1_0::IBase> _hidl_out_service;
@@ -263,8 +264,12 @@ void BpHwServiceManager::onLastStrongRef( const void* id )
 
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
-    _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(1 /* get */, _hidl_data, &_hidl_reply);
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+    _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(1 /* get */, _hidl_data, &_hidl_reply, 0 /* flags */);
+    if (_hidl_transact_err != ::android::OK) 
+    {
+        _hidl_err = _hidl_transact_err;
+        goto _hidl_error;
+    }
 
     _hidl_err = ::android::hardware::readFromParcel(&_hidl_status, _hidl_reply);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
@@ -289,7 +294,6 @@ void BpHwServiceManager::onLastStrongRef( const void* id )
     }
     #endif // __ANDROID_DEBUGGABLE__
 
-    _hidl_status.setFromStatusT(_hidl_err);
     return ::android::hardware::Return<::android::sp<::android::hidl::base::V1_0::IBase>>(_hidl_out_service);
 
 _hidl_error:
@@ -319,6 +323,7 @@ _hidl_error:
     ::android::hardware::Parcel _hidl_data;
     ::android::hardware::Parcel _hidl_reply;
     ::android::status_t _hidl_err;
+    ::android::status_t _hidl_transact_err;
     ::android::hardware::Status _hidl_status;
 
     bool _hidl_out_success;
@@ -352,8 +357,12 @@ _hidl_error:
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     ::android::hardware::ProcessState::self()->startThreadPool();
-    _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(2 /* add */, _hidl_data, &_hidl_reply);
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+    _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(2 /* add */, _hidl_data, &_hidl_reply, 0 /* flags */);
+    if (_hidl_transact_err != ::android::OK) 
+    {
+        _hidl_err = _hidl_transact_err;
+        goto _hidl_error;
+    }
 
     _hidl_err = ::android::hardware::readFromParcel(&_hidl_status, _hidl_reply);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
@@ -373,7 +382,6 @@ _hidl_error:
     }
     #endif // __ANDROID_DEBUGGABLE__
 
-    _hidl_status.setFromStatusT(_hidl_err);
     return ::android::hardware::Return<bool>(_hidl_out_success);
 
 _hidl_error:
@@ -403,6 +411,7 @@ _hidl_error:
     ::android::hardware::Parcel _hidl_data;
     ::android::hardware::Parcel _hidl_reply;
     ::android::status_t _hidl_err;
+    ::android::status_t _hidl_transact_err;
     ::android::hardware::Status _hidl_status;
 
     ::android::hidl::manager::V1_0::IServiceManager::Transport _hidl_out_transport;
@@ -436,8 +445,12 @@ _hidl_error:
 
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
-    _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(3 /* getTransport */, _hidl_data, &_hidl_reply);
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+    _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(3 /* getTransport */, _hidl_data, &_hidl_reply, 0 /* flags */);
+    if (_hidl_transact_err != ::android::OK) 
+    {
+        _hidl_err = _hidl_transact_err;
+        goto _hidl_error;
+    }
 
     _hidl_err = ::android::hardware::readFromParcel(&_hidl_status, _hidl_reply);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
@@ -457,7 +470,6 @@ _hidl_error:
     }
     #endif // __ANDROID_DEBUGGABLE__
 
-    _hidl_status.setFromStatusT(_hidl_err);
     return ::android::hardware::Return<::android::hidl::manager::V1_0::IServiceManager::Transport>(_hidl_out_transport);
 
 _hidl_error:
@@ -472,12 +484,6 @@ _hidl_error:
     #else
     (void) _hidl_this_instrumentor;
     #endif // __ANDROID_DEBUGGABLE__
-    if (_hidl_cb == nullptr) {
-        return ::android::hardware::Status::fromExceptionCode(
-                ::android::hardware::Status::EX_ILLEGAL_ARGUMENT,
-                "Null synchronous callback passed.");
-    }
-
     ::android::ScopedTrace PASTE(___tracer, __LINE__) (ATRACE_TAG_HAL, "HIDL::IServiceManager::list::client");
     #ifdef __ANDROID_DEBUGGABLE__
     if (UNLIKELY(mEnableInstrumentation)) {
@@ -491,61 +497,67 @@ _hidl_error:
     ::android::hardware::Parcel _hidl_data;
     ::android::hardware::Parcel _hidl_reply;
     ::android::status_t _hidl_err;
+    ::android::status_t _hidl_transact_err;
     ::android::hardware::Status _hidl_status;
-
-    const ::android::hardware::hidl_vec<::android::hardware::hidl_string>* _hidl_out_fqInstanceNames;
 
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwServiceManager::descriptor);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
-    _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(4 /* list */, _hidl_data, &_hidl_reply);
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+    _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(4 /* list */, _hidl_data, &_hidl_reply, 0 /* flags */, [&] (::android::hardware::Parcel& _hidl_reply) {
+        const ::android::hardware::hidl_vec<::android::hardware::hidl_string>* _hidl_out_fqInstanceNames;
 
-    _hidl_err = ::android::hardware::readFromParcel(&_hidl_status, _hidl_reply);
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+
+        _hidl_err = ::android::hardware::readFromParcel(&_hidl_status, _hidl_reply);
+        if (_hidl_err != ::android::OK) { return; }
+
+        if (!_hidl_status.isOk()) { return; }
+
+        size_t _hidl__hidl_out_fqInstanceNames_parent;
+
+        _hidl_err = _hidl_reply.readBuffer(sizeof(*_hidl_out_fqInstanceNames), &_hidl__hidl_out_fqInstanceNames_parent,  reinterpret_cast<const void **>(&_hidl_out_fqInstanceNames));
+
+        if (_hidl_err != ::android::OK) { return; }
+
+        size_t _hidl__hidl_out_fqInstanceNames_child;
+
+        _hidl_err = ::android::hardware::readEmbeddedFromParcel(
+                const_cast<::android::hardware::hidl_vec<::android::hardware::hidl_string> &>(*_hidl_out_fqInstanceNames),
+                _hidl_reply,
+                _hidl__hidl_out_fqInstanceNames_parent,
+                0 /* parentOffset */, &_hidl__hidl_out_fqInstanceNames_child);
+
+        if (_hidl_err != ::android::OK) { return; }
+
+        for (size_t _hidl_index_0 = 0; _hidl_index_0 < _hidl_out_fqInstanceNames->size(); ++_hidl_index_0) {
+            _hidl_err = ::android::hardware::readEmbeddedFromParcel(
+                    const_cast<::android::hardware::hidl_string &>((*_hidl_out_fqInstanceNames)[_hidl_index_0]),
+                    _hidl_reply,
+                    _hidl__hidl_out_fqInstanceNames_child,
+                    _hidl_index_0 * sizeof(::android::hardware::hidl_string));
+
+            if (_hidl_err != ::android::OK) { return; }
+
+        }
+
+        _hidl_cb(*_hidl_out_fqInstanceNames);
+
+        #ifdef __ANDROID_DEBUGGABLE__
+        if (UNLIKELY(mEnableInstrumentation)) {
+            std::vector<void *> _hidl_args;
+            _hidl_args.push_back((void *)_hidl_out_fqInstanceNames);
+            for (const auto &callback: mInstrumentationCallbacks) {
+                callback(InstrumentationEvent::CLIENT_API_EXIT, "android.hidl.manager", "1.0", "IServiceManager", "list", &_hidl_args);
+            }
+        }
+        #endif // __ANDROID_DEBUGGABLE__
+
+    });
+    if (_hidl_transact_err != ::android::OK) {
+        _hidl_err = _hidl_transact_err;
+        goto _hidl_error;
+    }
 
     if (!_hidl_status.isOk()) { return _hidl_status; }
-
-    size_t _hidl__hidl_out_fqInstanceNames_parent;
-
-    _hidl_err = _hidl_reply.readBuffer(sizeof(*_hidl_out_fqInstanceNames), &_hidl__hidl_out_fqInstanceNames_parent,  reinterpret_cast<const void **>(&_hidl_out_fqInstanceNames));
-
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
-
-    size_t _hidl__hidl_out_fqInstanceNames_child;
-
-    _hidl_err = ::android::hardware::readEmbeddedFromParcel(
-            const_cast<::android::hardware::hidl_vec<::android::hardware::hidl_string> &>(*_hidl_out_fqInstanceNames),
-            _hidl_reply,
-            _hidl__hidl_out_fqInstanceNames_parent,
-            0 /* parentOffset */, &_hidl__hidl_out_fqInstanceNames_child);
-
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
-
-    for (size_t _hidl_index_0 = 0; _hidl_index_0 < _hidl_out_fqInstanceNames->size(); ++_hidl_index_0) {
-        _hidl_err = ::android::hardware::readEmbeddedFromParcel(
-                const_cast<::android::hardware::hidl_string &>((*_hidl_out_fqInstanceNames)[_hidl_index_0]),
-                _hidl_reply,
-                _hidl__hidl_out_fqInstanceNames_child,
-                _hidl_index_0 * sizeof(::android::hardware::hidl_string));
-
-        if (_hidl_err != ::android::OK) { goto _hidl_error; }
-
-    }
-
-    _hidl_cb(*_hidl_out_fqInstanceNames);
-
-    #ifdef __ANDROID_DEBUGGABLE__
-    if (UNLIKELY(mEnableInstrumentation)) {
-        std::vector<void *> _hidl_args;
-        _hidl_args.push_back((void *)_hidl_out_fqInstanceNames);
-        for (const auto &callback: mInstrumentationCallbacks) {
-            callback(InstrumentationEvent::CLIENT_API_EXIT, "android.hidl.manager", "1.0", "IServiceManager", "list", &_hidl_args);
-        }
-    }
-    #endif // __ANDROID_DEBUGGABLE__
-
-    _hidl_status.setFromStatusT(_hidl_err);
     return ::android::hardware::Return<void>();
 
 _hidl_error:
@@ -560,12 +572,6 @@ _hidl_error:
     #else
     (void) _hidl_this_instrumentor;
     #endif // __ANDROID_DEBUGGABLE__
-    if (_hidl_cb == nullptr) {
-        return ::android::hardware::Status::fromExceptionCode(
-                ::android::hardware::Status::EX_ILLEGAL_ARGUMENT,
-                "Null synchronous callback passed.");
-    }
-
     ::android::ScopedTrace PASTE(___tracer, __LINE__) (ATRACE_TAG_HAL, "HIDL::IServiceManager::listByInterface::client");
     #ifdef __ANDROID_DEBUGGABLE__
     if (UNLIKELY(mEnableInstrumentation)) {
@@ -580,9 +586,8 @@ _hidl_error:
     ::android::hardware::Parcel _hidl_data;
     ::android::hardware::Parcel _hidl_reply;
     ::android::status_t _hidl_err;
+    ::android::status_t _hidl_transact_err;
     ::android::hardware::Status _hidl_status;
-
-    const ::android::hardware::hidl_vec<::android::hardware::hidl_string>* _hidl_out_instanceNames;
 
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwServiceManager::descriptor);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
@@ -600,54 +605,61 @@ _hidl_error:
 
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
-    _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(5 /* listByInterface */, _hidl_data, &_hidl_reply);
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+    _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(5 /* listByInterface */, _hidl_data, &_hidl_reply, 0 /* flags */, [&] (::android::hardware::Parcel& _hidl_reply) {
+        const ::android::hardware::hidl_vec<::android::hardware::hidl_string>* _hidl_out_instanceNames;
 
-    _hidl_err = ::android::hardware::readFromParcel(&_hidl_status, _hidl_reply);
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+
+        _hidl_err = ::android::hardware::readFromParcel(&_hidl_status, _hidl_reply);
+        if (_hidl_err != ::android::OK) { return; }
+
+        if (!_hidl_status.isOk()) { return; }
+
+        size_t _hidl__hidl_out_instanceNames_parent;
+
+        _hidl_err = _hidl_reply.readBuffer(sizeof(*_hidl_out_instanceNames), &_hidl__hidl_out_instanceNames_parent,  reinterpret_cast<const void **>(&_hidl_out_instanceNames));
+
+        if (_hidl_err != ::android::OK) { return; }
+
+        size_t _hidl__hidl_out_instanceNames_child;
+
+        _hidl_err = ::android::hardware::readEmbeddedFromParcel(
+                const_cast<::android::hardware::hidl_vec<::android::hardware::hidl_string> &>(*_hidl_out_instanceNames),
+                _hidl_reply,
+                _hidl__hidl_out_instanceNames_parent,
+                0 /* parentOffset */, &_hidl__hidl_out_instanceNames_child);
+
+        if (_hidl_err != ::android::OK) { return; }
+
+        for (size_t _hidl_index_0 = 0; _hidl_index_0 < _hidl_out_instanceNames->size(); ++_hidl_index_0) {
+            _hidl_err = ::android::hardware::readEmbeddedFromParcel(
+                    const_cast<::android::hardware::hidl_string &>((*_hidl_out_instanceNames)[_hidl_index_0]),
+                    _hidl_reply,
+                    _hidl__hidl_out_instanceNames_child,
+                    _hidl_index_0 * sizeof(::android::hardware::hidl_string));
+
+            if (_hidl_err != ::android::OK) { return; }
+
+        }
+
+        _hidl_cb(*_hidl_out_instanceNames);
+
+        #ifdef __ANDROID_DEBUGGABLE__
+        if (UNLIKELY(mEnableInstrumentation)) {
+            std::vector<void *> _hidl_args;
+            _hidl_args.push_back((void *)_hidl_out_instanceNames);
+            for (const auto &callback: mInstrumentationCallbacks) {
+                callback(InstrumentationEvent::CLIENT_API_EXIT, "android.hidl.manager", "1.0", "IServiceManager", "listByInterface", &_hidl_args);
+            }
+        }
+        #endif // __ANDROID_DEBUGGABLE__
+
+    });
+    if (_hidl_transact_err != ::android::OK) {
+        _hidl_err = _hidl_transact_err;
+        goto _hidl_error;
+    }
 
     if (!_hidl_status.isOk()) { return _hidl_status; }
-
-    size_t _hidl__hidl_out_instanceNames_parent;
-
-    _hidl_err = _hidl_reply.readBuffer(sizeof(*_hidl_out_instanceNames), &_hidl__hidl_out_instanceNames_parent,  reinterpret_cast<const void **>(&_hidl_out_instanceNames));
-
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
-
-    size_t _hidl__hidl_out_instanceNames_child;
-
-    _hidl_err = ::android::hardware::readEmbeddedFromParcel(
-            const_cast<::android::hardware::hidl_vec<::android::hardware::hidl_string> &>(*_hidl_out_instanceNames),
-            _hidl_reply,
-            _hidl__hidl_out_instanceNames_parent,
-            0 /* parentOffset */, &_hidl__hidl_out_instanceNames_child);
-
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
-
-    for (size_t _hidl_index_0 = 0; _hidl_index_0 < _hidl_out_instanceNames->size(); ++_hidl_index_0) {
-        _hidl_err = ::android::hardware::readEmbeddedFromParcel(
-                const_cast<::android::hardware::hidl_string &>((*_hidl_out_instanceNames)[_hidl_index_0]),
-                _hidl_reply,
-                _hidl__hidl_out_instanceNames_child,
-                _hidl_index_0 * sizeof(::android::hardware::hidl_string));
-
-        if (_hidl_err != ::android::OK) { goto _hidl_error; }
-
-    }
-
-    _hidl_cb(*_hidl_out_instanceNames);
-
-    #ifdef __ANDROID_DEBUGGABLE__
-    if (UNLIKELY(mEnableInstrumentation)) {
-        std::vector<void *> _hidl_args;
-        _hidl_args.push_back((void *)_hidl_out_instanceNames);
-        for (const auto &callback: mInstrumentationCallbacks) {
-            callback(InstrumentationEvent::CLIENT_API_EXIT, "android.hidl.manager", "1.0", "IServiceManager", "listByInterface", &_hidl_args);
-        }
-    }
-    #endif // __ANDROID_DEBUGGABLE__
-
-    _hidl_status.setFromStatusT(_hidl_err);
     return ::android::hardware::Return<void>();
 
 _hidl_error:
@@ -678,6 +690,7 @@ _hidl_error:
     ::android::hardware::Parcel _hidl_data;
     ::android::hardware::Parcel _hidl_reply;
     ::android::status_t _hidl_err;
+    ::android::status_t _hidl_transact_err;
     ::android::hardware::Status _hidl_status;
 
     bool _hidl_out_success;
@@ -724,8 +737,12 @@ _hidl_error:
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     ::android::hardware::ProcessState::self()->startThreadPool();
-    _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(6 /* registerForNotifications */, _hidl_data, &_hidl_reply);
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+    _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(6 /* registerForNotifications */, _hidl_data, &_hidl_reply, 0 /* flags */);
+    if (_hidl_transact_err != ::android::OK) 
+    {
+        _hidl_err = _hidl_transact_err;
+        goto _hidl_error;
+    }
 
     _hidl_err = ::android::hardware::readFromParcel(&_hidl_status, _hidl_reply);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
@@ -745,7 +762,6 @@ _hidl_error:
     }
     #endif // __ANDROID_DEBUGGABLE__
 
-    _hidl_status.setFromStatusT(_hidl_err);
     return ::android::hardware::Return<bool>(_hidl_out_success);
 
 _hidl_error:
@@ -760,12 +776,6 @@ _hidl_error:
     #else
     (void) _hidl_this_instrumentor;
     #endif // __ANDROID_DEBUGGABLE__
-    if (_hidl_cb == nullptr) {
-        return ::android::hardware::Status::fromExceptionCode(
-                ::android::hardware::Status::EX_ILLEGAL_ARGUMENT,
-                "Null synchronous callback passed.");
-    }
-
     ::android::ScopedTrace PASTE(___tracer, __LINE__) (ATRACE_TAG_HAL, "HIDL::IServiceManager::debugDump::client");
     #ifdef __ANDROID_DEBUGGABLE__
     if (UNLIKELY(mEnableInstrumentation)) {
@@ -779,61 +789,67 @@ _hidl_error:
     ::android::hardware::Parcel _hidl_data;
     ::android::hardware::Parcel _hidl_reply;
     ::android::status_t _hidl_err;
+    ::android::status_t _hidl_transact_err;
     ::android::hardware::Status _hidl_status;
-
-    const ::android::hardware::hidl_vec<::android::hidl::manager::V1_0::IServiceManager::InstanceDebugInfo>* _hidl_out_info;
 
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwServiceManager::descriptor);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
-    _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(7 /* debugDump */, _hidl_data, &_hidl_reply);
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+    _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(7 /* debugDump */, _hidl_data, &_hidl_reply, 0 /* flags */, [&] (::android::hardware::Parcel& _hidl_reply) {
+        const ::android::hardware::hidl_vec<::android::hidl::manager::V1_0::IServiceManager::InstanceDebugInfo>* _hidl_out_info;
 
-    _hidl_err = ::android::hardware::readFromParcel(&_hidl_status, _hidl_reply);
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+
+        _hidl_err = ::android::hardware::readFromParcel(&_hidl_status, _hidl_reply);
+        if (_hidl_err != ::android::OK) { return; }
+
+        if (!_hidl_status.isOk()) { return; }
+
+        size_t _hidl__hidl_out_info_parent;
+
+        _hidl_err = _hidl_reply.readBuffer(sizeof(*_hidl_out_info), &_hidl__hidl_out_info_parent,  reinterpret_cast<const void **>(&_hidl_out_info));
+
+        if (_hidl_err != ::android::OK) { return; }
+
+        size_t _hidl__hidl_out_info_child;
+
+        _hidl_err = ::android::hardware::readEmbeddedFromParcel(
+                const_cast<::android::hardware::hidl_vec<::android::hidl::manager::V1_0::IServiceManager::InstanceDebugInfo> &>(*_hidl_out_info),
+                _hidl_reply,
+                _hidl__hidl_out_info_parent,
+                0 /* parentOffset */, &_hidl__hidl_out_info_child);
+
+        if (_hidl_err != ::android::OK) { return; }
+
+        for (size_t _hidl_index_0 = 0; _hidl_index_0 < _hidl_out_info->size(); ++_hidl_index_0) {
+            _hidl_err = readEmbeddedFromParcel(
+                    const_cast<::android::hidl::manager::V1_0::IServiceManager::InstanceDebugInfo &>((*_hidl_out_info)[_hidl_index_0]),
+                    _hidl_reply,
+                    _hidl__hidl_out_info_child,
+                    _hidl_index_0 * sizeof(::android::hidl::manager::V1_0::IServiceManager::InstanceDebugInfo));
+
+            if (_hidl_err != ::android::OK) { return; }
+
+        }
+
+        _hidl_cb(*_hidl_out_info);
+
+        #ifdef __ANDROID_DEBUGGABLE__
+        if (UNLIKELY(mEnableInstrumentation)) {
+            std::vector<void *> _hidl_args;
+            _hidl_args.push_back((void *)_hidl_out_info);
+            for (const auto &callback: mInstrumentationCallbacks) {
+                callback(InstrumentationEvent::CLIENT_API_EXIT, "android.hidl.manager", "1.0", "IServiceManager", "debugDump", &_hidl_args);
+            }
+        }
+        #endif // __ANDROID_DEBUGGABLE__
+
+    });
+    if (_hidl_transact_err != ::android::OK) {
+        _hidl_err = _hidl_transact_err;
+        goto _hidl_error;
+    }
 
     if (!_hidl_status.isOk()) { return _hidl_status; }
-
-    size_t _hidl__hidl_out_info_parent;
-
-    _hidl_err = _hidl_reply.readBuffer(sizeof(*_hidl_out_info), &_hidl__hidl_out_info_parent,  reinterpret_cast<const void **>(&_hidl_out_info));
-
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
-
-    size_t _hidl__hidl_out_info_child;
-
-    _hidl_err = ::android::hardware::readEmbeddedFromParcel(
-            const_cast<::android::hardware::hidl_vec<::android::hidl::manager::V1_0::IServiceManager::InstanceDebugInfo> &>(*_hidl_out_info),
-            _hidl_reply,
-            _hidl__hidl_out_info_parent,
-            0 /* parentOffset */, &_hidl__hidl_out_info_child);
-
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
-
-    for (size_t _hidl_index_0 = 0; _hidl_index_0 < _hidl_out_info->size(); ++_hidl_index_0) {
-        _hidl_err = readEmbeddedFromParcel(
-                const_cast<::android::hidl::manager::V1_0::IServiceManager::InstanceDebugInfo &>((*_hidl_out_info)[_hidl_index_0]),
-                _hidl_reply,
-                _hidl__hidl_out_info_child,
-                _hidl_index_0 * sizeof(::android::hidl::manager::V1_0::IServiceManager::InstanceDebugInfo));
-
-        if (_hidl_err != ::android::OK) { goto _hidl_error; }
-
-    }
-
-    _hidl_cb(*_hidl_out_info);
-
-    #ifdef __ANDROID_DEBUGGABLE__
-    if (UNLIKELY(mEnableInstrumentation)) {
-        std::vector<void *> _hidl_args;
-        _hidl_args.push_back((void *)_hidl_out_info);
-        for (const auto &callback: mInstrumentationCallbacks) {
-            callback(InstrumentationEvent::CLIENT_API_EXIT, "android.hidl.manager", "1.0", "IServiceManager", "debugDump", &_hidl_args);
-        }
-    }
-    #endif // __ANDROID_DEBUGGABLE__
-
-    _hidl_status.setFromStatusT(_hidl_err);
     return ::android::hardware::Return<void>();
 
 _hidl_error:
@@ -863,6 +879,7 @@ _hidl_error:
     ::android::hardware::Parcel _hidl_data;
     ::android::hardware::Parcel _hidl_reply;
     ::android::status_t _hidl_err;
+    ::android::status_t _hidl_transact_err;
     ::android::hardware::Status _hidl_status;
 
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwServiceManager::descriptor);
@@ -894,8 +911,12 @@ _hidl_error:
 
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
-    _hidl_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(8 /* registerPassthroughClient */, _hidl_data, &_hidl_reply);
-    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+    _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(8 /* registerPassthroughClient */, _hidl_data, &_hidl_reply, 0 /* flags */);
+    if (_hidl_transact_err != ::android::OK) 
+    {
+        _hidl_err = _hidl_transact_err;
+        goto _hidl_error;
+    }
 
     _hidl_err = ::android::hardware::readFromParcel(&_hidl_status, _hidl_reply);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
@@ -911,7 +932,6 @@ _hidl_error:
     }
     #endif // __ANDROID_DEBUGGABLE__
 
-    _hidl_status.setFromStatusT(_hidl_err);
     return ::android::hardware::Return<void>();
 
 _hidl_error:
@@ -1043,18 +1063,14 @@ _hidl_error:
 BnHwServiceManager::BnHwServiceManager(const ::android::sp<IServiceManager> &_hidl_impl)
         : ::android::hidl::base::V1_0::BnHwBase(_hidl_impl, "android.hidl.manager@1.0", "IServiceManager") { 
             _hidl_mImpl = _hidl_impl;
-#if 0
-            auto prio = ::android::hardware::details::gServicePrioMap->get(_hidl_impl, {SCHED_NORMAL, 0});
+            auto prio = ::android::hardware::getMinSchedulerPolicy(_hidl_impl);
             mSchedPolicy = prio.sched_policy;
             mSchedPriority = prio.prio;
-            setRequestingSid(::android::hardware::details::gServiceSidMap->get(_hidl_impl, false));
-            assert( 0 );
-#endif
+            setRequestingSid(::android::hardware::getRequestingSid(_hidl_impl));
 }
 
 BnHwServiceManager::~BnHwServiceManager() {
     ::android::hardware::details::gBnMap->eraseIfEqual(_hidl_mImpl.get(), this);
-    assert( 0 );
 }
 
 // Methods from ::android::hidl::manager::V1_0::IServiceManager follow.
@@ -1131,8 +1147,9 @@ BnHwServiceManager::~BnHwServiceManager() {
             _hidl_err = ::android::UNKNOWN_ERROR;
         }
     }
-    /* _hidl_err ignored! */
+    if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
+_hidl_error:
     atrace_end(ATRACE_TAG_HAL);
     #ifdef __ANDROID_DEBUGGABLE__
     if (UNLIKELY(mEnableInstrumentation)) {
@@ -1144,6 +1161,7 @@ BnHwServiceManager::~BnHwServiceManager() {
     }
     #endif // __ANDROID_DEBUGGABLE__
 
+    if (_hidl_err != ::android::OK) { return _hidl_err; }
     _hidl_cb(*_hidl_reply);
     return _hidl_err;
 }
@@ -1206,8 +1224,9 @@ BnHwServiceManager::~BnHwServiceManager() {
     ::android::hardware::writeToParcel(::android::hardware::Status::ok(), _hidl_reply);
 
     _hidl_err = _hidl_reply->writeBool(_hidl_out_success);
-    /* _hidl_err ignored! */
+    if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
+_hidl_error:
     atrace_end(ATRACE_TAG_HAL);
     #ifdef __ANDROID_DEBUGGABLE__
     if (UNLIKELY(mEnableInstrumentation)) {
@@ -1219,6 +1238,7 @@ BnHwServiceManager::~BnHwServiceManager() {
     }
     #endif // __ANDROID_DEBUGGABLE__
 
+    if (_hidl_err != ::android::OK) { return _hidl_err; }
     _hidl_cb(*_hidl_reply);
     return _hidl_err;
 }
@@ -1287,8 +1307,9 @@ BnHwServiceManager::~BnHwServiceManager() {
     ::android::hardware::writeToParcel(::android::hardware::Status::ok(), _hidl_reply);
 
     _hidl_err = _hidl_reply->writeUint8((uint8_t)_hidl_out_transport);
-    /* _hidl_err ignored! */
+    if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
+_hidl_error:
     atrace_end(ATRACE_TAG_HAL);
     #ifdef __ANDROID_DEBUGGABLE__
     if (UNLIKELY(mEnableInstrumentation)) {
@@ -1300,6 +1321,7 @@ BnHwServiceManager::~BnHwServiceManager() {
     }
     #endif // __ANDROID_DEBUGGABLE__
 
+    if (_hidl_err != ::android::OK) { return _hidl_err; }
     _hidl_cb(*_hidl_reply);
     return _hidl_err;
 }
@@ -1343,7 +1365,7 @@ BnHwServiceManager::~BnHwServiceManager() {
         size_t _hidl__hidl_out_fqInstanceNames_parent;
 
         _hidl_err = _hidl_reply->writeBuffer(&_hidl_out_fqInstanceNames, sizeof(_hidl_out_fqInstanceNames), &_hidl__hidl_out_fqInstanceNames_parent);
-        /* _hidl_err ignored! */
+        if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
         size_t _hidl__hidl_out_fqInstanceNames_child;
 
@@ -1353,7 +1375,7 @@ BnHwServiceManager::~BnHwServiceManager() {
                 _hidl__hidl_out_fqInstanceNames_parent,
                 0 /* parentOffset */, &_hidl__hidl_out_fqInstanceNames_child);
 
-        /* _hidl_err ignored! */
+        if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
         for (size_t _hidl_index_0 = 0; _hidl_index_0 < _hidl_out_fqInstanceNames.size(); ++_hidl_index_0) {
             _hidl_err = ::android::hardware::writeEmbeddedToParcel(
@@ -1362,10 +1384,11 @@ BnHwServiceManager::~BnHwServiceManager() {
                     _hidl__hidl_out_fqInstanceNames_child,
                     _hidl_index_0 * sizeof(::android::hardware::hidl_string));
 
-            /* _hidl_err ignored! */
+            if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
         }
 
+    _hidl_error:
         atrace_end(ATRACE_TAG_HAL);
         #ifdef __ANDROID_DEBUGGABLE__
         if (UNLIKELY(mEnableInstrumentation)) {
@@ -1377,6 +1400,7 @@ BnHwServiceManager::~BnHwServiceManager() {
         }
         #endif // __ANDROID_DEBUGGABLE__
 
+        if (_hidl_err != ::android::OK) { return; }
         _hidl_cb(*_hidl_reply);
     });
 
@@ -1444,7 +1468,7 @@ BnHwServiceManager::~BnHwServiceManager() {
         size_t _hidl__hidl_out_instanceNames_parent;
 
         _hidl_err = _hidl_reply->writeBuffer(&_hidl_out_instanceNames, sizeof(_hidl_out_instanceNames), &_hidl__hidl_out_instanceNames_parent);
-        /* _hidl_err ignored! */
+        if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
         size_t _hidl__hidl_out_instanceNames_child;
 
@@ -1454,7 +1478,7 @@ BnHwServiceManager::~BnHwServiceManager() {
                 _hidl__hidl_out_instanceNames_parent,
                 0 /* parentOffset */, &_hidl__hidl_out_instanceNames_child);
 
-        /* _hidl_err ignored! */
+        if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
         for (size_t _hidl_index_0 = 0; _hidl_index_0 < _hidl_out_instanceNames.size(); ++_hidl_index_0) {
             _hidl_err = ::android::hardware::writeEmbeddedToParcel(
@@ -1463,10 +1487,11 @@ BnHwServiceManager::~BnHwServiceManager() {
                     _hidl__hidl_out_instanceNames_child,
                     _hidl_index_0 * sizeof(::android::hardware::hidl_string));
 
-            /* _hidl_err ignored! */
+            if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
         }
 
+    _hidl_error:
         atrace_end(ATRACE_TAG_HAL);
         #ifdef __ANDROID_DEBUGGABLE__
         if (UNLIKELY(mEnableInstrumentation)) {
@@ -1478,6 +1503,7 @@ BnHwServiceManager::~BnHwServiceManager() {
         }
         #endif // __ANDROID_DEBUGGABLE__
 
+        if (_hidl_err != ::android::OK) { return; }
         _hidl_cb(*_hidl_reply);
     });
 
@@ -1563,8 +1589,9 @@ BnHwServiceManager::~BnHwServiceManager() {
     ::android::hardware::writeToParcel(::android::hardware::Status::ok(), _hidl_reply);
 
     _hidl_err = _hidl_reply->writeBool(_hidl_out_success);
-    /* _hidl_err ignored! */
+    if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
+_hidl_error:
     atrace_end(ATRACE_TAG_HAL);
     #ifdef __ANDROID_DEBUGGABLE__
     if (UNLIKELY(mEnableInstrumentation)) {
@@ -1576,6 +1603,7 @@ BnHwServiceManager::~BnHwServiceManager() {
     }
     #endif // __ANDROID_DEBUGGABLE__
 
+    if (_hidl_err != ::android::OK) { return _hidl_err; }
     _hidl_cb(*_hidl_reply);
     return _hidl_err;
 }
@@ -1619,7 +1647,7 @@ BnHwServiceManager::~BnHwServiceManager() {
         size_t _hidl__hidl_out_info_parent;
 
         _hidl_err = _hidl_reply->writeBuffer(&_hidl_out_info, sizeof(_hidl_out_info), &_hidl__hidl_out_info_parent);
-        /* _hidl_err ignored! */
+        if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
         size_t _hidl__hidl_out_info_child;
 
@@ -1629,7 +1657,7 @@ BnHwServiceManager::~BnHwServiceManager() {
                 _hidl__hidl_out_info_parent,
                 0 /* parentOffset */, &_hidl__hidl_out_info_child);
 
-        /* _hidl_err ignored! */
+        if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
         for (size_t _hidl_index_0 = 0; _hidl_index_0 < _hidl_out_info.size(); ++_hidl_index_0) {
             _hidl_err = writeEmbeddedToParcel(
@@ -1638,10 +1666,11 @@ BnHwServiceManager::~BnHwServiceManager() {
                     _hidl__hidl_out_info_child,
                     _hidl_index_0 * sizeof(::android::hidl::manager::V1_0::IServiceManager::InstanceDebugInfo));
 
-            /* _hidl_err ignored! */
+            if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
         }
 
+    _hidl_error:
         atrace_end(ATRACE_TAG_HAL);
         #ifdef __ANDROID_DEBUGGABLE__
         if (UNLIKELY(mEnableInstrumentation)) {
@@ -1653,6 +1682,7 @@ BnHwServiceManager::~BnHwServiceManager() {
         }
         #endif // __ANDROID_DEBUGGABLE__
 
+        if (_hidl_err != ::android::OK) { return; }
         _hidl_cb(*_hidl_reply);
     });
 
@@ -1751,16 +1781,17 @@ BnHwServiceManager::~BnHwServiceManager() {
     return ::android::hardware::Void();
 }
 ::android::hardware::Return<void> BnHwServiceManager::getDebugInfo(getDebugInfo_cb _hidl_cb) {
-    _hidl_cb({
-        ::android::hardware::details::getPidIfSharable(),
-        ::android::hardware::details::debuggable()? reinterpret_cast<uint64_t>(this) : 0 /* ptr */,
-        #if defined(__LP64__)
-        ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_64BIT
-        #else
-        ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_32BIT
-        #endif
-
-    });
+    ::android::hidl::base::V1_0::DebugInfo info = {};
+    info.pid = ::android::hardware::details::getPidIfSharable();
+    info.ptr = ::android::hardware::details::debuggable()? reinterpret_cast<uint64_t>(this) : 0;
+    info.arch = 
+    #if defined(__LP64__)
+    ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_64BIT
+    #else
+    ::android::hidl::base::V1_0::DebugInfo::Architecture::IS_32BIT
+    #endif
+    ;
+    _hidl_cb(info);
     return ::android::hardware::Void();
 }
 
@@ -1775,88 +1806,48 @@ BnHwServiceManager::~BnHwServiceManager() {
     switch (_hidl_code) {
         case 1 /* get */:
         {
-            bool _hidl_is_oneway = _hidl_flags & 1u /* oneway */;
-            if (_hidl_is_oneway != false) {
-                return ::android::UNKNOWN_ERROR;
-            }
-
             _hidl_err = ::android::hidl::manager::V1_0::BnHwServiceManager::_hidl_get(this, _hidl_data, _hidl_reply, _hidl_cb);
             break;
         }
 
         case 2 /* add */:
         {
-            bool _hidl_is_oneway = _hidl_flags & 1u /* oneway */;
-            if (_hidl_is_oneway != false) {
-                return ::android::UNKNOWN_ERROR;
-            }
-
             _hidl_err = ::android::hidl::manager::V1_0::BnHwServiceManager::_hidl_add(this, _hidl_data, _hidl_reply, _hidl_cb);
             break;
         }
 
         case 3 /* getTransport */:
         {
-            bool _hidl_is_oneway = _hidl_flags & 1u /* oneway */;
-            if (_hidl_is_oneway != false) {
-                return ::android::UNKNOWN_ERROR;
-            }
-
             _hidl_err = ::android::hidl::manager::V1_0::BnHwServiceManager::_hidl_getTransport(this, _hidl_data, _hidl_reply, _hidl_cb);
             break;
         }
 
         case 4 /* list */:
         {
-            bool _hidl_is_oneway = _hidl_flags & 1u /* oneway */;
-            if (_hidl_is_oneway != false) {
-                return ::android::UNKNOWN_ERROR;
-            }
-
             _hidl_err = ::android::hidl::manager::V1_0::BnHwServiceManager::_hidl_list(this, _hidl_data, _hidl_reply, _hidl_cb);
             break;
         }
 
         case 5 /* listByInterface */:
         {
-            bool _hidl_is_oneway = _hidl_flags & 1u /* oneway */;
-            if (_hidl_is_oneway != false) {
-                return ::android::UNKNOWN_ERROR;
-            }
-
             _hidl_err = ::android::hidl::manager::V1_0::BnHwServiceManager::_hidl_listByInterface(this, _hidl_data, _hidl_reply, _hidl_cb);
             break;
         }
 
         case 6 /* registerForNotifications */:
         {
-            bool _hidl_is_oneway = _hidl_flags & 1u /* oneway */;
-            if (_hidl_is_oneway != false) {
-                return ::android::UNKNOWN_ERROR;
-            }
-
             _hidl_err = ::android::hidl::manager::V1_0::BnHwServiceManager::_hidl_registerForNotifications(this, _hidl_data, _hidl_reply, _hidl_cb);
             break;
         }
 
         case 7 /* debugDump */:
         {
-            bool _hidl_is_oneway = _hidl_flags & 1u /* oneway */;
-            if (_hidl_is_oneway != false) {
-                return ::android::UNKNOWN_ERROR;
-            }
-
             _hidl_err = ::android::hidl::manager::V1_0::BnHwServiceManager::_hidl_debugDump(this, _hidl_data, _hidl_reply, _hidl_cb);
             break;
         }
 
         case 8 /* registerPassthroughClient */:
         {
-            bool _hidl_is_oneway = _hidl_flags & 1u /* oneway */;
-            if (_hidl_is_oneway != false) {
-                return ::android::UNKNOWN_ERROR;
-            }
-
             _hidl_err = ::android::hidl::manager::V1_0::BnHwServiceManager::_hidl_registerPassthroughClient(this, _hidl_data, _hidl_reply, _hidl_cb);
             break;
         }
