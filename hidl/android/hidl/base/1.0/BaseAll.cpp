@@ -12,6 +12,7 @@
 #include <android/hidl/base/1.0/BnHwBase.h>
 #include <android/hidl/base/1.0/BsBase.h>
 #include <hidl/ServiceManagement.h>
+#include <utils/AutoHolder.h>
 
 namespace android {
 namespace hidl {
@@ -38,6 +39,8 @@ __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IBase::getDescriptorName() );
     ::android::hardware::details::getBsConstructorMap().erase(IBase::getDescriptorName() );
 }
+
+static AutoHolder holder( static_constructor, static_destructor );
 
 // Methods from ::android::hidl::base::V1_0::IBase follow.
 ::android::hardware::Return<void> IBase::interfaceChain(interfaceChain_cb _hidl_cb){
@@ -156,6 +159,11 @@ void BpHwBase::onLastStrongRef(const void* id) {
 
         if (!_hidl_status.isOk()) { return; }
 
+#ifdef _MSC_VER
+        ::android::hardware::hidl_vec<::android::hardware::hidl_string> out_values;
+        _hidl_err = _hidl_reply.readDynamic( out_values );
+        _hidl_out_descriptors = &out_values;
+#else
         size_t _hidl__hidl_out_descriptors_parent;
 
         _hidl_err = _hidl_reply.readBuffer(sizeof(*_hidl_out_descriptors), &_hidl__hidl_out_descriptors_parent,  reinterpret_cast<const void **>(&_hidl_out_descriptors));
@@ -182,6 +190,7 @@ void BpHwBase::onLastStrongRef(const void* id) {
             if (_hidl_err != ::android::OK) { return; }
 
         }
+#endif
 
         _hidl_cb(*_hidl_out_descriptors);
 
@@ -791,7 +800,9 @@ bool BnHwBase::checkSubclass(const void* subclassID) const {
         _hidl_callbackCalled = true;
 
         ::android::hardware::writeToParcel(::android::hardware::Status::ok(), _hidl_reply);
-
+#ifdef _MSC_VER
+        _hidl_reply->writeDynamic( _hidl_out_descriptors );
+#else
         size_t _hidl__hidl_out_descriptors_parent;
 
         _hidl_err = _hidl_reply->writeBuffer(&_hidl_out_descriptors, sizeof(_hidl_out_descriptors), &_hidl__hidl_out_descriptors_parent);
@@ -817,7 +828,7 @@ bool BnHwBase::checkSubclass(const void* subclassID) const {
             if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
         }
-
+#endif
     _hidl_error:
         atrace_end(ATRACE_TAG_HAL);
         #ifdef __ANDROID_DEBUGGABLE__

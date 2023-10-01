@@ -37,7 +37,9 @@ struct ANDROIDHARDWAREBLUETOOTH11_API IBluetoothHci : public ::android::hardware
     /**
      * Fully qualified interface name: "android.hardware.bluetooth@1.1::IBluetoothHci"
      */
-    static const char* descriptor;
+    static constexpr const char* descriptor = "android.hardware.bluetooth@1.1::IBluetoothHci";
+
+    static const char* getDescriptorName();
 
     /**
      * Returns whether this object's implementation is outside of the current process.

@@ -15,6 +15,10 @@
 #include <android/hidl/manager/1.0/BpHwServiceManager.h>
 #include <android/hidl/base/1.0/BpHwBase.h>
 #include <hidl/ServiceManagement.h>
+#include <utils/AutoHolder.h>
+#include <utils/AutoHolder.h>
+
+#include <binder_driver/ipc_connection_token.h>
 
 namespace android {
 namespace hidl {
@@ -38,6 +42,8 @@ __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IServiceManager::descriptor);
     ::android::hardware::details::getBsConstructorMap().erase(IServiceManager::descriptor);
 }
+
+static AutoHolder holder( static_constructor, static_destructor );
 
 // Methods from ::android::hidl::manager::V1_0::IServiceManager follow.
 // no default implementation for: ::android::hardware::Return<::android::sp<::android::hidl::base::V1_0::IBase>> IServiceManager::get(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name)
@@ -389,12 +395,25 @@ _hidl_error:
     ::android::status_t _hidl_err;
     ::android::status_t _hidl_transact_err;
     ::android::hardware::Status _hidl_status;
-
+#ifdef _MSC_VER
+    uint32_t chain_size = 0;
+    std::string addr = ::android::ipc_connection_token_mgr::get_instance().get_local_listen_address();
+#endif
     bool _hidl_out_success;
 
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwServiceManager::descriptor);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
+#ifdef _MSC_VER
+    _hidl_err = _hidl_data.writeCString( addr.c_str() );
+    _hidl_err = _hidl_data.writeCString( name.c_str() );
+    chain_size = chain.size();
+    _hidl_data.writeInt32( chain_size );
+    for( uint32_t i = 0; i < chain_size; ++i )
+    {
+        _hidl_err = _hidl_data.writeCString( chain[i].c_str());
+    }
 
+#else
     size_t _hidl_name_parent;
 
     _hidl_err = _hidl_data.writeBuffer(&name, sizeof(name), &_hidl_name_parent);
@@ -445,7 +464,7 @@ _hidl_error:
         if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     }
-
+#endif
     ::android::hardware::ProcessState::self()->startThreadPool();
     _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(12 /* addWithChain */, _hidl_data, &_hidl_reply, 0 /* flags */);
     if (_hidl_transact_err != ::android::OK) 
@@ -1051,7 +1070,30 @@ _hidl_error:
     const ::android::hardware::hidl_string* name;
     ::android::sp<::android::hidl::base::V1_0::IBase> service;
     const ::android::hardware::hidl_vec<::android::hardware::hidl_string>* chain;
-
+#ifdef _MSC_VER
+    std::string addr;
+    addr.append( _hidl_data.readCString() );
+    ::android::hardware::hidl_string __name( _hidl_data.readCString() );
+    name = &__name;
+    ::android::hardware::hidl_vec<::android::hardware::hidl_string> __chain;
+    uint32_t chain_size = _hidl_data.readInt32();
+    std::vector<::android::hardware::hidl_string> read_chain;
+    std::string service_totally_name;
+    for( uint32_t i = 0; i < chain_size; ++i )
+    {
+        const char* _c_str = _hidl_data.readCString();
+        read_chain.emplace_back( _c_str );
+        service_totally_name.append( _c_str );
+        service_totally_name.push_back( ::android::ipc_connection_token_mgr::s_name_separator );
+    }
+    __chain = read_chain;
+    chain = &__chain;
+    service_totally_name.append( name->c_str() );
+    std::string connection_name;
+    connection_name = ::android::ipc_connection_token_mgr::get_instance()
+        .get_current_transaction_connection_name();
+    ::android::ipc_connection_token_mgr::get_instance().add_remote_service( service_totally_name, connection_name, addr );
+#else
     size_t _hidl_name_parent;
 
     _hidl_err = _hidl_data.readBuffer(sizeof(*name), &_hidl_name_parent,  reinterpret_cast<const void **>(&name));
@@ -1100,7 +1142,7 @@ _hidl_error:
         if (_hidl_err != ::android::OK) { return _hidl_err; }
 
     }
-
+#endif
     atrace_begin(ATRACE_TAG_HAL, "HIDL::IServiceManager::addWithChain::server");
     #ifdef __ANDROID_DEBUGGABLE__
     if (UNLIKELY(mEnableInstrumentation)) {
@@ -1116,6 +1158,13 @@ _hidl_error:
 
     bool _hidl_out_success = static_cast<IServiceManager*>(_hidl_this->getImpl().get())->addWithChain(*name, service, *chain);
 
+#ifdef _MSC_VER
+    if( !_hidl_out_success )
+    {
+        _hidl_out_success = true;
+        ALOGW( "we ignored the return value of static_cast<IServiceManager*>(_hidl_this->getImpl().get())->addWithChain(*name, service, *chain)" );
+    }
+#endif
     ::android::hardware::writeToParcel(::android::hardware::Status::ok(), _hidl_reply);
 
     _hidl_err = _hidl_reply->writeBool(_hidl_out_success);

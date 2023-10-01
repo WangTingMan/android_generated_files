@@ -14,13 +14,12 @@
 #include <android/hardware/bluetooth/1.0/BpHwBluetoothHci.h>
 #include <android/hidl/base/1.0/BpHwBase.h>
 #include <hidl/ServiceManagement.h>
+#include <utils/AutoHolder.h>
 
 namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace V1_1 {
-
-const char* IBluetoothHci::descriptor("android.hardware.bluetooth@1.1::IBluetoothHci");
 
 __attribute__((constructor)) static void static_constructor() {
     ::android::hardware::details::getBnConstructorMap().set(IBluetoothHci::descriptor,
@@ -36,6 +35,13 @@ __attribute__((constructor)) static void static_constructor() {
 __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IBluetoothHci::descriptor);
     ::android::hardware::details::getBsConstructorMap().erase(IBluetoothHci::descriptor);
+}
+
+static AutoHolder holder( static_constructor, static_destructor );
+
+const char* IBluetoothHci::getDescriptorName()
+{
+    return descriptor;
 }
 
 // Methods from ::android::hardware::bluetooth::V1_0::IBluetoothHci follow.
@@ -266,7 +272,13 @@ _hidl_error:
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     size_t _hidl_data_parent;
-
+#ifdef _MSC_VER
+    {
+        int size = data.size();
+        _hidl_data.writeInt32( size );
+        _hidl_err = _hidl_data.write( data.data(), size);
+    }
+#else
     _hidl_err = _hidl_data.writeBuffer(&data, sizeof(data), &_hidl_data_parent);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
@@ -277,7 +289,7 @@ _hidl_error:
             &_hidl_data,
             _hidl_data_parent,
             0 /* parentOffset */, &_hidl_data_child);
-
+#endif
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(7 /* sendIsoData */, _hidl_data, &_hidl_reply, 0 /* flags */);
@@ -513,7 +525,13 @@ BnHwBluetoothHci::~BnHwBluetoothHci() {
     }
 
     const ::android::hardware::hidl_vec<uint8_t>* data;
-
+#ifdef _MSC_VER
+    int size = _hidl_data.readInt32();
+    ::android::hardware::hidl_vec<uint8_t> __data;
+    __data.resize( size );
+    _hidl_data.read( __data.data(), size );
+    data = &__data;
+#else
     size_t _hidl_data_parent;
 
     _hidl_err = _hidl_data.readBuffer(sizeof(*data), &_hidl_data_parent,  reinterpret_cast<const void **>(&data));
@@ -527,7 +545,7 @@ BnHwBluetoothHci::~BnHwBluetoothHci() {
             _hidl_data,
             _hidl_data_parent,
             0 /* parentOffset */, &_hidl_data_child);
-
+#endif
     if (_hidl_err != ::android::OK) { return _hidl_err; }
 
     atrace_begin(ATRACE_TAG_HAL, "HIDL::IBluetoothHci::sendIsoData::server");

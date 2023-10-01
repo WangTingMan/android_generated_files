@@ -13,6 +13,7 @@
 #include <android/hidl/token/1.0/BsTokenManager.h>
 #include <android/hidl/base/1.0/BpHwBase.h>
 #include <hidl/ServiceManagement.h>
+#include <utils/AutoHolder.h>
 
 namespace android {
 namespace hidl {
@@ -34,6 +35,8 @@ __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(ITokenManager::descriptor);
     ::android::hardware::details::getBsConstructorMap().erase(ITokenManager::descriptor);
 }
+
+static AutoHolder holder( static_constructor, static_destructor );
 
 // Methods from ::android::hidl::token::V1_0::ITokenManager follow.
 // no default implementation for: ::android::hardware::Return<void> ITokenManager::createToken(const ::android::sp<::android::hidl::base::V1_0::IBase>& store, createToken_cb _hidl_cb)

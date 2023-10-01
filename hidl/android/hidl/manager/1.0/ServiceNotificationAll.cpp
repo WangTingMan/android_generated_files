@@ -13,6 +13,7 @@
 #include <android/hidl/manager/1.0/BsServiceNotification.h>
 #include <android/hidl/base/1.0/BpHwBase.h>
 #include <hidl/ServiceManagement.h>
+#include <utils/AutoHolder.h>
 
 namespace android {
 namespace hidl {
@@ -36,6 +37,8 @@ __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IServiceNotification::descriptor);
     ::android::hardware::details::getBsConstructorMap().erase(IServiceNotification::descriptor);
 }
+
+static AutoHolder holder( static_constructor, static_destructor );
 
 // Methods from ::android::hidl::manager::V1_0::IServiceNotification follow.
 // no default implementation for: ::android::hardware::Return<void> IServiceNotification::onRegistration(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name, bool preexisting)

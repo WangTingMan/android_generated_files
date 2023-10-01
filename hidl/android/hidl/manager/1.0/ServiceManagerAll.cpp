@@ -13,6 +13,10 @@
 #include <android/hidl/manager/1.0/BsServiceManager.h>
 #include <android/hidl/base/1.0/BpHwBase.h>
 #include <hidl/ServiceManagement.h>
+#include <utils/AutoHolder.h>
+
+#include <binder_driver/ipc_connection_token.h>
+#include <hwbinder/BpHwBinder.h>
 
 namespace android {
 namespace hidl {
@@ -108,6 +112,8 @@ __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IServiceManager::descriptor);
     ::android::hardware::details::getBsConstructorMap().erase(IServiceManager::descriptor);
 }
+
+static AutoHolder holder( static_constructor, static_destructor );
 
 // Methods from ::android::hidl::manager::V1_0::IServiceManager follow.
 // no default implementation for: ::android::hardware::Return<::android::sp<::android::hidl::base::V1_0::IBase>> IServiceManager::get(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name)
@@ -238,6 +244,10 @@ void BpHwServiceManager::onLastStrongRef(const void* id) {
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwServiceManager::descriptor);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
+#ifdef _MSC_VER
+    _hidl_err = _hidl_data.writeCString( fqName.c_str() );
+    _hidl_err = _hidl_data.writeCString( name.c_str() );
+#else
     size_t _hidl_fqName_parent;
 
     _hidl_err = _hidl_data.writeBuffer(&fqName, sizeof(fqName), &_hidl_fqName_parent);
@@ -261,7 +271,7 @@ void BpHwServiceManager::onLastStrongRef(const void* id) {
             &_hidl_data,
             _hidl_name_parent,
             0 /* parentOffset */);
-
+#endif
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(1 /* get */, _hidl_data, &_hidl_reply, 0 /* flags */);
@@ -275,7 +285,26 @@ void BpHwServiceManager::onLastStrongRef(const void* id) {
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     if (!_hidl_status.isOk()) { return _hidl_status; }
-
+#ifdef _MSC_VER
+    {
+        std::string connection_name( _hidl_reply.readCString() );
+        std::string binder_listen_addr( _hidl_reply.readCString() );
+        if( binder_listen_addr.empty() )
+        {
+            ALOGE( "cannot find such service. fqname: %s, name: %s", fqName.c_str(), name.c_str() );
+            goto _hidl_error;
+        }
+        std::string chain_name( fqName.c_str() );
+        chain_name.push_back( ::android::ipc_connection_token_mgr::s_name_separator );
+        chain_name.append( name );
+        int service_id = 0;
+        service_id = ::android::ipc_connection_token_mgr::get_instance().add_remote_service( chain_name, connection_name, binder_listen_addr );
+        auto binder = ::android::sp<::android::hardware::BpHwBinder>::make( service_id );
+        _hidl_out_service = ::android::hardware::fromBinder<::android::hidl::base::V1_0::IBase,
+            ::android::hidl::base::V1_0::BpHwBase,
+            ::android::hidl::base::V1_0::BnHwBase>( binder );
+    }
+#else
     {
         ::android::sp<::android::hardware::IBinder> _hidl_binder;
         _hidl_err = _hidl_reply.readNullableStrongBinder(&_hidl_binder);
@@ -283,6 +312,7 @@ void BpHwServiceManager::onLastStrongRef(const void* id) {
 
         _hidl_out_service = ::android::hardware::fromBinder<::android::hidl::base::V1_0::IBase,::android::hidl::base::V1_0::BpHwBase,::android::hidl::base::V1_0::BnHwBase>(_hidl_binder);
     }
+#endif
 
     #ifdef __ANDROID_DEBUGGABLE__
     if (UNLIKELY(mEnableInstrumentation)) {
@@ -331,6 +361,9 @@ _hidl_error:
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwServiceManager::descriptor);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
+#ifdef _MSC_VER
+    _hidl_err = _hidl_data.writeCString( name.c_str() );
+#else
     size_t _hidl_name_parent;
 
     _hidl_err = _hidl_data.writeBuffer(&name, sizeof(name), &_hidl_name_parent);
@@ -341,7 +374,7 @@ _hidl_error:
             &_hidl_data,
             _hidl_name_parent,
             0 /* parentOffset */);
-
+#endif
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     if (service == nullptr) {
@@ -413,14 +446,17 @@ _hidl_error:
     ::android::status_t _hidl_err;
     ::android::status_t _hidl_transact_err;
     ::android::hardware::Status _hidl_status;
+    size_t _hidl_fqName_parent = 0;
 
     ::android::hidl::manager::V1_0::IServiceManager::Transport _hidl_out_transport;
 
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwServiceManager::descriptor);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
-    size_t _hidl_fqName_parent;
-
+#ifdef _MSC_VER
+    _hidl_err = _hidl_data.writeCString( fqName.c_str() );
+    _hidl_err = _hidl_data.writeCString( name.c_str() );
+#else
     _hidl_err = _hidl_data.writeBuffer(&fqName, sizeof(fqName), &_hidl_fqName_parent);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
@@ -428,7 +464,7 @@ _hidl_error:
             fqName,
             &_hidl_data,
             _hidl_fqName_parent,
-            0 /* parentOffset */);
+        0 /* parentOffset */ );
 
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
@@ -441,7 +477,8 @@ _hidl_error:
             name,
             &_hidl_data,
             _hidl_name_parent,
-            0 /* parentOffset */);
+        0 /* parentOffset */ );
+#endif
 
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
@@ -591,7 +628,9 @@ _hidl_error:
 
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwServiceManager::descriptor);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
-
+#ifdef _MSC_VER
+    _hidl_err = _hidl_data.writeCString( fqName.c_str() );
+#else
     size_t _hidl_fqName_parent;
 
     _hidl_err = _hidl_data.writeBuffer(&fqName, sizeof(fqName), &_hidl_fqName_parent);
@@ -602,7 +641,7 @@ _hidl_error:
             &_hidl_data,
             _hidl_fqName_parent,
             0 /* parentOffset */);
-
+#endif
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(5 /* listByInterface */, _hidl_data, &_hidl_reply, 0 /* flags */, [&] (::android::hardware::Parcel& _hidl_reply) {
@@ -697,7 +736,10 @@ _hidl_error:
 
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwServiceManager::descriptor);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
-
+#ifdef _MSC_VER
+    _hidl_err = _hidl_data.writeCString( fqName.c_str() );
+    _hidl_err = _hidl_data.writeCString( name.c_str() );
+#else
     size_t _hidl_fqName_parent;
 
     _hidl_err = _hidl_data.writeBuffer(&fqName, sizeof(fqName), &_hidl_fqName_parent);
@@ -721,7 +763,7 @@ _hidl_error:
             &_hidl_data,
             _hidl_name_parent,
             0 /* parentOffset */);
-
+#endif
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     if (callback == nullptr) {
@@ -884,7 +926,10 @@ _hidl_error:
 
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwServiceManager::descriptor);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
-
+#ifdef _MSC_VER
+    _hidl_err = _hidl_data.writeCString( fqName.c_str() );
+    _hidl_err = _hidl_data.writeCString( name.c_str() );
+#else
     size_t _hidl_fqName_parent;
 
     _hidl_err = _hidl_data.writeBuffer(&fqName, sizeof(fqName), &_hidl_fqName_parent);
@@ -908,7 +953,7 @@ _hidl_error:
             &_hidl_data,
             _hidl_name_parent,
             0 /* parentOffset */);
-
+#endif
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(8 /* registerPassthroughClient */, _hidl_data, &_hidl_reply, 0 /* flags */);
@@ -1093,6 +1138,12 @@ BnHwServiceManager::~BnHwServiceManager() {
     const ::android::hardware::hidl_string* fqName;
     const ::android::hardware::hidl_string* name;
 
+#ifdef _MSC_VER
+    ::android::hardware::hidl_string __fqName( _hidl_data.readCString() );
+    ::android::hardware::hidl_string __name( _hidl_data.readCString() );
+    fqName = &__fqName;
+    name = &__name;
+#else
     size_t _hidl_fqName_parent;
 
     _hidl_err = _hidl_data.readBuffer(sizeof(*fqName), &_hidl_fqName_parent,  reinterpret_cast<const void **>(&fqName));
@@ -1118,7 +1169,7 @@ BnHwServiceManager::~BnHwServiceManager() {
             _hidl_data,
             _hidl_name_parent,
             0 /* parentOffset */);
-
+#endif
     if (_hidl_err != ::android::OK) { return _hidl_err; }
 
     atrace_begin(ATRACE_TAG_HAL, "HIDL::IServiceManager::get::server");
@@ -1137,6 +1188,21 @@ BnHwServiceManager::~BnHwServiceManager() {
 
     ::android::hardware::writeToParcel(::android::hardware::Status::ok(), _hidl_reply);
 
+#ifdef _MSC_VER
+    std::vector<std::string> chain_name;
+    chain_name.emplace_back( fqName->c_str() );
+    chain_name.emplace_back( name->c_str() );
+    std::string connection_name;
+    std::string binder_listen_addr;
+    int id = 0;
+    id = ::android::ipc_connection_token_mgr::get_instance().find_remote_service_by_service_name( chain_name, connection_name, binder_listen_addr );
+    if( id < 0 )
+    {
+        ALOGE( "No service register as fqname: %s, name: %s", fqName->c_str(), name->c_str() );
+    }
+    _hidl_reply->writeCString( connection_name.c_str() );
+    _hidl_reply->writeCString( binder_listen_addr.c_str() );
+#else
     if (_hidl_out_service == nullptr) {
         _hidl_err = _hidl_reply->writeStrongBinder(nullptr);
     } else {
@@ -1147,6 +1213,7 @@ BnHwServiceManager::~BnHwServiceManager() {
             _hidl_err = ::android::UNKNOWN_ERROR;
         }
     }
+#endif
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
 _hidl_error:
@@ -1185,6 +1252,19 @@ _hidl_error:
     const ::android::hardware::hidl_string* name;
     ::android::sp<::android::hidl::base::V1_0::IBase> service;
 
+#ifdef _MSC_VER
+    const char* str = _hidl_data.readCString();
+    ::android::hardware::hidl_string __name( str );
+    if( str )
+    {
+        name = &__name;
+    }
+    else
+    {
+        name = nullptr;
+        _hidl_err = ::android::BAD_TYPE;
+    }
+#else
     size_t _hidl_name_parent;
 
     _hidl_err = _hidl_data.readBuffer(sizeof(*name), &_hidl_name_parent,  reinterpret_cast<const void **>(&name));
@@ -1196,6 +1276,7 @@ _hidl_error:
             _hidl_data,
             _hidl_name_parent,
             0 /* parentOffset */);
+#endif
 
     if (_hidl_err != ::android::OK) { return _hidl_err; }
 
@@ -1261,7 +1342,12 @@ _hidl_error:
 
     const ::android::hardware::hidl_string* fqName;
     const ::android::hardware::hidl_string* name;
-
+#ifdef _MSC_VER
+    ::android::hardware::hidl_string __fqName( _hidl_data.readCString() );
+    ::android::hardware::hidl_string __name( _hidl_data.readCString() );
+    fqName = &__fqName;
+    name = &__name;
+#else
     size_t _hidl_fqName_parent;
 
     _hidl_err = _hidl_data.readBuffer(sizeof(*fqName), &_hidl_fqName_parent,  reinterpret_cast<const void **>(&fqName));
@@ -1287,7 +1373,7 @@ _hidl_error:
             _hidl_data,
             _hidl_name_parent,
             0 /* parentOffset */);
-
+#endif
     if (_hidl_err != ::android::OK) { return _hidl_err; }
 
     atrace_begin(ATRACE_TAG_HAL, "HIDL::IServiceManager::getTransport::server");
@@ -1429,7 +1515,19 @@ _hidl_error:
     }
 
     const ::android::hardware::hidl_string* fqName;
-
+#ifdef _MSC_VER
+    const char* str = _hidl_data.readCString();
+    ::android::hardware::hidl_string __name( str );
+    if( str )
+    {
+        fqName = &__name;
+    }
+    else
+    {
+        fqName = nullptr;
+        _hidl_err = ::android::BAD_TYPE;
+    }
+#else
     size_t _hidl_fqName_parent;
 
     _hidl_err = _hidl_data.readBuffer(sizeof(*fqName), &_hidl_fqName_parent,  reinterpret_cast<const void **>(&fqName));
@@ -1441,7 +1539,7 @@ _hidl_error:
             _hidl_data,
             _hidl_fqName_parent,
             0 /* parentOffset */);
-
+#endif
     if (_hidl_err != ::android::OK) { return _hidl_err; }
 
     atrace_begin(ATRACE_TAG_HAL, "HIDL::IServiceManager::listByInterface::server");
@@ -1534,7 +1632,12 @@ _hidl_error:
     const ::android::hardware::hidl_string* fqName;
     const ::android::hardware::hidl_string* name;
     ::android::sp<::android::hidl::manager::V1_0::IServiceNotification> callback;
-
+#ifdef _MSC_VER
+    ::android::hardware::hidl_string __fqName( _hidl_data.readCString() );
+    ::android::hardware::hidl_string __name( _hidl_data.readCString() );
+    fqName = &__fqName;
+    name = &__name;
+#else
     size_t _hidl_fqName_parent;
 
     _hidl_err = _hidl_data.readBuffer(sizeof(*fqName), &_hidl_fqName_parent,  reinterpret_cast<const void **>(&fqName));
@@ -1560,7 +1663,7 @@ _hidl_error:
             _hidl_data,
             _hidl_name_parent,
             0 /* parentOffset */);
-
+#endif
     if (_hidl_err != ::android::OK) { return _hidl_err; }
 
     {
@@ -1712,7 +1815,12 @@ _hidl_error:
 
     const ::android::hardware::hidl_string* fqName;
     const ::android::hardware::hidl_string* name;
-
+#ifdef _MSC_VER
+    ::android::hardware::hidl_string __fqName( _hidl_data.readCString() );
+    ::android::hardware::hidl_string __name( _hidl_data.readCString() );
+    fqName = &__fqName;
+    name = &__name;
+#else
     size_t _hidl_fqName_parent;
 
     _hidl_err = _hidl_data.readBuffer(sizeof(*fqName), &_hidl_fqName_parent,  reinterpret_cast<const void **>(&fqName));
@@ -1738,7 +1846,7 @@ _hidl_error:
             _hidl_data,
             _hidl_name_parent,
             0 /* parentOffset */);
-
+#endif
     if (_hidl_err != ::android::OK) { return _hidl_err; }
 
     atrace_begin(ATRACE_TAG_HAL, "HIDL::IServiceManager::registerPassthroughClient::server");

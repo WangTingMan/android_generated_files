@@ -13,13 +13,15 @@
 #include <android/hardware/bluetooth/1.0/BsBluetoothHci.h>
 #include <android/hidl/base/1.0/BpHwBase.h>
 #include <hidl/ServiceManagement.h>
+#include <utils/AutoHolder.h>
+
+#include <binder_driver/ipc_connection_token.h>
+#include <hwbinder/BpHwBinder.h>
 
 namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace V1_0 {
-
-const char* IBluetoothHci::descriptor("android.hardware.bluetooth@1.0::IBluetoothHci");
 
 __attribute__((constructor)) static void static_constructor() {
     ::android::hardware::details::getBnConstructorMap().set(IBluetoothHci::descriptor,
@@ -35,6 +37,13 @@ __attribute__((constructor)) static void static_constructor() {
 __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IBluetoothHci::descriptor);
     ::android::hardware::details::getBsConstructorMap().erase(IBluetoothHci::descriptor);
+}
+
+static AutoHolder holder( static_constructor, static_destructor );
+
+const char* IBluetoothHci::getDescriptorName()
+{
+    return descriptor;
 }
 
 // Methods from ::android::hardware::bluetooth::V1_0::IBluetoothHci follow.
@@ -178,15 +187,27 @@ void BpHwBluetoothHci::onLastStrongRef(const void* id) {
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwBluetoothHci::descriptor);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
-    if (callback == nullptr) {
+    if( callback == nullptr )
+    {
+#ifdef _MSC_VER
+        char buf[1] = { 0x00 };
+        _hidl_data.writeCString( buf );
+#else
         _hidl_err = _hidl_data.writeStrongBinder(nullptr);
+#endif
     } else {
         ::android::sp<::android::hardware::IBinder> _hidl_binder = ::android::hardware::getOrCreateCachedBinder(callback.get());
+#ifdef _MSC_VER
+        std::string callback_name = details::getDescriptor( callback.get() );
+        ::android::ipc_connection_token_mgr::get_instance().add_local_service( callback_name, _hidl_binder );
+        _hidl_data.writeCString( callback_name.c_str() );
+#else
         if (_hidl_binder.get() != nullptr) {
             _hidl_err = _hidl_data.writeStrongBinder(_hidl_binder);
         } else {
             _hidl_err = ::android::UNKNOWN_ERROR;
         }
+#endif
     }
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
@@ -242,10 +263,15 @@ _hidl_error:
     ::android::status_t _hidl_err;
     ::android::status_t _hidl_transact_err;
     ::android::hardware::Status _hidl_status;
+    int size = 0;
 
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwBluetoothHci::descriptor);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
-
+#ifdef _MSC_VER
+    size = command.size();
+    _hidl_data.writeInt32( size );
+    _hidl_data.write( command.data(), command.size() );
+#else
     size_t _hidl_command_parent;
 
     _hidl_err = _hidl_data.writeBuffer(&command, sizeof(command), &_hidl_command_parent);
@@ -258,7 +284,7 @@ _hidl_error:
             &_hidl_data,
             _hidl_command_parent,
             0 /* parentOffset */, &_hidl_command_child);
-
+#endif
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(2 /* sendHciCommand */, _hidl_data, &_hidl_reply, 0 /* flags */);
@@ -317,7 +343,13 @@ _hidl_error:
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     size_t _hidl_data_parent;
-
+#ifdef _MSC_VER
+    {
+        int size = data.size();
+        _hidl_data.writeInt32( size );
+        _hidl_err = _hidl_data.write( data.data(), size );
+    }
+#else
     _hidl_err = _hidl_data.writeBuffer(&data, sizeof(data), &_hidl_data_parent);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
@@ -328,7 +360,7 @@ _hidl_error:
             &_hidl_data,
             _hidl_data_parent,
             0 /* parentOffset */, &_hidl_data_child);
-
+#endif
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(3 /* sendAclData */, _hidl_data, &_hidl_reply, 0 /* flags */);
@@ -387,7 +419,13 @@ _hidl_error:
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     size_t _hidl_data_parent;
-
+#ifdef _MSC_VER
+    {
+        int size = data.size();
+        _hidl_data.writeInt32( size );
+        _hidl_err = _hidl_data.write( data.data(), size );
+    }
+#else
     _hidl_err = _hidl_data.writeBuffer(&data, sizeof(data), &_hidl_data_parent);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
@@ -398,7 +436,7 @@ _hidl_error:
             &_hidl_data,
             _hidl_data_parent,
             0 /* parentOffset */, &_hidl_data_child);
-
+#endif
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(4 /* sendScoData */, _hidl_data, &_hidl_reply, 0 /* flags */);
@@ -620,10 +658,23 @@ BnHwBluetoothHci::~BnHwBluetoothHci() {
 
     {
         ::android::sp<::android::hardware::IBinder> _hidl_binder;
+#ifdef _MSC_VER
+        std::string call_back_name = _hidl_data.readCString();
+        std::string remote_connection_name;
+        remote_connection_name = ::android::ipc_connection_token_mgr::get_instance()
+            .get_current_transaction_connection_name();
+        int callback_id = 0;
+        callback_id = ::android::ipc_connection_token_mgr::get_instance()
+            .add_remote_callback( call_back_name, remote_connection_name );
+        auto binder = ::android::sp<::android::hardware::BpHwBinder>::make( callback_id );
+        callback = ::android::hardware::fromBinder<::android::hardware::bluetooth::V1_0::IBluetoothHciCallbacks,
+            ::android::hardware::bluetooth::V1_0::BpHwBluetoothHciCallbacks,
+            ::android::hardware::bluetooth::V1_0::BnHwBluetoothHciCallbacks>( binder );
+#else
         _hidl_err = _hidl_data.readNullableStrongBinder(&_hidl_binder);
         if (_hidl_err != ::android::OK) { return _hidl_err; }
-
         callback = ::android::hardware::fromBinder<::android::hardware::bluetooth::V1_0::IBluetoothHciCallbacks,::android::hardware::bluetooth::V1_0::BpHwBluetoothHciCallbacks,::android::hardware::bluetooth::V1_0::BnHwBluetoothHciCallbacks>(_hidl_binder);
+#endif
     }
 
     atrace_begin(ATRACE_TAG_HAL, "HIDL::IBluetoothHci::initialize::server");
@@ -674,7 +725,13 @@ BnHwBluetoothHci::~BnHwBluetoothHci() {
     }
 
     const ::android::hardware::hidl_vec<uint8_t>* command;
-
+#ifdef _MSC_VER
+    ::android::hardware::hidl_vec<uint8_t> _data;
+    int size = _hidl_data.readInt32();
+    _data.resize( size );
+    _hidl_data.read( _data.data(), size );
+    command = &_data;
+#else
     size_t _hidl_command_parent;
 
     _hidl_err = _hidl_data.readBuffer(sizeof(*command), &_hidl_command_parent,  reinterpret_cast<const void **>(&command));
@@ -688,7 +745,7 @@ BnHwBluetoothHci::~BnHwBluetoothHci() {
             _hidl_data,
             _hidl_command_parent,
             0 /* parentOffset */, &_hidl_command_child);
-
+#endif
     if (_hidl_err != ::android::OK) { return _hidl_err; }
 
     atrace_begin(ATRACE_TAG_HAL, "HIDL::IBluetoothHci::sendHciCommand::server");
@@ -739,7 +796,13 @@ BnHwBluetoothHci::~BnHwBluetoothHci() {
     }
 
     const ::android::hardware::hidl_vec<uint8_t>* data;
-
+#ifdef _MSC_VER
+    int size = _hidl_data.readInt32();
+    ::android::hardware::hidl_vec<uint8_t> __data;
+    __data.resize( size );
+    _hidl_data.read( __data.data(), size );
+    data = &__data;
+#else
     size_t _hidl_data_parent;
 
     _hidl_err = _hidl_data.readBuffer(sizeof(*data), &_hidl_data_parent,  reinterpret_cast<const void **>(&data));
@@ -753,7 +816,7 @@ BnHwBluetoothHci::~BnHwBluetoothHci() {
             _hidl_data,
             _hidl_data_parent,
             0 /* parentOffset */, &_hidl_data_child);
-
+#endif
     if (_hidl_err != ::android::OK) { return _hidl_err; }
 
     atrace_begin(ATRACE_TAG_HAL, "HIDL::IBluetoothHci::sendAclData::server");
@@ -804,7 +867,14 @@ BnHwBluetoothHci::~BnHwBluetoothHci() {
     }
 
     const ::android::hardware::hidl_vec<uint8_t>* data;
-
+#ifdef _MSC_VER
+    ::android::hardware::hidl_vec<uint8_t> _data;
+    int size = 0;
+    size = _hidl_data.readInt32();
+    _data.resize( size );
+    _hidl_err = _hidl_data.read( _data.data(), size );
+    data = &_data;
+#else
     size_t _hidl_data_parent;
 
     _hidl_err = _hidl_data.readBuffer(sizeof(*data), &_hidl_data_parent,  reinterpret_cast<const void **>(&data));
@@ -818,7 +888,7 @@ BnHwBluetoothHci::~BnHwBluetoothHci() {
             _hidl_data,
             _hidl_data_parent,
             0 /* parentOffset */, &_hidl_data_child);
-
+#endif
     if (_hidl_err != ::android::OK) { return _hidl_err; }
 
     atrace_begin(ATRACE_TAG_HAL, "HIDL::IBluetoothHci::sendScoData::server");

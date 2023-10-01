@@ -14,13 +14,12 @@
 #include <android/hardware/bluetooth/1.0/BpHwBluetoothHciCallbacks.h>
 #include <android/hidl/base/1.0/BpHwBase.h>
 #include <hidl/ServiceManagement.h>
+#include <utils/AutoHolder.h>
 
 namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace V1_1 {
-
-const char* IBluetoothHciCallbacks::descriptor("android.hardware.bluetooth@1.1::IBluetoothHciCallbacks");
 
 __attribute__((constructor)) static void static_constructor() {
     ::android::hardware::details::getBnConstructorMap().set(IBluetoothHciCallbacks::descriptor,
@@ -37,6 +36,8 @@ __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IBluetoothHciCallbacks::descriptor);
     ::android::hardware::details::getBsConstructorMap().erase(IBluetoothHciCallbacks::descriptor);
 }
+
+static AutoHolder holder( static_constructor, static_destructor );
 
 // Methods from ::android::hardware::bluetooth::V1_0::IBluetoothHciCallbacks follow.
 // no default implementation for: ::android::hardware::Return<void> IBluetoothHciCallbacks::initializationComplete(::android::hardware::bluetooth::V1_0::Status status)

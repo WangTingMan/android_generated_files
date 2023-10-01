@@ -14,6 +14,7 @@
 #include <android/hardware/bluetooth/audio/2.0/BsBluetoothAudioPort.h>
 #include <android/hidl/base/1.0/BpHwBase.h>
 #include <hidl/ServiceManagement.h>
+#include <utils/AutoHolder.h>
 
 namespace android {
 namespace hardware {

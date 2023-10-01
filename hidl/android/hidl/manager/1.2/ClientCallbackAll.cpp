@@ -13,6 +13,7 @@
 #include <android/hidl/manager/1.2/BsClientCallback.h>
 #include <android/hidl/base/1.0/BpHwBase.h>
 #include <hidl/ServiceManagement.h>
+#include <utils/AutoHolder.h>
 
 namespace android {
 namespace hidl {
@@ -36,6 +37,8 @@ __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IClientCallback::descriptor);
     ::android::hardware::details::getBsConstructorMap().erase(IClientCallback::descriptor);
 }
+
+static AutoHolder holder( static_constructor, static_destructor );
 
 // Methods from ::android::hidl::manager::V1_2::IClientCallback follow.
 // no default implementation for: ::android::hardware::Return<void> IClientCallback::onClients(const ::android::sp<::android::hidl::base::V1_0::IBase>& registered, bool hasClients)
