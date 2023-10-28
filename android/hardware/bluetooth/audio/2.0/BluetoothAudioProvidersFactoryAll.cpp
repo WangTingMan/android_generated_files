@@ -21,8 +21,6 @@ namespace bluetooth {
 namespace audio {
 namespace V2_0 {
 
-const char* IBluetoothAudioProvidersFactory::descriptor("android.hardware.bluetooth.audio@2.0::IBluetoothAudioProvidersFactory");
-
 __attribute__((constructor)) static void static_constructor() {
     ::android::hardware::details::getBnConstructorMap().set(IBluetoothAudioProvidersFactory::descriptor,
             [](void *iIntf) -> ::android::sp<::android::hardware::IBinder> {
@@ -670,7 +668,7 @@ bool IBluetoothAudioProvidersFactory::registerForNotifications(
     return success.isOk() && success;
 }
 
-static_assert(sizeof(::android::hardware::MQDescriptor<char, ::android::hardware::kSynchronizedReadWrite>) == 32, "wrong size");
+static_assert(sizeof(::android::hardware::MQDescriptor<char, ::android::hardware::kSynchronizedReadWrite>) == 32 + sizeof( std::string ), "wrong size");
 static_assert(sizeof(::android::hardware::hidl_handle) == 16, "wrong size");
 static_assert(sizeof(::android::hardware::hidl_memory) == 40, "wrong size");
 static_assert(sizeof(::android::hardware::hidl_string) == 16, "wrong size");

@@ -551,7 +551,7 @@ const ::android::hardware::audio::common::V5_0::DeviceAddress& (::android::hardw
     return _hidl_err;
 }
 
-static_assert(sizeof(::android::hardware::MQDescriptor<char, ::android::hardware::kSynchronizedReadWrite>) == 32, "wrong size");
+static_assert(sizeof(::android::hardware::MQDescriptor<char, ::android::hardware::kSynchronizedReadWrite>) == 32 + sizeof( std::string ), "wrong size");
 static_assert(sizeof(::android::hardware::hidl_handle) == 16, "wrong size");
 static_assert(sizeof(::android::hardware::hidl_memory) == 40, "wrong size");
 static_assert(sizeof(::android::hardware::hidl_string) == 16, "wrong size");

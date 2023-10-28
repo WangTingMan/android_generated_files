@@ -1358,7 +1358,7 @@ BsBase::BsBase(const ::android::sp<::android::hidl::base::V1_0::IBase> impl) : :
 }
 
 // skipped getService, registerAsService, registerForNotifications
-static_assert(sizeof(::android::hardware::MQDescriptor<char, ::android::hardware::kSynchronizedReadWrite>) == 32, "wrong size");
+static_assert(sizeof(::android::hardware::MQDescriptor<char, ::android::hardware::kSynchronizedReadWrite>) == 32 + sizeof(std::string), "wrong size" );
 static_assert(sizeof(::android::hardware::hidl_handle) == 16, "wrong size");
 static_assert(sizeof(::android::hardware::hidl_memory) == 40, "wrong size");
 static_assert(sizeof(::android::hardware::hidl_string) == 16, "wrong size");

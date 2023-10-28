@@ -41,7 +41,12 @@ struct ANDROIDHARDWAREBLUETOOTHAUDIO21_EXPORTS IBluetoothAudioProvidersFactory :
     /**
      * Fully qualified interface name: "android.hardware.bluetooth.audio@2.1::IBluetoothAudioProvidersFactory"
      */
-    static const char* descriptor;
+    static constexpr const char* descriptor = "android.hardware.bluetooth.audio@2.1::IBluetoothAudioProvidersFactory";
+
+    static const char* getDescriptorName()
+    {
+        return descriptor;
+    }
 
     /**
      * Returns whether this object's implementation is outside of the current process.
