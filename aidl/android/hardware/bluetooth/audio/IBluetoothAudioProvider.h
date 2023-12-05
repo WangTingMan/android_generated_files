@@ -41,6 +41,13 @@ public:
   static binder_status_t readFromParcel(const AParcel* parcel, std::shared_ptr<IBluetoothAudioProvider>* instance);
   static bool setDefaultImpl(const std::shared_ptr<IBluetoothAudioProvider>& impl);
   static const std::shared_ptr<IBluetoothAudioProvider>& getDefaultImpl();
+
+protected:
+
+  /**
+  * MSVC cannot route right virtual function here( Maybe a BUG? )
+  * So please invoke function with prefix invoke_
+  */
   virtual ::ndk::ScopedAStatus endSession() = 0;
   virtual ::ndk::ScopedAStatus startSession(const std::shared_ptr<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioPort>& in_hostIf, const ::aidl::android::hardware::bluetooth::audio::AudioConfiguration& in_audioConfig, const std::vector<::aidl::android::hardware::bluetooth::audio::LatencyMode>& in_supportedLatencyModes, ::aidl::android::hardware::common::fmq::MQDescriptor<int8_t, ::aidl::android::hardware::common::fmq::SynchronizedReadWrite>* _aidl_return) = 0;
   virtual ::ndk::ScopedAStatus streamStarted(::aidl::android::hardware::bluetooth::audio::BluetoothAudioStatus in_status) = 0;
@@ -49,6 +56,100 @@ public:
   virtual ::ndk::ScopedAStatus setLowLatencyModeAllowed(bool in_allowed) = 0;
   virtual ::ndk::ScopedAStatus getInterfaceVersion(int32_t* _aidl_return) = 0;
   virtual ::ndk::ScopedAStatus getInterfaceHash(std::string* _aidl_return) = 0;
+
+public:
+
+#ifdef _MSC_VER
+  ::ndk::ScopedAStatus invoke_endSession()
+  {
+      return endSession();
+  }
+
+  ::ndk::ScopedAStatus invoke_startSession( const std::shared_ptr<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioPort>& in_hostIf,
+                                            const ::aidl::android::hardware::bluetooth::audio::AudioConfiguration& in_audioConfig,
+                                            const std::vector<::aidl::android::hardware::bluetooth::audio::LatencyMode>& in_supportedLatencyModes,
+                                            ::aidl::android::hardware::common::fmq::MQDescriptor<int8_t, ::aidl::android::hardware::common::fmq::SynchronizedReadWrite>* _aidl_return
+                                          )
+  {
+      if( m_startSession )
+      {
+          return m_startSession( in_hostIf, in_audioConfig, in_supportedLatencyModes, _aidl_return );
+      }
+
+      return startSession( in_hostIf, in_audioConfig, in_supportedLatencyModes, _aidl_return );
+  }
+
+  ::ndk::ScopedAStatus invoke_streamStarted( ::aidl::android::hardware::bluetooth::audio::BluetoothAudioStatus in_status )
+  {
+      if( m_streamStarted )
+      {
+          return m_streamStarted( in_status );
+      }
+      return streamStarted( in_status );
+  }
+
+  ::ndk::ScopedAStatus invoke_streamSuspended( ::aidl::android::hardware::bluetooth::audio::BluetoothAudioStatus in_status )
+  {
+      if( m_streamSuspended )
+      {
+          return m_streamSuspended( in_status );
+      }
+      return streamSuspended( in_status );
+  }
+
+  ::ndk::ScopedAStatus invoke_updateAudioConfiguration( const ::aidl::android::hardware::bluetooth::audio::AudioConfiguration& in_audioConfig )
+  {
+      if( m_updateAudioConfiguration )
+      {
+          return m_updateAudioConfiguration( in_audioConfig );
+      }
+      return updateAudioConfiguration( in_audioConfig );
+  }
+
+  ::ndk::ScopedAStatus invoke_setLowLatencyModeAllowed( bool in_allowed )
+  {
+      if( m_setLowLatencyModeAllowed )
+      {
+          return m_setLowLatencyModeAllowed( in_allowed );
+      }
+      return setLowLatencyModeAllowed( in_allowed );
+  }
+
+  ::ndk::ScopedAStatus invoke_getInterfaceVersion( int32_t* _aidl_return )
+  {
+      if( m_getInterfaceVersion )
+      {
+          return m_getInterfaceVersion( _aidl_return );
+      }
+      return getInterfaceVersion( _aidl_return );
+  }
+
+  ::ndk::ScopedAStatus invoke_getInterfaceHash( std::string* _aidl_return )
+  {
+      if( m_getInterfaceHash )
+      {
+          return m_getInterfaceHash( _aidl_return );
+      }
+      return getInterfaceHash( _aidl_return );
+  }
+
+protected:
+
+    std::function<::ndk::ScopedAStatus()> m_endSession;
+    std::function<::ndk::ScopedAStatus(
+        const std::shared_ptr<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioPort>&,
+        const ::aidl::android::hardware::bluetooth::audio::AudioConfiguration&,
+        const std::vector<::aidl::android::hardware::bluetooth::audio::LatencyMode>&,
+        ::aidl::android::hardware::common::fmq::MQDescriptor<int8_t, ::aidl::android::hardware::common::fmq::SynchronizedReadWrite>*
+        )> m_startSession;
+    std::function<::ndk::ScopedAStatus( ::aidl::android::hardware::bluetooth::audio::BluetoothAudioStatus )> m_streamStarted;
+    std::function<::ndk::ScopedAStatus( ::aidl::android::hardware::bluetooth::audio::BluetoothAudioStatus )> m_streamSuspended;
+    std::function<::ndk::ScopedAStatus( const ::aidl::android::hardware::bluetooth::audio::AudioConfiguration& )> m_updateAudioConfiguration;
+    std::function<::ndk::ScopedAStatus( bool )> m_setLowLatencyModeAllowed;
+    std::function<::ndk::ScopedAStatus( int32_t* )> m_getInterfaceVersion;
+    std::function<::ndk::ScopedAStatus( std::string* )> m_getInterfaceHash;
+#endif
+
 private:
   static std::shared_ptr<IBluetoothAudioProvider> default_impl;
 };

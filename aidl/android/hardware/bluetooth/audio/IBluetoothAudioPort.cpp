@@ -483,9 +483,21 @@ BpBluetoothAudioPort::~BpBluetoothAudioPort() {}
   return _aidl_status;
 }
 // Source for BnBluetoothAudioPort
-BnBluetoothAudioPort::BnBluetoothAudioPort() {}
+BnBluetoothAudioPort::BnBluetoothAudioPort()
+{
+#ifdef _MSC_VER
+    setBinderCreater( std::bind( &BnBluetoothAudioPort::createBinder_impl, this ) );
+#endif
+}
+
 BnBluetoothAudioPort::~BnBluetoothAudioPort() {}
-::ndk::SpAIBinder BnBluetoothAudioPort::createBinder() {
+
+::ndk::SpAIBinder BnBluetoothAudioPort::createBinder()
+{
+    return createBinder_impl();
+}
+
+::ndk::SpAIBinder BnBluetoothAudioPort::createBinder_impl() {
   AIBinder* binder = AIBinder_new(_g_aidl_android_hardware_bluetooth_audio_IBluetoothAudioPort_clazz, static_cast<void*>(this));
   #ifdef BINDER_STABILITY_SUPPORT
   AIBinder_markVintfStability(binder);

@@ -24,6 +24,11 @@ public:
   ::ndk::ScopedAStatus getInterfaceHash(std::string* _aidl_return) final;
 protected:
   ::ndk::SpAIBinder createBinder() override;
+
+#ifdef _MSC_VER
+  ::ndk::SpAIBinder createBinder_impl();
+#endif
+
 private:
 };
 class ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS_API IBluetoothAudioPortDelegator : public BnBluetoothAudioPort {

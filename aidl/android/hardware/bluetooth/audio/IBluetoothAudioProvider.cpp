@@ -20,7 +20,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
   switch (_aidl_code) {
     case (FIRST_CALL_TRANSACTION + 0 /*endSession*/): {
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->endSession();
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->invoke_endSession();
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -43,7 +43,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_supportedLatencyModes);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->startSession(in_hostIf, in_audioConfig, in_supportedLatencyModes, &_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->invoke_startSession(in_hostIf, in_audioConfig, in_supportedLatencyModes, &_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -60,7 +60,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_status);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->streamStarted(in_status);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->invoke_streamStarted(in_status);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -74,7 +74,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_status);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->streamSuspended(in_status);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->invoke_streamSuspended(in_status);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -88,7 +88,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_audioConfig);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->updateAudioConfiguration(in_audioConfig);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->invoke_updateAudioConfiguration(in_audioConfig);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -102,7 +102,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_allowed);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->setLowLatencyModeAllowed(in_allowed);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->invoke_setLowLatencyModeAllowed(in_allowed);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -113,7 +113,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
     case (FIRST_CALL_TRANSACTION + 16777214 /*getInterfaceVersion*/): {
       int32_t _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceVersion(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->invoke_getInterfaceVersion(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -127,7 +127,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
     case (FIRST_CALL_TRANSACTION + 16777213 /*getInterfaceHash*/): {
       std::string _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceHash(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->invoke_getInterfaceHash(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -144,10 +144,66 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
 
 static AIBinder_Class* _g_aidl_android_hardware_bluetooth_audio_IBluetoothAudioProvider_clazz = ::ndk::ICInterface::defineClass(IBluetoothAudioProvider::descriptor, _aidl_android_hardware_bluetooth_audio_IBluetoothAudioProvider_onTransact);
 
-BpBluetoothAudioProvider::BpBluetoothAudioProvider(const ::ndk::SpAIBinder& binder) : BpCInterface(binder) {}
+BpBluetoothAudioProvider::BpBluetoothAudioProvider(const ::ndk::SpAIBinder& binder) : BpCInterface(binder)
+{
+    /**
+    * MSVC cannot route right virtual function here( Maybe a BUG? )
+    * So please invoke function with prefix invoke_
+    */
+    m_endSession = std::bind( &BpBluetoothAudioProvider::endSession_impl, this );
+    m_startSession = std::bind( &BpBluetoothAudioProvider::startSession_impl, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+    m_streamStarted = std::bind( &BpBluetoothAudioProvider::streamStarted_impl, this, std::placeholders::_1 );
+    m_streamSuspended = std::bind( &BpBluetoothAudioProvider::streamSuspended_impl, this, std::placeholders::_1 );
+    m_updateAudioConfiguration = std::bind( &BpBluetoothAudioProvider::updateAudioConfiguration_impl, this, std::placeholders::_1 );
+    m_setLowLatencyModeAllowed = std::bind( &BpBluetoothAudioProvider::setLowLatencyModeAllowed_impl, this, std::placeholders::_1 );
+    m_getInterfaceVersion = std::bind( &BpBluetoothAudioProvider::getInterfaceVersion_impl, this, std::placeholders::_1 );
+    m_getInterfaceHash = std::bind( &BpBluetoothAudioProvider::getInterfaceHash_impl, this, std::placeholders::_1 );
+}
+
 BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
 
-::ndk::ScopedAStatus BpBluetoothAudioProvider::endSession() {
+#ifdef _MSC_VER
+::ndk::ScopedAStatus BpBluetoothAudioProvider::endSession()
+{
+    return endSession_impl();
+}
+::ndk::ScopedAStatus BpBluetoothAudioProvider::startSession
+    (
+    const std::shared_ptr<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioPort>& in_hostIf,
+    const ::aidl::android::hardware::bluetooth::audio::AudioConfiguration& in_audioConfig,
+    const std::vector<::aidl::android::hardware::bluetooth::audio::LatencyMode>& in_supportedLatencyModes,
+    ::aidl::android::hardware::common::fmq::MQDescriptor<int8_t, ::aidl::android::hardware::common::fmq::SynchronizedReadWrite>* _aidl_return
+    )
+{
+    return startSession_impl( in_hostIf, in_audioConfig, in_supportedLatencyModes, _aidl_return );
+}
+::ndk::ScopedAStatus BpBluetoothAudioProvider::streamStarted( ::aidl::android::hardware::bluetooth::audio::BluetoothAudioStatus in_status )
+{
+    return streamStarted_impl( in_status );
+}
+::ndk::ScopedAStatus BpBluetoothAudioProvider::streamSuspended( ::aidl::android::hardware::bluetooth::audio::BluetoothAudioStatus in_status )
+{
+    return streamSuspended_impl( in_status );
+}
+::ndk::ScopedAStatus BpBluetoothAudioProvider::updateAudioConfiguration( const ::aidl::android::hardware::bluetooth::audio::AudioConfiguration& in_audioConfig )
+{
+    return updateAudioConfiguration_impl( in_audioConfig );
+}
+::ndk::ScopedAStatus BpBluetoothAudioProvider::setLowLatencyModeAllowed( bool in_allowed )
+{
+    return setLowLatencyModeAllowed_impl( in_allowed );
+}
+::ndk::ScopedAStatus BpBluetoothAudioProvider::getInterfaceVersion( int32_t* _aidl_return )
+{
+    return getInterfaceVersion_impl( _aidl_return );
+}
+::ndk::ScopedAStatus BpBluetoothAudioProvider::getInterfaceHash( std::string* _aidl_return )
+{
+    return getInterfaceHash_impl( _aidl_return );
+}
+#endif
+
+::ndk::ScopedAStatus BpBluetoothAudioProvider::endSession_impl() {
   binder_status_t _aidl_ret_status = STATUS_OK;
   ::ndk::ScopedAStatus _aidl_status;
   ::ndk::ScopedAParcel _aidl_in;
@@ -167,7 +223,7 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
     #endif  // BINDER_STABILITY_SUPPORT
     );
   if (_aidl_ret_status == STATUS_UNKNOWN_TRANSACTION && IBluetoothAudioProvider::getDefaultImpl()) {
-    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->endSession();
+    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->invoke_endSession();
     goto _aidl_status_return;
   }
   if (_aidl_ret_status != STATUS_OK) goto _aidl_error;
@@ -181,7 +237,7 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
   _aidl_status_return:
   return _aidl_status;
 }
-::ndk::ScopedAStatus BpBluetoothAudioProvider::startSession(const std::shared_ptr<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioPort>& in_hostIf, const ::aidl::android::hardware::bluetooth::audio::AudioConfiguration& in_audioConfig, const std::vector<::aidl::android::hardware::bluetooth::audio::LatencyMode>& in_supportedLatencyModes, ::aidl::android::hardware::common::fmq::MQDescriptor<int8_t, ::aidl::android::hardware::common::fmq::SynchronizedReadWrite>* _aidl_return) {
+::ndk::ScopedAStatus BpBluetoothAudioProvider::startSession_impl(const std::shared_ptr<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioPort>& in_hostIf, const ::aidl::android::hardware::bluetooth::audio::AudioConfiguration& in_audioConfig, const std::vector<::aidl::android::hardware::bluetooth::audio::LatencyMode>& in_supportedLatencyModes, ::aidl::android::hardware::common::fmq::MQDescriptor<int8_t, ::aidl::android::hardware::common::fmq::SynchronizedReadWrite>* _aidl_return) {
   binder_status_t _aidl_ret_status = STATUS_OK;
   ::ndk::ScopedAStatus _aidl_status;
   ::ndk::ScopedAParcel _aidl_in;
@@ -210,7 +266,7 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
     #endif  // BINDER_STABILITY_SUPPORT
     );
   if (_aidl_ret_status == STATUS_UNKNOWN_TRANSACTION && IBluetoothAudioProvider::getDefaultImpl()) {
-    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->startSession(in_hostIf, in_audioConfig, in_supportedLatencyModes, _aidl_return);
+    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->invoke_startSession(in_hostIf, in_audioConfig, in_supportedLatencyModes, _aidl_return);
     goto _aidl_status_return;
   }
   if (_aidl_ret_status != STATUS_OK) goto _aidl_error;
@@ -227,7 +283,7 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
   _aidl_status_return:
   return _aidl_status;
 }
-::ndk::ScopedAStatus BpBluetoothAudioProvider::streamStarted(::aidl::android::hardware::bluetooth::audio::BluetoothAudioStatus in_status) {
+::ndk::ScopedAStatus BpBluetoothAudioProvider::streamStarted_impl(::aidl::android::hardware::bluetooth::audio::BluetoothAudioStatus in_status) {
   binder_status_t _aidl_ret_status = STATUS_OK;
   ::ndk::ScopedAStatus _aidl_status;
   ::ndk::ScopedAParcel _aidl_in;
@@ -250,7 +306,7 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
     #endif  // BINDER_STABILITY_SUPPORT
     );
   if (_aidl_ret_status == STATUS_UNKNOWN_TRANSACTION && IBluetoothAudioProvider::getDefaultImpl()) {
-    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->streamStarted(in_status);
+    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->invoke_streamStarted(in_status);
     goto _aidl_status_return;
   }
   if (_aidl_ret_status != STATUS_OK) goto _aidl_error;
@@ -264,7 +320,7 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
   _aidl_status_return:
   return _aidl_status;
 }
-::ndk::ScopedAStatus BpBluetoothAudioProvider::streamSuspended(::aidl::android::hardware::bluetooth::audio::BluetoothAudioStatus in_status) {
+::ndk::ScopedAStatus BpBluetoothAudioProvider::streamSuspended_impl(::aidl::android::hardware::bluetooth::audio::BluetoothAudioStatus in_status) {
   binder_status_t _aidl_ret_status = STATUS_OK;
   ::ndk::ScopedAStatus _aidl_status;
   ::ndk::ScopedAParcel _aidl_in;
@@ -287,7 +343,7 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
     #endif  // BINDER_STABILITY_SUPPORT
     );
   if (_aidl_ret_status == STATUS_UNKNOWN_TRANSACTION && IBluetoothAudioProvider::getDefaultImpl()) {
-    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->streamSuspended(in_status);
+    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->invoke_streamSuspended(in_status);
     goto _aidl_status_return;
   }
   if (_aidl_ret_status != STATUS_OK) goto _aidl_error;
@@ -301,7 +357,7 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
   _aidl_status_return:
   return _aidl_status;
 }
-::ndk::ScopedAStatus BpBluetoothAudioProvider::updateAudioConfiguration(const ::aidl::android::hardware::bluetooth::audio::AudioConfiguration& in_audioConfig) {
+::ndk::ScopedAStatus BpBluetoothAudioProvider::updateAudioConfiguration_impl(const ::aidl::android::hardware::bluetooth::audio::AudioConfiguration& in_audioConfig) {
   binder_status_t _aidl_ret_status = STATUS_OK;
   ::ndk::ScopedAStatus _aidl_status;
   ::ndk::ScopedAParcel _aidl_in;
@@ -324,7 +380,7 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
     #endif  // BINDER_STABILITY_SUPPORT
     );
   if (_aidl_ret_status == STATUS_UNKNOWN_TRANSACTION && IBluetoothAudioProvider::getDefaultImpl()) {
-    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->updateAudioConfiguration(in_audioConfig);
+    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->invoke_updateAudioConfiguration(in_audioConfig);
     goto _aidl_status_return;
   }
   if (_aidl_ret_status != STATUS_OK) goto _aidl_error;
@@ -338,7 +394,7 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
   _aidl_status_return:
   return _aidl_status;
 }
-::ndk::ScopedAStatus BpBluetoothAudioProvider::setLowLatencyModeAllowed(bool in_allowed) {
+::ndk::ScopedAStatus BpBluetoothAudioProvider::setLowLatencyModeAllowed_impl(bool in_allowed) {
   binder_status_t _aidl_ret_status = STATUS_OK;
   ::ndk::ScopedAStatus _aidl_status;
   ::ndk::ScopedAParcel _aidl_in;
@@ -361,7 +417,7 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
     #endif  // BINDER_STABILITY_SUPPORT
     );
   if (_aidl_ret_status == STATUS_UNKNOWN_TRANSACTION && IBluetoothAudioProvider::getDefaultImpl()) {
-    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->setLowLatencyModeAllowed(in_allowed);
+    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->invoke_setLowLatencyModeAllowed(in_allowed);
     goto _aidl_status_return;
   }
   if (_aidl_ret_status != STATUS_OK) goto _aidl_error;
@@ -375,7 +431,7 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
   _aidl_status_return:
   return _aidl_status;
 }
-::ndk::ScopedAStatus BpBluetoothAudioProvider::getInterfaceVersion(int32_t* _aidl_return) {
+::ndk::ScopedAStatus BpBluetoothAudioProvider::getInterfaceVersion_impl(int32_t* _aidl_return) {
   binder_status_t _aidl_ret_status = STATUS_OK;
   ::ndk::ScopedAStatus _aidl_status;
   if (_aidl_cached_version != -1) {
@@ -400,7 +456,7 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
     #endif  // BINDER_STABILITY_SUPPORT
     );
   if (_aidl_ret_status == STATUS_UNKNOWN_TRANSACTION && IBluetoothAudioProvider::getDefaultImpl()) {
-    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->getInterfaceVersion(_aidl_return);
+    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->invoke_getInterfaceVersion(_aidl_return);
     goto _aidl_status_return;
   }
   if (_aidl_ret_status != STATUS_OK) goto _aidl_error;
@@ -418,7 +474,7 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
   _aidl_status_return:
   return _aidl_status;
 }
-::ndk::ScopedAStatus BpBluetoothAudioProvider::getInterfaceHash(std::string* _aidl_return) {
+::ndk::ScopedAStatus BpBluetoothAudioProvider::getInterfaceHash_impl(std::string* _aidl_return) {
   binder_status_t _aidl_ret_status = STATUS_OK;
   ::ndk::ScopedAStatus _aidl_status;
   const std::lock_guard<std::mutex> lock(_aidl_cached_hash_mutex);
@@ -444,7 +500,7 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
     #endif  // BINDER_STABILITY_SUPPORT
     );
   if (_aidl_ret_status == STATUS_UNKNOWN_TRANSACTION && IBluetoothAudioProvider::getDefaultImpl()) {
-    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->getInterfaceHash(_aidl_return);
+    _aidl_status = IBluetoothAudioProvider::getDefaultImpl()->invoke_getInterfaceHash(_aidl_return);
     goto _aidl_status_return;
   }
   if (_aidl_ret_status != STATUS_OK) goto _aidl_error;
@@ -463,10 +519,23 @@ BpBluetoothAudioProvider::~BpBluetoothAudioProvider() {}
   return _aidl_status;
 }
 // Source for BnBluetoothAudioProvider
-BnBluetoothAudioProvider::BnBluetoothAudioProvider() {}
+BnBluetoothAudioProvider::BnBluetoothAudioProvider() {
+#ifdef _MSC_VER
+    setBinderCreater( std::bind(&BnBluetoothAudioProvider::createBinder_impl, this) );
+#endif
+}
+
 BnBluetoothAudioProvider::~BnBluetoothAudioProvider() {}
+#ifdef _MSC_VER
 ::ndk::SpAIBinder BnBluetoothAudioProvider::createBinder() {
-  AIBinder* binder = AIBinder_new(_g_aidl_android_hardware_bluetooth_audio_IBluetoothAudioProvider_clazz, static_cast<void*>(this));
+    return createBinder_impl();
+}
+
+::ndk::SpAIBinder BnBluetoothAudioProvider::createBinder_impl() {
+#else
+::ndk::SpAIBinder BnBluetoothAudioProvider::createBinder() {
+#endif
+    AIBinder* binder = AIBinder_new(_g_aidl_android_hardware_bluetooth_audio_IBluetoothAudioProvider_clazz, static_cast<void*>(this));
   #ifdef BINDER_STABILITY_SUPPORT
   AIBinder_markVintfStability(binder);
   #endif  // BINDER_STABILITY_SUPPORT

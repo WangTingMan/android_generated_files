@@ -23,6 +23,22 @@ public:
   int32_t _aidl_cached_version = -1;
   std::string _aidl_cached_hash = "-1";
   std::mutex _aidl_cached_hash_mutex;
+
+#ifdef _MSC_VER
+  ::ndk::ScopedAStatus getProviderCapabilities_impl
+        (
+        ::aidl::android::hardware::bluetooth::audio::SessionType in_sessionType,
+        std::vector<::aidl::android::hardware::bluetooth::audio::AudioCapabilities>* _aidl_return
+        );
+  ::ndk::ScopedAStatus openProvider_impl
+        (
+        ::aidl::android::hardware::bluetooth::audio::SessionType in_sessionType,
+        std::shared_ptr<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider>* _aidl_return
+        );
+  ::ndk::ScopedAStatus getInterfaceVersion_impl( int32_t* _aidl_return );
+  ::ndk::ScopedAStatus getInterfaceHash_impl( std::string* _aidl_return );
+#endif
+
 };
 }  // namespace audio
 }  // namespace bluetooth

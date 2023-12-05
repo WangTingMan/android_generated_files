@@ -20,11 +20,14 @@ class ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS_API BnBluetoothAudioProviderFac
 public:
   BnBluetoothAudioProviderFactory();
   virtual ~BnBluetoothAudioProviderFactory();
+  void SetBinderCreater();
+public:
   ::ndk::ScopedAStatus getInterfaceVersion(int32_t* _aidl_return) final;
   ::ndk::ScopedAStatus getInterfaceHash(std::string* _aidl_return) final;
 protected:
   ::ndk::SpAIBinder createBinder() override;
 private:
+    ::ndk::SpAIBinder createBinderImpl();
 };
 class ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS_API IBluetoothAudioProviderFactoryDelegator : public BnBluetoothAudioProviderFactory {
 public:

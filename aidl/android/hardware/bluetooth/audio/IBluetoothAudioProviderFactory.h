@@ -38,6 +38,57 @@ public:
   virtual ::ndk::ScopedAStatus openProvider(::aidl::android::hardware::bluetooth::audio::SessionType in_sessionType, std::shared_ptr<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider>* _aidl_return) = 0;
   virtual ::ndk::ScopedAStatus getInterfaceVersion(int32_t* _aidl_return) = 0;
   virtual ::ndk::ScopedAStatus getInterfaceHash(std::string* _aidl_return) = 0;
+
+#ifdef _MSC_VER
+  ::ndk::ScopedAStatus invoke_getProviderCapabilities( ::aidl::android::hardware::bluetooth::audio::SessionType in_sessionType, std::vector<::aidl::android::hardware::bluetooth::audio::AudioCapabilities>* _aidl_return )
+  {
+      if( mInvokeOpenProvider )
+      {
+          return mGetProviderCapabilities( in_sessionType, _aidl_return );
+      }
+      return getProviderCapabilities( in_sessionType, _aidl_return );
+  }
+
+  ::ndk::ScopedAStatus invoke_openProvider( ::aidl::android::hardware::bluetooth::audio::SessionType in_sessionType, std::shared_ptr<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider>* _aidl_return )
+  {
+      if( mInvokeOpenProvider )
+      {
+          return mInvokeOpenProvider( in_sessionType, _aidl_return );
+      }
+      return openProvider( in_sessionType, _aidl_return );
+  }
+
+  ::ndk::ScopedAStatus invoke_getInterfaceVersion( int32_t* _aidl_return )
+  {
+      if( mGetInterfaceVersion )
+      {
+          return mGetInterfaceVersion( _aidl_return );
+      }
+      return getInterfaceVersion( _aidl_return );
+  }
+
+  ::ndk::ScopedAStatus invoke_getInterfaceHash( std::string* _aidl_return )
+  {
+      if( mGetInterfaceHash )
+      {
+          return mGetInterfaceHash( _aidl_return );
+      }
+      return getInterfaceHash( _aidl_return );
+  }
+
+protected:
+
+    std::function <::ndk::ScopedAStatus( ::aidl::android::hardware::bluetooth::audio::SessionType,
+                                         std::shared_ptr<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider>*
+                                       )> mInvokeOpenProvider;
+    std::function <::ndk::ScopedAStatus( ::aidl::android::hardware::bluetooth::audio::SessionType,
+                                         std::vector<::aidl::android::hardware::bluetooth::audio::AudioCapabilities>*
+                                       )> mGetProviderCapabilities;
+    std::function <::ndk::ScopedAStatus( int32_t* )> mGetInterfaceVersion;
+    std::function <::ndk::ScopedAStatus( std::string* )> mGetInterfaceHash;
+
+#endif
+
 private:
   static std::shared_ptr<IBluetoothAudioProviderFactory> default_impl;
 };
