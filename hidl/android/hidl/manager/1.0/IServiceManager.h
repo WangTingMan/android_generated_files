@@ -52,6 +52,10 @@ struct LIBHIDL_EXPORT IServiceManager : public ::android::hidl::base::V1_0::IBas
     enum class PidConstant : int32_t;
     struct InstanceDebugInfo;
 
+#ifdef PASSTHROUGH
+#undef PASSTHROUGH
+#endif
+
     enum class Transport : uint8_t {
         EMPTY = 0,
         HWBINDER = 1 /* ::android::hidl::manager::V1_0::IServiceManager::Transport.EMPTY implicitly + 1 */,
