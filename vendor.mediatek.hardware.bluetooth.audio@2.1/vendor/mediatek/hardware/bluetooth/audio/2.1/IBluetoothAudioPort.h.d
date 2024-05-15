@@ -1,0 +1,12 @@
+vendor/mediatek/hardware/bluetooth/audio/2.1/types.h: \
+  hardware/interfaces/audio/common/5.0/types.hal \
+  hardware/interfaces/current.txt \
+  system/libhidl/transport/base/1.0/IBase.hal \
+  system/libhidl/transport/base/1.0/types.hal \
+  system/libhidl/transport/current.txt \
+  system/libhidl/transport/safe_union/1.0/types.hal \
+  vendor/mediatek/proprietary/hardware/interfaces/bluetooth/audio/2.1/IBluetoothAudioPort.hal \
+  vendor/mediatek/proprietary/hardware/interfaces/bluetooth/audio/2.1/IBluetoothAudioProvider.hal \
+  vendor/mediatek/proprietary/hardware/interfaces/bluetooth/audio/2.1/IBluetoothAudioProvidersFactory.hal \
+  vendor/mediatek/proprietary/hardware/interfaces/bluetooth/audio/2.1/types.hal \
+  vendor/mediatek/proprietary/hardware/interfaces/current.txt \

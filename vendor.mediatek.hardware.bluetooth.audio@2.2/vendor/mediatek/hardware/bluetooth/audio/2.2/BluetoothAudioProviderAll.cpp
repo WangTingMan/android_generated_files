@@ -1,4 +1,4 @@
-#define LOG_TAG "android.hardware.bluetooth.audio@2.1::BluetoothAudioProvider"
+#define LOG_TAG "vendor.mediatek.hardware.bluetooth.audio@2.2::BluetoothAudioProvider"
 
 #include <log/log.h>
 #include <cutils/trace.h>
@@ -7,22 +7,22 @@
 #include <hidl/Static.h>
 #include <hwbinder/ProcessState.h>
 #include <utils/Trace.h>
-#include <utils/AutoHolder.h>
 #include <android/hidl/manager/1.0/IServiceManager.h>
-#include <android/hardware/bluetooth/audio/2.1/BpHwBluetoothAudioProvider.h>
-#include <android/hardware/bluetooth/audio/2.1/BnHwBluetoothAudioProvider.h>
-#include <android/hardware/bluetooth/audio/2.1/BsBluetoothAudioProvider.h>
-#include <android/hardware/bluetooth/audio/2.0/BpHwBluetoothAudioProvider.h>
+#include <vendor/mediatek/hardware/bluetooth/audio/2.2/BpHwBluetoothAudioProvider.h>
+#include <vendor/mediatek/hardware/bluetooth/audio/2.2/BnHwBluetoothAudioProvider.h>
+#include <vendor/mediatek/hardware/bluetooth/audio/2.2/BsBluetoothAudioProvider.h>
+#include <vendor/mediatek/hardware/bluetooth/audio/2.1/BpHwBluetoothAudioProvider.h>
 #include <android/hidl/base/1.0/BpHwBase.h>
 #include <hidl/ServiceManagement.h>
 
-namespace android {
+#include <utils/AutoHolder.h>
+
+namespace vendor {
+namespace mediatek {
 namespace hardware {
 namespace bluetooth {
 namespace audio {
-namespace V2_1 {
-
-const char* IBluetoothAudioProvider::descriptor("android.hardware.bluetooth.audio@2.1::IBluetoothAudioProvider");
+namespace V2_2 {
 
 __attribute__((constructor)) static void static_constructor() {
     ::android::hardware::details::getBnConstructorMap().set(IBluetoothAudioProvider::descriptor,
@@ -40,23 +40,25 @@ __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBsConstructorMap().erase(IBluetoothAudioProvider::descriptor);
 }
 
-static AutoHolder holder(static_constructor, static_destructor);
+static AutoHolder holder( static_constructor, static_destructor );
 
-// Methods from ::android::hardware::bluetooth::audio::V2_0::IBluetoothAudioProvider follow.
-// no default implementation for: ::android::hardware::Return<void> IBluetoothAudioProvider::startSession(const ::android::sp<::android::hardware::bluetooth::audio::V2_0::IBluetoothAudioPort>& hostIf, const ::android::hardware::bluetooth::audio::V2_0::AudioConfiguration& audioConfig, startSession_cb _hidl_cb)
-// no default implementation for: ::android::hardware::Return<void> IBluetoothAudioProvider::streamStarted(::android::hardware::bluetooth::audio::V2_0::Status status)
-// no default implementation for: ::android::hardware::Return<void> IBluetoothAudioProvider::streamSuspended(::android::hardware::bluetooth::audio::V2_0::Status status)
+// Methods from ::vendor::mediatek::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider follow.
+// no default implementation for: ::android::hardware::Return<void> IBluetoothAudioProvider::startSession(const ::android::sp<::vendor::mediatek::hardware::bluetooth::audio::V2_1::IBluetoothAudioPort>& hostIf, const ::vendor::mediatek::hardware::bluetooth::audio::V2_1::AudioConfiguration& audioConfig, startSession_cb _hidl_cb)
+// no default implementation for: ::android::hardware::Return<void> IBluetoothAudioProvider::streamStarted(::vendor::mediatek::hardware::bluetooth::audio::V2_1::Status status)
+// no default implementation for: ::android::hardware::Return<void> IBluetoothAudioProvider::streamSuspended(::vendor::mediatek::hardware::bluetooth::audio::V2_1::Status status)
 // no default implementation for: ::android::hardware::Return<void> IBluetoothAudioProvider::endSession()
+// no default implementation for: ::android::hardware::Return<void> IBluetoothAudioProvider::enterGameMode(uint8_t enter)
 
-// Methods from ::android::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider follow.
-// no default implementation for: ::android::hardware::Return<void> IBluetoothAudioProvider::startSession_2_1(const ::android::sp<::android::hardware::bluetooth::audio::V2_0::IBluetoothAudioPort>& hostIf, const ::android::hardware::bluetooth::audio::V2_1::AudioConfiguration& audioConfig, startSession_2_1_cb _hidl_cb)
+// Methods from ::vendor::mediatek::hardware::bluetooth::audio::V2_2::IBluetoothAudioProvider follow.
+// no default implementation for: ::android::hardware::Return<void> IBluetoothAudioProvider::startSession_2_1(const ::android::sp<::vendor::mediatek::hardware::bluetooth::audio::V2_1::IBluetoothAudioPort>& hostIf, const ::vendor::mediatek::hardware::bluetooth::audio::V2_2::AudioConfiguration& audioConfig, startSession_2_1_cb _hidl_cb)
+// no default implementation for: ::android::hardware::Return<void> IBluetoothAudioProvider::updataConnParam(const ::vendor::mediatek::hardware::bluetooth::audio::V2_2::ConnParam& connPrameter)
 
 // Methods from ::android::hidl::base::V1_0::IBase follow.
 ::android::hardware::Return<void> IBluetoothAudioProvider::interfaceChain(interfaceChain_cb _hidl_cb){
     _hidl_cb({
-        ::android::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider::descriptor,
-        ::android::hardware::bluetooth::audio::V2_0::IBluetoothAudioProvider::descriptor,
-        ::android::hidl::base::V1_0::IBase::getDescriptorName(),
+        ::vendor::mediatek::hardware::bluetooth::audio::V2_2::IBluetoothAudioProvider::descriptor,
+        ::vendor::mediatek::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider::descriptor,
+        ::android::hidl::base::V1_0::IBase::descriptor,
     });
     return ::android::hardware::Void();
 }
@@ -68,7 +70,7 @@ static AutoHolder holder(static_constructor, static_destructor);
 }
 
 ::android::hardware::Return<void> IBluetoothAudioProvider::interfaceDescriptor(interfaceDescriptor_cb _hidl_cb){
-    _hidl_cb(::android::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider::descriptor);
+    _hidl_cb(::vendor::mediatek::hardware::bluetooth::audio::V2_2::IBluetoothAudioProvider::descriptor);
     return ::android::hardware::Void();
 }
 
@@ -77,31 +79,31 @@ static AutoHolder holder(static_constructor, static_destructor);
     ::android::hardware::hidl_array<uint8_t, 32> v2;
     ::android::hardware::hidl_array<uint8_t, 32> v3;
 
-    uint8_t v1Detailes[] = { 75,175,142,14,202,74,168,150,204,156,235,123,182,118,170,244,250,33,55,46,248,180,158,237,104,236,237,18,33,195,220,13 };
-    for (auto i = 0; i < 32; ++i)
+    uint8_t v1Detailes[] = { 222,110,179,161,130,47,31,217,129,110,86,97,11,16,211,234,199,42,54,220,165,175,1,58,48,187,54,196,221,28,24,69 };
+    for( auto i = 0; i < 32; ++i )
     {
         v1[i] = v1Detailes[i];
     }
 
-    uint8_t v2Detailes[] = { 251,156,64,228,222,171,64,190,84,118,71,112,120,254,61,138,74,68,149,253,157,238,244,50,24,120,209,105,214,117,198,51 };
-    for (auto i = 0; i < 32; ++i)
+    uint8_t v2Detailes[] = { 201,144,191,138,228,94,59,243,193,132,129,107,5,55,196,119,189,161,163,18,174,197,50,235,219,19,236,25,218,164,25,245 };
+    for( auto i = 0; i < 32; ++i )
     {
         v2[i] = v2Detailes[i];
     }
 
     uint8_t v3Detailes[] = { 236,127,215,158,208,45,250,133,188,73,148,38,173,174,62,190,35,239,5,36,243,205,105,87,19,147,36,184,59,24,202,76 };
-    for (auto i = 0; i < 32; ++i)
+    for( auto i = 0; i < 32; ++i )
     {
         v3[i] = v3Detailes[i];
     }
 
     std::vector<::android::hardware::hidl_array<uint8_t, 32>> vecs;
-    vecs.push_back(v1);
-    vecs.push_back(v2);
-    vecs.push_back(v3);
+    vecs.push_back( v1 );
+    vecs.push_back( v2 );
+    vecs.push_back( v3 );
 
-    ::android::hardware::hidl_vec<::android::hardware::hidl_array<uint8_t, 32>> paras(vecs);
-    _hidl_cb(paras);
+    ::android::hardware::hidl_vec<::android::hardware::hidl_array<uint8_t, 32>> paras( vecs );
+    _hidl_cb( paras );
 
     return ::android::hardware::Void();
 }
@@ -144,23 +146,23 @@ static AutoHolder holder(static_constructor, static_destructor);
 }
 
 
-::android::hardware::Return<::android::sp<::android::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider>> IBluetoothAudioProvider::castFrom(const ::android::sp<::android::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider>& parent, bool /* emitError */) {
+::android::hardware::Return<::android::sp<::vendor::mediatek::hardware::bluetooth::audio::V2_2::IBluetoothAudioProvider>> IBluetoothAudioProvider::castFrom(const ::android::sp<::vendor::mediatek::hardware::bluetooth::audio::V2_2::IBluetoothAudioProvider>& parent, bool /* emitError */) {
     return parent;
 }
 
-::android::hardware::Return<::android::sp<::android::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider>> IBluetoothAudioProvider::castFrom(const ::android::sp<::android::hardware::bluetooth::audio::V2_0::IBluetoothAudioProvider>& parent, bool emitError) {
-    return ::android::hardware::details::castInterface<IBluetoothAudioProvider, ::android::hardware::bluetooth::audio::V2_0::IBluetoothAudioProvider, BpHwBluetoothAudioProvider>(
-            parent, "android.hardware.bluetooth.audio@2.1::IBluetoothAudioProvider", emitError);
+::android::hardware::Return<::android::sp<::vendor::mediatek::hardware::bluetooth::audio::V2_2::IBluetoothAudioProvider>> IBluetoothAudioProvider::castFrom(const ::android::sp<::vendor::mediatek::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider>& parent, bool emitError) {
+    return ::android::hardware::details::castInterface<IBluetoothAudioProvider, ::vendor::mediatek::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider, BpHwBluetoothAudioProvider>(
+            parent, "vendor.mediatek.hardware.bluetooth.audio@2.2::IBluetoothAudioProvider", emitError);
 }
 
-::android::hardware::Return<::android::sp<::android::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider>> IBluetoothAudioProvider::castFrom(const ::android::sp<::android::hidl::base::V1_0::IBase>& parent, bool emitError) {
+::android::hardware::Return<::android::sp<::vendor::mediatek::hardware::bluetooth::audio::V2_2::IBluetoothAudioProvider>> IBluetoothAudioProvider::castFrom(const ::android::sp<::android::hidl::base::V1_0::IBase>& parent, bool emitError) {
     return ::android::hardware::details::castInterface<IBluetoothAudioProvider, ::android::hidl::base::V1_0::IBase, BpHwBluetoothAudioProvider>(
-            parent, "android.hardware.bluetooth.audio@2.1::IBluetoothAudioProvider", emitError);
+            parent, "vendor.mediatek.hardware.bluetooth.audio@2.2::IBluetoothAudioProvider", emitError);
 }
 
 BpHwBluetoothAudioProvider::BpHwBluetoothAudioProvider(const ::android::sp<::android::hardware::IBinder> &_hidl_impl)
         : BpInterface<IBluetoothAudioProvider>(_hidl_impl),
-          ::android::hardware::details::HidlInstrumentor("android.hardware.bluetooth.audio@2.1", "IBluetoothAudioProvider") {
+          ::android::hardware::details::HidlInstrumentor("vendor.mediatek.hardware.bluetooth.audio@2.2", "IBluetoothAudioProvider") {
 }
 
 void BpHwBluetoothAudioProvider::onLastStrongRef(const void* id) {
@@ -171,8 +173,8 @@ void BpHwBluetoothAudioProvider::onLastStrongRef(const void* id) {
 
     BpInterface<IBluetoothAudioProvider>::onLastStrongRef(id);
 }
-// Methods from ::android::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider follow.
-::android::hardware::Return<void> BpHwBluetoothAudioProvider::_hidl_startSession_2_1(::android::hardware::IInterface *_hidl_this, ::android::hardware::details::HidlInstrumentor *_hidl_this_instrumentor, const ::android::sp<::android::hardware::bluetooth::audio::V2_0::IBluetoothAudioPort>& hostIf, const ::android::hardware::bluetooth::audio::V2_1::AudioConfiguration& audioConfig, startSession_2_1_cb _hidl_cb) {
+// Methods from ::vendor::mediatek::hardware::bluetooth::audio::V2_2::IBluetoothAudioProvider follow.
+::android::hardware::Return<void> BpHwBluetoothAudioProvider::_hidl_startSession_2_1(::android::hardware::IInterface *_hidl_this, ::android::hardware::details::HidlInstrumentor *_hidl_this_instrumentor, const ::android::sp<::vendor::mediatek::hardware::bluetooth::audio::V2_1::IBluetoothAudioPort>& hostIf, const ::vendor::mediatek::hardware::bluetooth::audio::V2_2::AudioConfiguration& audioConfig, startSession_2_1_cb _hidl_cb) {
     #ifdef __ANDROID_DEBUGGABLE__
     bool mEnableInstrumentation = _hidl_this_instrumentor->isInstrumentationEnabled();
     const auto &mInstrumentationCallbacks = _hidl_this_instrumentor->getInstrumentationCallbacks();
@@ -186,7 +188,7 @@ void BpHwBluetoothAudioProvider::onLastStrongRef(const void* id) {
         _hidl_args.push_back((void *)&hostIf);
         _hidl_args.push_back((void *)&audioConfig);
         for (const auto &callback: mInstrumentationCallbacks) {
-            callback(InstrumentationEvent::CLIENT_API_ENTRY, "android.hardware.bluetooth.audio", "2.1", "IBluetoothAudioProvider", "startSession_2_1", &_hidl_args);
+            callback(InstrumentationEvent::CLIENT_API_ENTRY, "vendor.mediatek.hardware.bluetooth.audio", "2.2", "IBluetoothAudioProvider", "startSession_2_1", &_hidl_args);
         }
     }
     #endif // __ANDROID_DEBUGGABLE__
@@ -218,8 +220,8 @@ void BpHwBluetoothAudioProvider::onLastStrongRef(const void* id) {
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     ::android::hardware::ProcessState::self()->startThreadPool();
-    _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(5 /* startSession_2_1 */, _hidl_data, &_hidl_reply, 0 /* flags */, [&] (::android::hardware::Parcel& _hidl_reply) {
-        ::android::hardware::bluetooth::audio::V2_0::Status _hidl_out_status;
+    _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(6 /* startSession_2_1 */, _hidl_data, &_hidl_reply, 0 /* flags */, [&] (::android::hardware::Parcel& _hidl_reply) {
+        ::vendor::mediatek::hardware::bluetooth::audio::V2_1::Status _hidl_out_status;
         const ::android::hardware::MQDescriptorSync<uint8_t>* _hidl_out_dataMQ;
 
 
@@ -253,7 +255,7 @@ void BpHwBluetoothAudioProvider::onLastStrongRef(const void* id) {
             _hidl_args.push_back((void *)&_hidl_out_status);
             _hidl_args.push_back((void *)_hidl_out_dataMQ);
             for (const auto &callback: mInstrumentationCallbacks) {
-                callback(InstrumentationEvent::CLIENT_API_EXIT, "android.hardware.bluetooth.audio", "2.1", "IBluetoothAudioProvider", "startSession_2_1", &_hidl_args);
+                callback(InstrumentationEvent::CLIENT_API_EXIT, "vendor.mediatek.hardware.bluetooth.audio", "2.2", "IBluetoothAudioProvider", "startSession_2_1", &_hidl_args);
             }
         }
         #endif // __ANDROID_DEBUGGABLE__
@@ -272,36 +274,108 @@ _hidl_error:
     return ::android::hardware::Return<void>(_hidl_status);
 }
 
+::android::hardware::Return<void> BpHwBluetoothAudioProvider::_hidl_updataConnParam(::android::hardware::IInterface *_hidl_this, ::android::hardware::details::HidlInstrumentor *_hidl_this_instrumentor, const ::vendor::mediatek::hardware::bluetooth::audio::V2_2::ConnParam& connPrameter) {
+    #ifdef __ANDROID_DEBUGGABLE__
+    bool mEnableInstrumentation = _hidl_this_instrumentor->isInstrumentationEnabled();
+    const auto &mInstrumentationCallbacks = _hidl_this_instrumentor->getInstrumentationCallbacks();
+    #else
+    (void) _hidl_this_instrumentor;
+    #endif // __ANDROID_DEBUGGABLE__
+    ::android::ScopedTrace PASTE(___tracer, __LINE__) (ATRACE_TAG_HAL, "HIDL::IBluetoothAudioProvider::updataConnParam::client");
+    #ifdef __ANDROID_DEBUGGABLE__
+    if (UNLIKELY(mEnableInstrumentation)) {
+        std::vector<void *> _hidl_args;
+        _hidl_args.push_back((void *)&connPrameter);
+        for (const auto &callback: mInstrumentationCallbacks) {
+            callback(InstrumentationEvent::CLIENT_API_ENTRY, "vendor.mediatek.hardware.bluetooth.audio", "2.2", "IBluetoothAudioProvider", "updataConnParam", &_hidl_args);
+        }
+    }
+    #endif // __ANDROID_DEBUGGABLE__
 
-// Methods from ::android::hardware::bluetooth::audio::V2_0::IBluetoothAudioProvider follow.
-::android::hardware::Return<void> BpHwBluetoothAudioProvider::startSession(const ::android::sp<::android::hardware::bluetooth::audio::V2_0::IBluetoothAudioPort>& hostIf, const ::android::hardware::bluetooth::audio::V2_0::AudioConfiguration& audioConfig, startSession_cb _hidl_cb){
-    ::android::hardware::Return<void>  _hidl_out = ::android::hardware::bluetooth::audio::V2_0::BpHwBluetoothAudioProvider::_hidl_startSession(this, this, hostIf, audioConfig, _hidl_cb);
+    ::android::hardware::Parcel _hidl_data;
+    ::android::hardware::Parcel _hidl_reply;
+    ::android::status_t _hidl_err;
+    ::android::status_t _hidl_transact_err;
+    ::android::hardware::Status _hidl_status;
+
+    _hidl_err = _hidl_data.writeInterfaceToken(BpHwBluetoothAudioProvider::descriptor);
+    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+
+    size_t _hidl_connPrameter_parent;
+
+    _hidl_err = _hidl_data.writeBuffer(&connPrameter, sizeof(connPrameter), &_hidl_connPrameter_parent);
+    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+
+    _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(7 /* updataConnParam */, _hidl_data, &_hidl_reply, 0 /* flags */);
+    if (_hidl_transact_err != ::android::OK) 
+    {
+        _hidl_err = _hidl_transact_err;
+        goto _hidl_error;
+    }
+
+    _hidl_err = ::android::hardware::readFromParcel(&_hidl_status, _hidl_reply);
+    if (_hidl_err != ::android::OK) { goto _hidl_error; }
+
+    if (!_hidl_status.isOk()) { return _hidl_status; }
+
+    #ifdef __ANDROID_DEBUGGABLE__
+    if (UNLIKELY(mEnableInstrumentation)) {
+        std::vector<void *> _hidl_args;
+        for (const auto &callback: mInstrumentationCallbacks) {
+            callback(InstrumentationEvent::CLIENT_API_EXIT, "vendor.mediatek.hardware.bluetooth.audio", "2.2", "IBluetoothAudioProvider", "updataConnParam", &_hidl_args);
+        }
+    }
+    #endif // __ANDROID_DEBUGGABLE__
+
+    return ::android::hardware::Return<void>();
+
+_hidl_error:
+    _hidl_status.setFromStatusT(_hidl_err);
+    return ::android::hardware::Return<void>(_hidl_status);
+}
+
+
+// Methods from ::vendor::mediatek::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider follow.
+::android::hardware::Return<void> BpHwBluetoothAudioProvider::startSession(const ::android::sp<::vendor::mediatek::hardware::bluetooth::audio::V2_1::IBluetoothAudioPort>& hostIf, const ::vendor::mediatek::hardware::bluetooth::audio::V2_1::AudioConfiguration& audioConfig, startSession_cb _hidl_cb){
+    ::android::hardware::Return<void>  _hidl_out = ::vendor::mediatek::hardware::bluetooth::audio::V2_1::BpHwBluetoothAudioProvider::_hidl_startSession(this, this, hostIf, audioConfig, _hidl_cb);
 
     return _hidl_out;
 }
 
-::android::hardware::Return<void> BpHwBluetoothAudioProvider::streamStarted(::android::hardware::bluetooth::audio::V2_0::Status status){
-    ::android::hardware::Return<void>  _hidl_out = ::android::hardware::bluetooth::audio::V2_0::BpHwBluetoothAudioProvider::_hidl_streamStarted(this, this, status);
+::android::hardware::Return<void> BpHwBluetoothAudioProvider::streamStarted(::vendor::mediatek::hardware::bluetooth::audio::V2_1::Status status){
+    ::android::hardware::Return<void>  _hidl_out = ::vendor::mediatek::hardware::bluetooth::audio::V2_1::BpHwBluetoothAudioProvider::_hidl_streamStarted(this, this, status);
 
     return _hidl_out;
 }
 
-::android::hardware::Return<void> BpHwBluetoothAudioProvider::streamSuspended(::android::hardware::bluetooth::audio::V2_0::Status status){
-    ::android::hardware::Return<void>  _hidl_out = ::android::hardware::bluetooth::audio::V2_0::BpHwBluetoothAudioProvider::_hidl_streamSuspended(this, this, status);
+::android::hardware::Return<void> BpHwBluetoothAudioProvider::streamSuspended(::vendor::mediatek::hardware::bluetooth::audio::V2_1::Status status){
+    ::android::hardware::Return<void>  _hidl_out = ::vendor::mediatek::hardware::bluetooth::audio::V2_1::BpHwBluetoothAudioProvider::_hidl_streamSuspended(this, this, status);
 
     return _hidl_out;
 }
 
 ::android::hardware::Return<void> BpHwBluetoothAudioProvider::endSession(){
-    ::android::hardware::Return<void>  _hidl_out = ::android::hardware::bluetooth::audio::V2_0::BpHwBluetoothAudioProvider::_hidl_endSession(this, this);
+    ::android::hardware::Return<void>  _hidl_out = ::vendor::mediatek::hardware::bluetooth::audio::V2_1::BpHwBluetoothAudioProvider::_hidl_endSession(this, this);
+
+    return _hidl_out;
+}
+
+::android::hardware::Return<void> BpHwBluetoothAudioProvider::enterGameMode(uint8_t enter){
+    ::android::hardware::Return<void>  _hidl_out = ::vendor::mediatek::hardware::bluetooth::audio::V2_1::BpHwBluetoothAudioProvider::_hidl_enterGameMode(this, this, enter);
 
     return _hidl_out;
 }
 
 
-// Methods from ::android::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider follow.
-::android::hardware::Return<void> BpHwBluetoothAudioProvider::startSession_2_1(const ::android::sp<::android::hardware::bluetooth::audio::V2_0::IBluetoothAudioPort>& hostIf, const ::android::hardware::bluetooth::audio::V2_1::AudioConfiguration& audioConfig, startSession_2_1_cb _hidl_cb){
-    ::android::hardware::Return<void>  _hidl_out = ::android::hardware::bluetooth::audio::V2_1::BpHwBluetoothAudioProvider::_hidl_startSession_2_1(this, this, hostIf, audioConfig, _hidl_cb);
+// Methods from ::vendor::mediatek::hardware::bluetooth::audio::V2_2::IBluetoothAudioProvider follow.
+::android::hardware::Return<void> BpHwBluetoothAudioProvider::startSession_2_1(const ::android::sp<::vendor::mediatek::hardware::bluetooth::audio::V2_1::IBluetoothAudioPort>& hostIf, const ::vendor::mediatek::hardware::bluetooth::audio::V2_2::AudioConfiguration& audioConfig, startSession_2_1_cb _hidl_cb){
+    ::android::hardware::Return<void>  _hidl_out = ::vendor::mediatek::hardware::bluetooth::audio::V2_2::BpHwBluetoothAudioProvider::_hidl_startSession_2_1(this, this, hostIf, audioConfig, _hidl_cb);
+
+    return _hidl_out;
+}
+
+::android::hardware::Return<void> BpHwBluetoothAudioProvider::updataConnParam(const ::vendor::mediatek::hardware::bluetooth::audio::V2_2::ConnParam& connPrameter){
+    ::android::hardware::Return<void>  _hidl_out = ::vendor::mediatek::hardware::bluetooth::audio::V2_2::BpHwBluetoothAudioProvider::_hidl_updataConnParam(this, this, connPrameter);
 
     return _hidl_out;
 }
@@ -378,7 +452,7 @@ _hidl_error:
 
 
 BnHwBluetoothAudioProvider::BnHwBluetoothAudioProvider(const ::android::sp<IBluetoothAudioProvider> &_hidl_impl)
-        : ::android::hidl::base::V1_0::BnHwBase(_hidl_impl, "android.hardware.bluetooth.audio@2.1", "IBluetoothAudioProvider") { 
+        : ::android::hidl::base::V1_0::BnHwBase(_hidl_impl, "vendor.mediatek.hardware.bluetooth.audio@2.2", "IBluetoothAudioProvider") { 
             _hidl_mImpl = _hidl_impl;
             auto prio = ::android::hardware::getMinSchedulerPolicy(_hidl_impl);
             mSchedPolicy = prio.sched_policy;
@@ -390,7 +464,7 @@ BnHwBluetoothAudioProvider::~BnHwBluetoothAudioProvider() {
     ::android::hardware::details::gBnMap->eraseIfEqual(_hidl_mImpl.get(), this);
 }
 
-// Methods from ::android::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider follow.
+// Methods from ::vendor::mediatek::hardware::bluetooth::audio::V2_2::IBluetoothAudioProvider follow.
 ::android::status_t BnHwBluetoothAudioProvider::_hidl_startSession_2_1(
         ::android::hidl::base::V1_0::BnHwBase* _hidl_this,
         const ::android::hardware::Parcel &_hidl_data,
@@ -407,15 +481,15 @@ BnHwBluetoothAudioProvider::~BnHwBluetoothAudioProvider() {
         return _hidl_err;
     }
 
-    ::android::sp<::android::hardware::bluetooth::audio::V2_0::IBluetoothAudioPort> hostIf;
-    ::android::hardware::bluetooth::audio::V2_1::AudioConfiguration* audioConfig;
+    ::android::sp<::vendor::mediatek::hardware::bluetooth::audio::V2_1::IBluetoothAudioPort> hostIf;
+    ::vendor::mediatek::hardware::bluetooth::audio::V2_2::AudioConfiguration* audioConfig;
 
     {
         ::android::sp<::android::hardware::IBinder> _hidl_binder;
         _hidl_err = _hidl_data.readNullableStrongBinder(&_hidl_binder);
         if (_hidl_err != ::android::OK) { return _hidl_err; }
 
-        hostIf = ::android::hardware::fromBinder<::android::hardware::bluetooth::audio::V2_0::IBluetoothAudioPort,::android::hardware::bluetooth::audio::V2_0::BpHwBluetoothAudioPort,::android::hardware::bluetooth::audio::V2_0::BnHwBluetoothAudioPort>(_hidl_binder);
+        hostIf = ::android::hardware::fromBinder<::vendor::mediatek::hardware::bluetooth::audio::V2_1::IBluetoothAudioPort,::vendor::mediatek::hardware::bluetooth::audio::V2_1::BpHwBluetoothAudioPort,::vendor::mediatek::hardware::bluetooth::audio::V2_1::BnHwBluetoothAudioPort>(_hidl_binder);
     }
 
     size_t _hidl_audioConfig_parent;
@@ -430,7 +504,7 @@ BnHwBluetoothAudioProvider::~BnHwBluetoothAudioProvider() {
         _hidl_args.push_back((void *)&hostIf);
         _hidl_args.push_back((void *)audioConfig);
         for (const auto &callback: mInstrumentationCallbacks) {
-            callback(InstrumentationEvent::SERVER_API_ENTRY, "android.hardware.bluetooth.audio", "2.1", "IBluetoothAudioProvider", "startSession_2_1", &_hidl_args);
+            callback(InstrumentationEvent::SERVER_API_ENTRY, "vendor.mediatek.hardware.bluetooth.audio", "2.2", "IBluetoothAudioProvider", "startSession_2_1", &_hidl_args);
         }
     }
     #endif // __ANDROID_DEBUGGABLE__
@@ -469,7 +543,7 @@ BnHwBluetoothAudioProvider::~BnHwBluetoothAudioProvider() {
             _hidl_args.push_back((void *)&_hidl_out_status);
             _hidl_args.push_back((void *)&_hidl_out_dataMQ);
             for (const auto &callback: mInstrumentationCallbacks) {
-                callback(InstrumentationEvent::SERVER_API_EXIT, "android.hardware.bluetooth.audio", "2.1", "IBluetoothAudioProvider", "startSession_2_1", &_hidl_args);
+                callback(InstrumentationEvent::SERVER_API_EXIT, "vendor.mediatek.hardware.bluetooth.audio", "2.2", "IBluetoothAudioProvider", "startSession_2_1", &_hidl_args);
             }
         }
         #endif // __ANDROID_DEBUGGABLE__
@@ -486,10 +560,64 @@ BnHwBluetoothAudioProvider::~BnHwBluetoothAudioProvider() {
     return _hidl_err;
 }
 
+::android::status_t BnHwBluetoothAudioProvider::_hidl_updataConnParam(
+        ::android::hidl::base::V1_0::BnHwBase* _hidl_this,
+        const ::android::hardware::Parcel &_hidl_data,
+        ::android::hardware::Parcel *_hidl_reply,
+        TransactCallback _hidl_cb) {
+    #ifdef __ANDROID_DEBUGGABLE__
+    bool mEnableInstrumentation = _hidl_this->isInstrumentationEnabled();
+    const auto &mInstrumentationCallbacks = _hidl_this->getInstrumentationCallbacks();
+    #endif // __ANDROID_DEBUGGABLE__
 
-// Methods from ::android::hardware::bluetooth::audio::V2_0::IBluetoothAudioProvider follow.
+    ::android::status_t _hidl_err = ::android::OK;
+    if (!_hidl_data.enforceInterface(BnHwBluetoothAudioProvider::Pure::descriptor)) {
+        _hidl_err = ::android::BAD_TYPE;
+        return _hidl_err;
+    }
 
-// Methods from ::android::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider follow.
+    ::vendor::mediatek::hardware::bluetooth::audio::V2_2::ConnParam* connPrameter;
+
+    size_t _hidl_connPrameter_parent;
+
+    _hidl_err = _hidl_data.readBuffer(sizeof(*connPrameter), &_hidl_connPrameter_parent,  const_cast<const void**>(reinterpret_cast<void **>(&connPrameter)));
+    if (_hidl_err != ::android::OK) { return _hidl_err; }
+
+    atrace_begin(ATRACE_TAG_HAL, "HIDL::IBluetoothAudioProvider::updataConnParam::server");
+    #ifdef __ANDROID_DEBUGGABLE__
+    if (UNLIKELY(mEnableInstrumentation)) {
+        std::vector<void *> _hidl_args;
+        _hidl_args.push_back((void *)connPrameter);
+        for (const auto &callback: mInstrumentationCallbacks) {
+            callback(InstrumentationEvent::SERVER_API_ENTRY, "vendor.mediatek.hardware.bluetooth.audio", "2.2", "IBluetoothAudioProvider", "updataConnParam", &_hidl_args);
+        }
+    }
+    #endif // __ANDROID_DEBUGGABLE__
+
+    ::android::hardware::Return<void> _hidl_ret = static_cast<IBluetoothAudioProvider*>(_hidl_this->getImpl().get())->updataConnParam(*connPrameter);
+
+    (void) _hidl_cb;
+
+    atrace_end(ATRACE_TAG_HAL);
+    #ifdef __ANDROID_DEBUGGABLE__
+    if (UNLIKELY(mEnableInstrumentation)) {
+        std::vector<void *> _hidl_args;
+        for (const auto &callback: mInstrumentationCallbacks) {
+            callback(InstrumentationEvent::SERVER_API_EXIT, "vendor.mediatek.hardware.bluetooth.audio", "2.2", "IBluetoothAudioProvider", "updataConnParam", &_hidl_args);
+        }
+    }
+    #endif // __ANDROID_DEBUGGABLE__
+
+    _hidl_ret.assertOk();
+    ::android::hardware::writeToParcel(::android::hardware::Status::ok(), _hidl_reply);
+
+    return _hidl_err;
+}
+
+
+// Methods from ::vendor::mediatek::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider follow.
+
+// Methods from ::vendor::mediatek::hardware::bluetooth::audio::V2_2::IBluetoothAudioProvider follow.
 
 // Methods from ::android::hidl::base::V1_0::IBase follow.
 ::android::hardware::Return<void> BnHwBluetoothAudioProvider::ping() {
@@ -521,31 +649,43 @@ BnHwBluetoothAudioProvider::~BnHwBluetoothAudioProvider() {
     switch (_hidl_code) {
         case 1 /* startSession */:
         {
-            _hidl_err = ::android::hardware::bluetooth::audio::V2_0::BnHwBluetoothAudioProvider::_hidl_startSession(this, _hidl_data, _hidl_reply, _hidl_cb);
+            _hidl_err = ::vendor::mediatek::hardware::bluetooth::audio::V2_1::BnHwBluetoothAudioProvider::_hidl_startSession(this, _hidl_data, _hidl_reply, _hidl_cb);
             break;
         }
 
         case 2 /* streamStarted */:
         {
-            _hidl_err = ::android::hardware::bluetooth::audio::V2_0::BnHwBluetoothAudioProvider::_hidl_streamStarted(this, _hidl_data, _hidl_reply, _hidl_cb);
+            _hidl_err = ::vendor::mediatek::hardware::bluetooth::audio::V2_1::BnHwBluetoothAudioProvider::_hidl_streamStarted(this, _hidl_data, _hidl_reply, _hidl_cb);
             break;
         }
 
         case 3 /* streamSuspended */:
         {
-            _hidl_err = ::android::hardware::bluetooth::audio::V2_0::BnHwBluetoothAudioProvider::_hidl_streamSuspended(this, _hidl_data, _hidl_reply, _hidl_cb);
+            _hidl_err = ::vendor::mediatek::hardware::bluetooth::audio::V2_1::BnHwBluetoothAudioProvider::_hidl_streamSuspended(this, _hidl_data, _hidl_reply, _hidl_cb);
             break;
         }
 
         case 4 /* endSession */:
         {
-            _hidl_err = ::android::hardware::bluetooth::audio::V2_0::BnHwBluetoothAudioProvider::_hidl_endSession(this, _hidl_data, _hidl_reply, _hidl_cb);
+            _hidl_err = ::vendor::mediatek::hardware::bluetooth::audio::V2_1::BnHwBluetoothAudioProvider::_hidl_endSession(this, _hidl_data, _hidl_reply, _hidl_cb);
             break;
         }
 
-        case 5 /* startSession_2_1 */:
+        case 5 /* enterGameMode */:
         {
-            _hidl_err = ::android::hardware::bluetooth::audio::V2_1::BnHwBluetoothAudioProvider::_hidl_startSession_2_1(this, _hidl_data, _hidl_reply, _hidl_cb);
+            _hidl_err = ::vendor::mediatek::hardware::bluetooth::audio::V2_1::BnHwBluetoothAudioProvider::_hidl_enterGameMode(this, _hidl_data, _hidl_reply, _hidl_cb);
+            break;
+        }
+
+        case 6 /* startSession_2_1 */:
+        {
+            _hidl_err = ::vendor::mediatek::hardware::bluetooth::audio::V2_2::BnHwBluetoothAudioProvider::_hidl_startSession_2_1(this, _hidl_data, _hidl_reply, _hidl_cb);
+            break;
+        }
+
+        case 7 /* updataConnParam */:
+        {
+            _hidl_err = ::vendor::mediatek::hardware::bluetooth::audio::V2_2::BnHwBluetoothAudioProvider::_hidl_updataConnParam(this, _hidl_data, _hidl_reply, _hidl_cb);
             break;
         }
 
@@ -563,7 +703,7 @@ BnHwBluetoothAudioProvider::~BnHwBluetoothAudioProvider() {
     }return _hidl_err;
 }
 
-BsBluetoothAudioProvider::BsBluetoothAudioProvider(const ::android::sp<::android::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvider> impl) : ::android::hardware::details::HidlInstrumentor("android.hardware.bluetooth.audio@2.1", "IBluetoothAudioProvider"), mImpl(impl) {
+BsBluetoothAudioProvider::BsBluetoothAudioProvider(const ::android::sp<::vendor::mediatek::hardware::bluetooth::audio::V2_2::IBluetoothAudioProvider> impl) : ::android::hardware::details::HidlInstrumentor("vendor.mediatek.hardware.bluetooth.audio@2.2", "IBluetoothAudioProvider"), mImpl(impl) {
     mOnewayQueue.start(3000 /* similar limit to binderized */);
 }
 
@@ -597,19 +737,20 @@ bool IBluetoothAudioProvider::registerForNotifications(
         return false;
     }
     ::android::hardware::Return<bool> success =
-            sm->registerForNotifications("android.hardware.bluetooth.audio@2.1::IBluetoothAudioProvider",
+            sm->registerForNotifications("vendor.mediatek.hardware.bluetooth.audio@2.2::IBluetoothAudioProvider",
                     serviceName, notification);
     return success.isOk() && success;
 }
 
-static_assert(sizeof(::android::hardware::MQDescriptor<char, ::android::hardware::kSynchronizedReadWrite>) == 32 + sizeof( std::string ), "wrong size");
+static_assert(sizeof(::android::hardware::MQDescriptor<char, ::android::hardware::kSynchronizedReadWrite>) == 32 + sizeof( std::string ), "wrong size" );
 static_assert(sizeof(::android::hardware::hidl_handle) == 16, "wrong size");
 static_assert(sizeof(::android::hardware::hidl_memory) == 40, "wrong size");
 static_assert(sizeof(::android::hardware::hidl_string) == 16, "wrong size");
 static_assert(sizeof(::android::hardware::hidl_vec<char>) == 16, "wrong size");
 
-}  // namespace V2_1
+}  // namespace V2_2
 }  // namespace audio
 }  // namespace bluetooth
 }  // namespace hardware
-}  // namespace android
+}  // namespace mediatek
+}  // namespace vendor
