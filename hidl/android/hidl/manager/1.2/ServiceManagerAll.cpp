@@ -525,6 +525,14 @@ _hidl_error:
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwServiceManager::descriptor);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
+#ifdef _MSC_VER
+    /**
+     * We do not support transfer object to other process on windows directly.
+     * So we just write hidl string to parcel area directly.
+     */
+    _hidl_err = _hidl_data.writeDynamic( fqName );
+    if( _hidl_err != ::android::OK ) { goto _hidl_error; }
+#else
     size_t _hidl_fqName_parent;
 
     _hidl_err = _hidl_data.writeBuffer(&fqName, sizeof(fqName), &_hidl_fqName_parent);
@@ -537,7 +545,7 @@ _hidl_error:
             0 /* parentOffset */);
 
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
-
+#endif
     _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(13 /* listManifestByInterface */, _hidl_data, &_hidl_reply, 0 /* flags */, [&] (::android::hardware::Parcel& _hidl_reply) {
         const ::android::hardware::hidl_vec<::android::hardware::hidl_string>* _hidl_out_instanceNames;
 
@@ -547,6 +555,12 @@ _hidl_error:
 
         if (!_hidl_status.isOk()) { return; }
 
+#ifdef _MSC_VER
+        ::android::hardware::hidl_vec<::android::hardware::hidl_string> reply_instances;
+        _hidl_out_instanceNames = &reply_instances;
+        _hidl_err = _hidl_reply.readDynamic( reply_instances );
+        if( _hidl_err != ::android::OK ) { return; }
+#else
         size_t _hidl__hidl_out_instanceNames_parent;
 
         _hidl_err = _hidl_reply.readBuffer(sizeof(*_hidl_out_instanceNames), &_hidl__hidl_out_instanceNames_parent,  reinterpret_cast<const void **>(&_hidl_out_instanceNames));
@@ -573,7 +587,7 @@ _hidl_error:
             if (_hidl_err != ::android::OK) { return; }
 
         }
-
+#endif
         _hidl_cb(*_hidl_out_instanceNames);
 
         #ifdef __ANDROID_DEBUGGABLE__
@@ -1205,6 +1219,11 @@ _hidl_error:
 
     const ::android::hardware::hidl_string* fqName;
 
+#ifdef _MSC_VER
+    ::android::hardware::hidl_string fqNameString;
+    fqName = &fqNameString;
+    _hidl_err = _hidl_data.readDynamic( fqNameString );
+#else
     size_t _hidl_fqName_parent;
 
     _hidl_err = _hidl_data.readBuffer(sizeof(*fqName), &_hidl_fqName_parent,  reinterpret_cast<const void **>(&fqName));
@@ -1218,6 +1237,7 @@ _hidl_error:
             0 /* parentOffset */);
 
     if (_hidl_err != ::android::OK) { return _hidl_err; }
+#endif
 
     atrace_begin(ATRACE_TAG_HAL, "HIDL::IServiceManager::listManifestByInterface::server");
     #ifdef __ANDROID_DEBUGGABLE__
@@ -1240,6 +1260,9 @@ _hidl_error:
 
         ::android::hardware::writeToParcel(::android::hardware::Status::ok(), _hidl_reply);
 
+#ifdef _MSC_VER
+        _hidl_reply->writeDynamic( _hidl_out_instanceNames );
+#else
         size_t _hidl__hidl_out_instanceNames_parent;
 
         _hidl_err = _hidl_reply->writeBuffer(&_hidl_out_instanceNames, sizeof(_hidl_out_instanceNames), &_hidl__hidl_out_instanceNames_parent);
@@ -1265,6 +1288,7 @@ _hidl_error:
             if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
         }
+#endif
 
     _hidl_error:
         atrace_end(ATRACE_TAG_HAL);
