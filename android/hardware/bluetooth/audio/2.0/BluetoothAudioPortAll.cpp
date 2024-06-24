@@ -423,6 +423,9 @@ _hidl_error:
     _hidl_err = _hidl_data.writeInterfaceToken(BpHwBluetoothAudioPort::descriptor);
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
+#ifdef _MSC_VER
+    _hidl_err = _hidl_data.writeDynamic( sourceMetadata );
+#else
     size_t _hidl_sourceMetadata_parent;
 
     _hidl_err = _hidl_data.writeBuffer(&sourceMetadata, sizeof(sourceMetadata), &_hidl_sourceMetadata_parent);
@@ -433,7 +436,7 @@ _hidl_error:
             &_hidl_data,
             _hidl_sourceMetadata_parent,
             0 /* parentOffset */);
-
+#endif
     if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_transact_err = ::android::hardware::IInterface::asBinder(_hidl_this)->transact(5 /* updateMetadata */, _hidl_data, &_hidl_reply, 0 /* flags */);
@@ -813,7 +816,12 @@ BnHwBluetoothAudioPort::~BnHwBluetoothAudioPort() {
     }
 
     ::android::hardware::audio::common::V5_0::SourceMetadata* sourceMetadata;
-
+#ifdef _MSC_VER
+    sourceMetadata = nullptr;
+    ::android::hardware::audio::common::V5_0::SourceMetadata source_metadata;
+    _hidl_err = _hidl_data.readDynamic( source_metadata );
+    sourceMetadata = &source_metadata;
+#else
     size_t _hidl_sourceMetadata_parent;
 
     _hidl_err = _hidl_data.readBuffer(sizeof(*sourceMetadata), &_hidl_sourceMetadata_parent,  const_cast<const void**>(reinterpret_cast<void **>(&sourceMetadata)));
@@ -824,7 +832,7 @@ BnHwBluetoothAudioPort::~BnHwBluetoothAudioPort() {
             _hidl_data,
             _hidl_sourceMetadata_parent,
             0 /* parentOffset */);
-
+#endif
     if (_hidl_err != ::android::OK) { return _hidl_err; }
 
     atrace_begin(ATRACE_TAG_HAL, "HIDL::IBluetoothAudioPort::updateMetadata::server");
