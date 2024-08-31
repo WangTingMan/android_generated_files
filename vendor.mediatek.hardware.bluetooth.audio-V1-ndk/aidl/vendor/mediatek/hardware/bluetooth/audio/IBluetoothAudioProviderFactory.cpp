@@ -33,7 +33,7 @@ static binder_status_t _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetooth
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_sessionType);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getProviderCapabilities(in_sessionType, &_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getProviderCapabilitiesDetail(in_sessionType, &_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -51,7 +51,7 @@ static binder_status_t _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetooth
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_sessionType);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->openProvider(in_sessionType, &_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->openProviderDetail(in_sessionType, &_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -65,7 +65,7 @@ static binder_status_t _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetooth
     case (FIRST_CALL_TRANSACTION + 16777214 /*getInterfaceVersion*/): {
       int32_t _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceVersion(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceVersionDetail(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -79,7 +79,7 @@ static binder_status_t _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetooth
     case (FIRST_CALL_TRANSACTION + 16777213 /*getInterfaceHash*/): {
       std::string _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceHash(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceHashDetail(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -96,7 +96,14 @@ static binder_status_t _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetooth
 
 static AIBinder_Class* _g_aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetoothAudioProviderFactory_clazz = ::ndk::ICInterface::defineClass(IBluetoothAudioProviderFactory::descriptor, _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetoothAudioProviderFactory_onTransact);
 
-BpBluetoothAudioProviderFactory::BpBluetoothAudioProviderFactory(const ::ndk::SpAIBinder& binder) : BpCInterface(binder) {}
+BpBluetoothAudioProviderFactory::BpBluetoothAudioProviderFactory(const ::ndk::SpAIBinder& binder) : BpCInterface(binder) {
+#ifdef _MSC_VER
+    getInterfaceVersionDetailFun = std::bind( &BpBluetoothAudioProviderFactory::getInterfaceVersion, this, std::placeholders::_1 );
+    getInterfaceHashDetailFun = std::bind( &BpBluetoothAudioProviderFactory::getInterfaceHash, this, std::placeholders::_1 );
+    m_getProviderCapabilitiesFun = std::bind( &BpBluetoothAudioProviderFactory::getProviderCapabilities, this, std::placeholders::_1, std::placeholders::_2 );
+    m_openProviderFun = std::bind( &BpBluetoothAudioProviderFactory::openProvider, this, std::placeholders::_1, std::placeholders::_2 );
+#endif
+}
 BpBluetoothAudioProviderFactory::~BpBluetoothAudioProviderFactory() {}
 
 ::ndk::ScopedAStatus BpBluetoothAudioProviderFactory::getProviderCapabilities(::aidl::vendor::mediatek::hardware::bluetooth::audio::SessionType in_sessionType, std::vector<::aidl::vendor::mediatek::hardware::bluetooth::audio::AudioCapabilities>* _aidl_return) {
@@ -267,7 +274,14 @@ BpBluetoothAudioProviderFactory::~BpBluetoothAudioProviderFactory() {}
   return _aidl_status;
 }
 // Source for BnBluetoothAudioProviderFactory
-BnBluetoothAudioProviderFactory::BnBluetoothAudioProviderFactory() {}
+BnBluetoothAudioProviderFactory::BnBluetoothAudioProviderFactory() {
+#ifdef _MSC_VER
+    setBinderCreater( std::bind(&BnBluetoothAudioProviderFactory::createBinder, this) );
+    getInterfaceVersionDetailFun = std::bind( &BnBluetoothAudioProviderFactory::getInterfaceVersion, this, std::placeholders::_1 );
+    getInterfaceHashDetailFun = std::bind( &BnBluetoothAudioProviderFactory::getInterfaceHash, this, std::placeholders::_1 );
+#endif
+}
+
 BnBluetoothAudioProviderFactory::~BnBluetoothAudioProviderFactory() {}
 ::ndk::SpAIBinder BnBluetoothAudioProviderFactory::createBinder() {
   AIBinder* binder = AIBinder_new(_g_aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetoothAudioProviderFactory_clazz, static_cast<void*>(this));
@@ -285,7 +299,6 @@ BnBluetoothAudioProviderFactory::~BnBluetoothAudioProviderFactory() {}
   return ::ndk::ScopedAStatus(AStatus_newOk());
 }
 // Source for IBluetoothAudioProviderFactory
-const char* IBluetoothAudioProviderFactory::descriptor = "vendor.mediatek.hardware.bluetooth.audio.IBluetoothAudioProviderFactory";
 IBluetoothAudioProviderFactory::IBluetoothAudioProviderFactory() {}
 IBluetoothAudioProviderFactory::~IBluetoothAudioProviderFactory() {}
 

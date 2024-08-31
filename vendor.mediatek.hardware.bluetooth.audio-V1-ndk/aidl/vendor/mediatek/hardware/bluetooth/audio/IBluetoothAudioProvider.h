@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <string>
@@ -41,7 +42,7 @@ class IBluetoothAudioProviderDelegator;
 class VENDORMEDIATEKHARDWAREBLUETOOTHAUDIOV1NDK_API IBluetoothAudioProvider : public ::ndk::ICInterface {
 public:
   typedef IBluetoothAudioProviderDelegator DefaultDelegator;
-  static const char* descriptor;
+  static constexpr inline const char* descriptor = "vendor.mediatek.hardware.bluetooth.audio.IBluetoothAudioProvider";
   IBluetoothAudioProvider();
   virtual ~IBluetoothAudioProvider();
 
@@ -55,6 +56,79 @@ public:
   static constexpr uint32_t TRANSACTION_setLowLatencyModeAllowed = FIRST_CALL_TRANSACTION + 5;
   static constexpr uint32_t TRANSACTION_enterGameMode = FIRST_CALL_TRANSACTION + 6;
   static constexpr uint32_t TRANSACTION_updataConnParam = FIRST_CALL_TRANSACTION + 7;
+
+#ifdef _MSC_VER
+  ::ndk::ScopedAStatus endSessionDetail()
+  {
+      return m_endSessionFun();
+  }
+
+  ::ndk::ScopedAStatus startSessionDetail
+    (
+    const std::shared_ptr<::aidl::vendor::mediatek::hardware::bluetooth::audio::IBluetoothAudioPort>& in_hostIf,
+    const ::aidl::vendor::mediatek::hardware::bluetooth::audio::AudioConfiguration& in_audioConfig,
+    const std::vector<::aidl::vendor::mediatek::hardware::bluetooth::audio::LatencyMode>& in_supportedLatencyModes,
+    ::aidl::android::hardware::common::fmq::MQDescriptor<int8_t, ::aidl::android::hardware::common::fmq::SynchronizedReadWrite>* _aidl_return
+    )
+  {
+      return m_startSessionFun( in_hostIf, in_audioConfig, in_supportedLatencyModes, _aidl_return );
+  }
+
+  ::ndk::ScopedAStatus streamStartedDetail( ::aidl::vendor::mediatek::hardware::bluetooth::audio::BluetoothAudioStatus in_status )
+  {
+      return m_streamStartedFun( in_status );
+  }
+
+  ::ndk::ScopedAStatus streamSuspendedDetail( ::aidl::vendor::mediatek::hardware::bluetooth::audio::BluetoothAudioStatus in_status )
+  {
+      return m_streamSuspendedFun( in_status );
+  }
+
+  ::ndk::ScopedAStatus updateAudioConfigurationDetail( const ::aidl::vendor::mediatek::hardware::bluetooth::audio::AudioConfiguration& in_audioConfig )
+  {
+      return m_updateAudioConfigurationFun( in_audioConfig );
+  }
+
+  ::ndk::ScopedAStatus setLowLatencyModeAllowedDetail( bool in_allowed )
+  {
+      return m_setLowLatencyModeAllowedFun( in_allowed );
+  }
+
+  ::ndk::ScopedAStatus enterGameModeDetail( int8_t in_enter )
+  {
+      return m_enterGameModeFun( in_enter );
+  }
+
+  ::ndk::ScopedAStatus updataConnParamDetail( const ::aidl::vendor::mediatek::hardware::bluetooth::audio::ConnParam& in_connPrameter )
+  {
+      return m_updataConnParamFun( in_connPrameter );
+  }
+
+  ::ndk::ScopedAStatus getInterfaceVersionDetail( int32_t* _aidl_return )
+  {
+      return m_getInterfaceVersionFun( _aidl_return );
+  }
+
+  ::ndk::ScopedAStatus getInterfaceHashDetail( std::string* _aidl_return )
+  {
+      return m_getInterfaceHashFun( _aidl_return );
+  }
+
+  std::function<::ndk::ScopedAStatus()> m_endSessionFun;
+  std::function<::ndk::ScopedAStatus(const std::shared_ptr<::aidl::vendor::mediatek::hardware::bluetooth::audio::IBluetoothAudioPort>&,
+                                     const ::aidl::vendor::mediatek::hardware::bluetooth::audio::AudioConfiguration&,
+                                     const std::vector<::aidl::vendor::mediatek::hardware::bluetooth::audio::LatencyMode>&,
+                                     ::aidl::android::hardware::common::fmq::MQDescriptor<int8_t, ::aidl::android::hardware::common::fmq::SynchronizedReadWrite>*
+                                    )> m_startSessionFun;
+  std::function<::ndk::ScopedAStatus(::aidl::vendor::mediatek::hardware::bluetooth::audio::BluetoothAudioStatus)> m_streamStartedFun;
+  std::function<::ndk::ScopedAStatus(::aidl::vendor::mediatek::hardware::bluetooth::audio::BluetoothAudioStatus)> m_streamSuspendedFun;
+  std::function<::ndk::ScopedAStatus(const ::aidl::vendor::mediatek::hardware::bluetooth::audio::AudioConfiguration&)> m_updateAudioConfigurationFun;
+  std::function<::ndk::ScopedAStatus(bool)> m_setLowLatencyModeAllowedFun;
+  std::function<::ndk::ScopedAStatus(int8_t)> m_enterGameModeFun;
+  std::function<::ndk::ScopedAStatus(const ::aidl::vendor::mediatek::hardware::bluetooth::audio::ConnParam&)> m_updataConnParamFun;
+  std::function<::ndk::ScopedAStatus(int32_t*)> m_getInterfaceVersionFun;
+  std::function<::ndk::ScopedAStatus(std::string*)> m_getInterfaceHashFun;
+#endif
 
   static std::shared_ptr<IBluetoothAudioProvider> fromBinder(const ::ndk::SpAIBinder& binder);
   static binder_status_t writeToParcel(AParcel* parcel, const std::shared_ptr<IBluetoothAudioProvider>& instance);

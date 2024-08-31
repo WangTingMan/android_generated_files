@@ -30,6 +30,9 @@ public:
   ::ndk::ScopedAStatus getInterfaceHash(std::string* _aidl_return) final;
 protected:
   ::ndk::SpAIBinder createBinder() override;
+#ifdef _MSC_VER
+  ::ndk::SpAIBinder createBinderDetail();
+#endif
 private:
 };
 class VENDORMEDIATEKHARDWAREBLUETOOTHAUDIOV1NDK_API IBluetoothAudioProviderDelegator : public BnBluetoothAudioProvider {

@@ -66,7 +66,7 @@ class IBluetoothAudioProviderDelegator;
 class ANDROIDHARDWAREBLUETOOTHAUDIOV4NDK_EXPORTS_API IBluetoothAudioProvider : public ::ndk::ICInterface {
 public:
   typedef IBluetoothAudioProviderDelegator DefaultDelegator;
-  static const char* descriptor;
+  static inline constexpr const char* descriptor = "android.hardware.bluetooth.audio.IBluetoothAudioProvider";
   IBluetoothAudioProvider();
   virtual ~IBluetoothAudioProvider();
 

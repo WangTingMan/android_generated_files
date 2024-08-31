@@ -1149,7 +1149,6 @@ BnBluetoothAudioProvider::~BnBluetoothAudioProvider() {}
   return ::ndk::ScopedAStatus(AStatus_newOk());
 }
 // Source for IBluetoothAudioProvider
-const char* IBluetoothAudioProvider::descriptor = "android.hardware.bluetooth.audio.IBluetoothAudioProvider";
 IBluetoothAudioProvider::IBluetoothAudioProvider() {}
 IBluetoothAudioProvider::~IBluetoothAudioProvider() {}
 

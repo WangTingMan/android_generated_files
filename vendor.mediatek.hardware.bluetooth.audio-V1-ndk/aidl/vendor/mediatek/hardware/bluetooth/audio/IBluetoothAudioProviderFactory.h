@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <string>
@@ -32,7 +33,7 @@ class IBluetoothAudioProviderFactoryDelegator;
 class VENDORMEDIATEKHARDWAREBLUETOOTHAUDIOV1NDK_API IBluetoothAudioProviderFactory : public ::ndk::ICInterface {
 public:
   typedef IBluetoothAudioProviderFactoryDelegator DefaultDelegator;
-  static const char* descriptor;
+  static inline constexpr const char* descriptor = "vendor.mediatek.hardware.bluetooth.audio.IBluetoothAudioProviderFactory";
   IBluetoothAudioProviderFactory();
   virtual ~IBluetoothAudioProviderFactory();
 
@@ -40,6 +41,29 @@ public:
   static inline const std::string hash = "d20fbfdf5a8fd5ffa178a1169e7fd7dad4a6e0a3";
   static constexpr uint32_t TRANSACTION_getProviderCapabilities = FIRST_CALL_TRANSACTION + 0;
   static constexpr uint32_t TRANSACTION_openProvider = FIRST_CALL_TRANSACTION + 1;
+
+#ifdef _MSC_VER
+  ::ndk::ScopedAStatus getProviderCapabilitiesDetail( ::aidl::vendor::mediatek::hardware::bluetooth::audio::SessionType in_sessionType, std::vector<::aidl::vendor::mediatek::hardware::bluetooth::audio::AudioCapabilities>* _aidl_return )
+  {
+      return m_getProviderCapabilitiesFun( in_sessionType, _aidl_return );
+  }
+  ::ndk::ScopedAStatus openProviderDetail( ::aidl::vendor::mediatek::hardware::bluetooth::audio::SessionType in_sessionType, std::shared_ptr<::aidl::vendor::mediatek::hardware::bluetooth::audio::IBluetoothAudioProvider>* _aidl_return )
+  {
+      return m_openProviderFun( in_sessionType, _aidl_return );
+  }
+  ::ndk::ScopedAStatus getInterfaceVersionDetail( int32_t* _aidl_return )
+  {
+      return getInterfaceVersionDetailFun( _aidl_return );
+  }
+  ::ndk::ScopedAStatus getInterfaceHashDetail( std::string* _aidl_return )
+  {
+      return getInterfaceHashDetailFun( _aidl_return );
+  }
+  std::function<::ndk::ScopedAStatus(::aidl::vendor::mediatek::hardware::bluetooth::audio::SessionType, std::vector<::aidl::vendor::mediatek::hardware::bluetooth::audio::AudioCapabilities>*)> m_getProviderCapabilitiesFun;
+  std::function<::ndk::ScopedAStatus(::aidl::vendor::mediatek::hardware::bluetooth::audio::SessionType, std::shared_ptr<::aidl::vendor::mediatek::hardware::bluetooth::audio::IBluetoothAudioProvider>*)> m_openProviderFun;
+  std::function<::ndk::ScopedAStatus(int32_t*)> getInterfaceVersionDetailFun;
+  std::function<::ndk::ScopedAStatus(std::string*)> getInterfaceHashDetailFun;
+#endif
 
   static std::shared_ptr<IBluetoothAudioProviderFactory> fromBinder(const ::ndk::SpAIBinder& binder);
   static binder_status_t writeToParcel(AParcel* parcel, const std::shared_ptr<IBluetoothAudioProviderFactory>& instance);

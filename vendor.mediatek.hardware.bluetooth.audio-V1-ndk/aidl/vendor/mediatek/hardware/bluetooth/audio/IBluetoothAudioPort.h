@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <string>
@@ -37,7 +38,7 @@ class IBluetoothAudioPortDelegator;
 class VENDORMEDIATEKHARDWAREBLUETOOTHAUDIOV1NDK_API IBluetoothAudioPort : public ::ndk::ICInterface {
 public:
   typedef IBluetoothAudioPortDelegator DefaultDelegator;
-  static const char* descriptor;
+  static inline constexpr const char* descriptor = "vendor.mediatek.hardware.bluetooth.audio.IBluetoothAudioPort";
   IBluetoothAudioPort();
   virtual ~IBluetoothAudioPort();
 
@@ -51,6 +52,70 @@ public:
   static constexpr uint32_t TRANSACTION_updateSinkMetadata = FIRST_CALL_TRANSACTION + 5;
   static constexpr uint32_t TRANSACTION_setLatencyMode = FIRST_CALL_TRANSACTION + 6;
   static constexpr uint32_t TRANSACTION_enterGameMode = FIRST_CALL_TRANSACTION + 7;
+
+#ifdef _MSC_VER
+  ::ndk::ScopedAStatus getPresentationPositionDetail( ::aidl::vendor::mediatek::hardware::bluetooth::audio::PresentationPosition* _aidl_return )
+  {
+      return m_getPresentationPositionFun( _aidl_return );
+  }
+
+  ::ndk::ScopedAStatus startStreamDetail( bool in_isLowLatency )
+  {
+      return m_startStreamFun( in_isLowLatency );
+  }
+
+  ::ndk::ScopedAStatus stopStreamDetail()
+  {
+      return m_stopStreamFun();
+  }
+
+  ::ndk::ScopedAStatus suspendStreamDetail()
+  {
+      return m_suspendStreamFun();
+  }
+
+  ::ndk::ScopedAStatus updateSourceMetadataDetail( const ::aidl::android::hardware::audio::common::SourceMetadata& in_sourceMetadata )
+  {
+      return m_updateSourceMetadataFun( in_sourceMetadata );
+  }
+
+  ::ndk::ScopedAStatus updateSinkMetadataDetail( const ::aidl::android::hardware::audio::common::SinkMetadata& in_sinkMetadata )
+  {
+      return m_updateSinkMetadataFun( in_sinkMetadata );
+  }
+
+  ::ndk::ScopedAStatus setLatencyModeDetail( ::aidl::vendor::mediatek::hardware::bluetooth::audio::LatencyMode in_latencyMode )
+  {
+      return m_setLatencyModeFun( in_latencyMode );
+  }
+
+  ::ndk::ScopedAStatus enterGameModeDetail( int8_t in_enter )
+  {
+      return m_enterGameModeFun( in_enter );
+  }
+
+  ::ndk::ScopedAStatus getInterfaceVersionDetail( int32_t* _aidl_return )
+  {
+      return m_getInterfaceVersionFun( _aidl_return );
+  }
+
+  ::ndk::ScopedAStatus getInterfaceHashDetail( std::string* _aidl_return )
+  {
+      return m_getInterfaceHashFun( _aidl_return );
+  }
+
+  std::function<::ndk::ScopedAStatus(::aidl::vendor::mediatek::hardware::bluetooth::audio::PresentationPosition*)> m_getPresentationPositionFun;
+  std::function<::ndk::ScopedAStatus(bool)> m_startStreamFun;
+  std::function<::ndk::ScopedAStatus()> m_stopStreamFun;
+  std::function<::ndk::ScopedAStatus()> m_suspendStreamFun;
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::hardware::audio::common::SourceMetadata&)> m_updateSourceMetadataFun;
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::hardware::audio::common::SinkMetadata&)> m_updateSinkMetadataFun;
+  std::function<::ndk::ScopedAStatus(::aidl::vendor::mediatek::hardware::bluetooth::audio::LatencyMode)> m_setLatencyModeFun;
+  std::function<::ndk::ScopedAStatus(int8_t)> m_enterGameModeFun;
+  std::function<::ndk::ScopedAStatus(int32_t*)> m_getInterfaceVersionFun;
+  std::function<::ndk::ScopedAStatus(std::string*)> m_getInterfaceHashFun;
+
+#endif
 
   static std::shared_ptr<IBluetoothAudioPort> fromBinder(const ::ndk::SpAIBinder& binder);
   static binder_status_t writeToParcel(AParcel* parcel, const std::shared_ptr<IBluetoothAudioPort>& instance);
