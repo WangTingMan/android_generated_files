@@ -428,7 +428,6 @@ namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace audio {
-const char* IBluetoothAudioProviderFactory::ProviderInfo::descriptor = "android.hardware.bluetooth.audio.IBluetoothAudioProviderFactory.ProviderInfo";
 
 binder_status_t IBluetoothAudioProviderFactory::ProviderInfo::readFromParcel(const AParcel* _aidl_parcel) {
   binder_status_t _aidl_ret_status = STATUS_OK;

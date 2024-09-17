@@ -557,9 +557,18 @@ BpBluetoothAudioPort::~BpBluetoothAudioPort() {}
 BnBluetoothAudioPort::BnBluetoothAudioPort() {
 #ifdef _MSC_VER
     using namespace std::placeholders;
-    setBinderCreater( std::bind(&BnBluetoothAudioPort::createBinder, this) );
-    m_getInterfaceVersionFun = std::bind( &BnBluetoothAudioPort::getInterfaceVersion, this, _1 );
-    m_getInterfaceHashFun = std::bind( &BnBluetoothAudioPort::getInterfaceHash, this, _1 );
+    setBinderCreater( [this]()mutable->::ndk::SpAIBinder
+                      {
+                          return this->BnBluetoothAudioPort::createBinder();
+                      });
+    m_getInterfaceVersionFun = [ this ]( int32_t* _aidl_return )mutable->::ndk::ScopedAStatus
+        {
+            return this->BnBluetoothAudioPort::getInterfaceVersion( _aidl_return );
+        };
+    m_getInterfaceHashFun = [ this ]( std::string* _aidl_return )mutable->::ndk::ScopedAStatus
+        {
+            return this->BnBluetoothAudioPort::getInterfaceHash( _aidl_return );
+        };
 #endif
 }
 BnBluetoothAudioPort::~BnBluetoothAudioPort() {}

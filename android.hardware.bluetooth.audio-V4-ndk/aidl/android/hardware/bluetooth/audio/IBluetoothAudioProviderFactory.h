@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <string>
@@ -43,7 +44,7 @@ public:
   class ProviderInfo {
   public:
     typedef std::false_type fixed_size;
-    static const char* descriptor;
+    static inline constexpr const char* descriptor = "android.hardware.bluetooth.audio.IBluetoothAudioProviderFactory.ProviderInfo";
 
     std::string name;
     std::vector<::aidl::android::hardware::bluetooth::audio::CodecInfo> codecInfos;
@@ -87,6 +88,12 @@ public:
   static constexpr uint32_t TRANSACTION_getProviderCapabilities = FIRST_CALL_TRANSACTION + 0;
   static constexpr uint32_t TRANSACTION_openProvider = FIRST_CALL_TRANSACTION + 1;
   static constexpr uint32_t TRANSACTION_getProviderInfo = FIRST_CALL_TRANSACTION + 2;
+
+#ifdef _MSC_VER
+  std::function<::ndk::ScopedAStatus(SessionType, std::vector<AudioCapabilities>*)> m_getProviderCapabilitiesFun;
+  std::function<::ndk::ScopedAStatus(SessionType, std::shared_ptr<IBluetoothAudioProvider>*)> m_openProviderFun;
+  std::function<::ndk::ScopedAStatus(SessionType, std::optional<IBluetoothAudioProviderFactory::ProviderInfo>*)> m_getProviderInfoFun;
+#endif
 
   static std::shared_ptr<IBluetoothAudioProviderFactory> fromBinder(const ::ndk::SpAIBinder& binder);
   static binder_status_t writeToParcel(AParcel* parcel, const std::shared_ptr<IBluetoothAudioProviderFactory>& instance);

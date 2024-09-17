@@ -70,7 +70,7 @@ public:
   IBluetoothAudioProvider();
   virtual ~IBluetoothAudioProvider();
 
-  class LeAudioDeviceCapabilities {
+  class ANDROIDHARDWAREBLUETOOTHAUDIOV4NDK_EXPORTS_API LeAudioDeviceCapabilities {
   public:
     typedef std::false_type fixed_size;
     static const char* descriptor;
