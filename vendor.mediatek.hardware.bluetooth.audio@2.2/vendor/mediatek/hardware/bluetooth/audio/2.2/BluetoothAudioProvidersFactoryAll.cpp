@@ -42,6 +42,11 @@ __attribute__((destructor))static void static_destructor() {
 
 static AutoHolder holder( static_constructor, static_destructor );
 
+const char* IBluetoothAudioProvidersFactory::getDescriptorName()
+{
+    return IBluetoothAudioProvidersFactory::descriptor;
+}
+
 // Methods from ::vendor::mediatek::hardware::bluetooth::audio::V2_1::IBluetoothAudioProvidersFactory follow.
 // no default implementation for: ::android::hardware::Return<void> IBluetoothAudioProvidersFactory::openProvider(::vendor::mediatek::hardware::bluetooth::audio::V2_1::SessionType sessionType, openProvider_cb _hidl_cb)
 // no default implementation for: ::android::hardware::Return<void> IBluetoothAudioProvidersFactory::getProviderCapabilities(::vendor::mediatek::hardware::bluetooth::audio::V2_1::SessionType sessionType, getProviderCapabilities_cb _hidl_cb)

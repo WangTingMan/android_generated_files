@@ -44,6 +44,8 @@ struct ANDROIDHARDWAREBLUETOOTHAUDIO22_API IBluetoothAudioProvidersFactory : pub
      */
     static inline constexpr const char* descriptor = "vendor.mediatek.hardware.bluetooth.audio@2.2::IBluetoothAudioProvidersFactory";
 
+    static const char* getDescriptorName();
+
     /**
      * Returns whether this object's implementation is outside of the current process.
      */
