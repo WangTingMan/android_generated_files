@@ -23,7 +23,7 @@ static binder_status_t _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetooth
     case (FIRST_CALL_TRANSACTION + 0 /*getPresentationPosition*/): {
       ::aidl::vendor::mediatek::hardware::bluetooth::audio::PresentationPosition _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getPresentationPosition(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getPresentationPositionDetail(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -40,7 +40,7 @@ static binder_status_t _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetooth
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_isLowLatency);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->startStream(in_isLowLatency);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->startStreamDetail(in_isLowLatency);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -50,7 +50,7 @@ static binder_status_t _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetooth
     }
     case (FIRST_CALL_TRANSACTION + 2 /*stopStream*/): {
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->stopStream();
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->stopStreamDetail();
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -60,7 +60,7 @@ static binder_status_t _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetooth
     }
     case (FIRST_CALL_TRANSACTION + 3 /*suspendStream*/): {
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->suspendStream();
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->suspendStreamDetail();
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -74,7 +74,7 @@ static binder_status_t _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetooth
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_sourceMetadata);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->updateSourceMetadata(in_sourceMetadata);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->updateSourceMetadataDetail(in_sourceMetadata);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -88,7 +88,7 @@ static binder_status_t _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetooth
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_sinkMetadata);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->updateSinkMetadata(in_sinkMetadata);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->updateSinkMetadataDetail(in_sinkMetadata);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -102,7 +102,7 @@ static binder_status_t _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetooth
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_latencyMode);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->setLatencyMode(in_latencyMode);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->setLatencyModeDetail(in_latencyMode);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -116,7 +116,7 @@ static binder_status_t _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetooth
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_enter);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->enterGameMode(in_enter);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->enterGameModeDetail(in_enter);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -127,7 +127,7 @@ static binder_status_t _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetooth
     case (FIRST_CALL_TRANSACTION + 16777214 /*getInterfaceVersion*/): {
       int32_t _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceVersion(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceVersionDetail(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -141,7 +141,7 @@ static binder_status_t _aidl_vendor_mediatek_hardware_bluetooth_audio_IBluetooth
     case (FIRST_CALL_TRANSACTION + 16777213 /*getInterfaceHash*/): {
       std::string _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceHash(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceHashDetail(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 

@@ -232,7 +232,13 @@ void BpHwBluetoothAudioProvider::onLastStrongRef(const void* id) {
 
         _hidl_err = _hidl_reply.readUint8((uint8_t *)&_hidl_out_status);
         if (_hidl_err != ::android::OK) { return; }
-
+#ifdef _MSC_VER
+        ::android::hardware::MQDescriptorSync<uint8_t> _hidl_detaMQ;
+        _hidl_out_dataMQ = &_hidl_detaMQ;
+        std::string mq_json;
+        _hidl_reply.readDynamic( mq_json );
+        _hidl_detaMQ.fromString( mq_json );
+#else
         size_t _hidl__hidl_out_dataMQ_parent;
 
         _hidl_err = _hidl_reply.readBuffer(sizeof(*_hidl_out_dataMQ), &_hidl__hidl_out_dataMQ_parent,  reinterpret_cast<const void **>(&_hidl_out_dataMQ));
@@ -244,7 +250,7 @@ void BpHwBluetoothAudioProvider::onLastStrongRef(const void* id) {
                 _hidl_reply,
                 _hidl__hidl_out_dataMQ_parent,
                 0 /* parentOffset */);
-
+#endif
         if (_hidl_err != ::android::OK) { return; }
 
         _hidl_cb(_hidl_out_status, *_hidl_out_dataMQ);
@@ -521,7 +527,9 @@ BnHwBluetoothAudioProvider::~BnHwBluetoothAudioProvider() {
 
         _hidl_err = _hidl_reply->writeUint8((uint8_t)_hidl_out_status);
         if (_hidl_err != ::android::OK) { goto _hidl_error; }
-
+#ifdef _MSC_VER
+        _hidl_reply->writeDynamic( _hidl_out_dataMQ.toString() );
+#else
         size_t _hidl__hidl_out_dataMQ_parent;
 
         _hidl_err = _hidl_reply->writeBuffer(&_hidl_out_dataMQ, sizeof(_hidl_out_dataMQ), &_hidl__hidl_out_dataMQ_parent);
@@ -532,7 +540,7 @@ BnHwBluetoothAudioProvider::~BnHwBluetoothAudioProvider() {
                 _hidl_reply,
                 _hidl__hidl_out_dataMQ_parent,
                 0 /* parentOffset */);
-
+#endif
         if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_error:

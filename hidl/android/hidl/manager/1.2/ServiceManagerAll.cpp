@@ -17,6 +17,7 @@
 #include <hidl/ServiceManagement.h>
 #include <utils/AutoHolder.h>
 #include <utils/AutoHolder.h>
+#include <hwbinder/BpHwBinder.h>
 
 #include <binder_driver/ipc_connection_token.h>
 
@@ -1106,7 +1107,11 @@ _hidl_error:
     std::string connection_name;
     connection_name = ::android::ipc_connection_token_mgr::get_instance()
         .get_current_transaction_connection_name();
-    ::android::ipc_connection_token_mgr::get_instance().add_remote_service( service_totally_name, connection_name, addr );
+    int service_id = 0;
+    service_id = ::android::ipc_connection_token_mgr::get_instance().add_remote_service( service_totally_name, connection_name, addr );
+    auto binder = ::android::sp<::android::hardware::BpHwBinder>::make( service_id );
+    service = ::android::hardware::fromBinder<::android::hidl::base::V1_0::IBase,
+        ::android::hidl::base::V1_0::BpHwBase, ::android::hidl::base::V1_0::BnHwBase>( binder );
 #else
     size_t _hidl_name_parent;
 

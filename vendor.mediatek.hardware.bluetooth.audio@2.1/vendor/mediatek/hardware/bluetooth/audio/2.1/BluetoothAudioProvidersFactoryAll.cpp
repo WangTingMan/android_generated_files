@@ -274,6 +274,11 @@ _hidl_error:
 
         if (!_hidl_status.isOk()) { return; }
 
+#ifdef _MSC_VER
+        ::android::hardware::hidl_vec<::vendor::mediatek::hardware::bluetooth::audio::V2_1::AudioCapabilities> audio_capabilities_buffer;
+        _hidl_out_audioCapabilities = &audio_capabilities_buffer;
+        _hidl_reply.readDynamic( audio_capabilities_buffer );
+#else
         size_t _hidl__hidl_out_audioCapabilities_parent;
 
         _hidl_err = _hidl_reply.readBuffer(sizeof(*_hidl_out_audioCapabilities), &_hidl__hidl_out_audioCapabilities_parent,  reinterpret_cast<const void **>(&_hidl_out_audioCapabilities));
@@ -287,7 +292,7 @@ _hidl_error:
                 _hidl_reply,
                 _hidl__hidl_out_audioCapabilities_parent,
                 0 /* parentOffset */, &_hidl__hidl_out_audioCapabilities_child);
-
+#endif
         if (_hidl_err != ::android::OK) { return; }
 
         _hidl_cb(*_hidl_out_audioCapabilities);
@@ -539,6 +544,9 @@ BnHwBluetoothAudioProvidersFactory::~BnHwBluetoothAudioProvidersFactory() {
 
         ::android::hardware::writeToParcel(::android::hardware::Status::ok(), _hidl_reply);
 
+#ifdef _MSC_VER
+        _hidl_reply->writeDynamic( _hidl_out_audioCapabilities );
+#else
         size_t _hidl__hidl_out_audioCapabilities_parent;
 
         _hidl_err = _hidl_reply->writeBuffer(&_hidl_out_audioCapabilities, sizeof(_hidl_out_audioCapabilities), &_hidl__hidl_out_audioCapabilities_parent);
@@ -551,7 +559,7 @@ BnHwBluetoothAudioProvidersFactory::~BnHwBluetoothAudioProvidersFactory() {
                 _hidl_reply,
                 _hidl__hidl_out_audioCapabilities_parent,
                 0 /* parentOffset */, &_hidl__hidl_out_audioCapabilities_child);
-
+#endif
         if (_hidl_err != ::android::OK) { goto _hidl_error; }
 
     _hidl_error:

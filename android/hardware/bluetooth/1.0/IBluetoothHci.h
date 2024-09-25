@@ -39,6 +39,8 @@ struct ANDROIDHARDWAREBLUETOOTH10_API IBluetoothHci : public ::android::hidl::ba
      */
     static inline constexpr const char* descriptor = "android.hardware.bluetooth@1.0::IBluetoothHci";
 
+    static const char* getDescriptorName();
+
     /**
      * Returns whether this object's implementation is outside of the current process.
      */

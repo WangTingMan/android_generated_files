@@ -41,6 +41,11 @@ __attribute__((destructor))static void static_destructor() {
 
 static AutoHolder holder( static_constructor, static_destructor );
 
+const char* IBluetoothHci::getDescriptorName()
+{
+    return IBluetoothHci::descriptor;
+}
+
 // Methods from ::android::hardware::bluetooth::V1_0::IBluetoothHci follow.
 // no default implementation for: ::android::hardware::Return<void> IBluetoothHci::initialize(const ::android::sp<::android::hardware::bluetooth::V1_0::IBluetoothHciCallbacks>& callback)
 // no default implementation for: ::android::hardware::Return<void> IBluetoothHci::sendHciCommand(const ::android::hardware::hidl_vec<uint8_t>& command)
