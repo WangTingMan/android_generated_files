@@ -44,6 +44,8 @@ struct VENDORQTIHARDWAREBLUETOOTHAUDIO21_API IBluetoothAudioProvidersFactory : p
      */
     static inline constexpr const char* descriptor = "vendor.qti.hardware.bluetooth_audio@2.1::IBluetoothAudioProvidersFactory";
 
+    const char* getDescriptorName();
+
     /**
      * Returns whether this object's implementation is outside of the current process.
      */

@@ -113,7 +113,14 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
 
 static AIBinder_Class* _g_aidl_android_hardware_bluetooth_audio_IBluetoothAudioProviderFactory_clazz = ::ndk::ICInterface::defineClass(IBluetoothAudioProviderFactory::descriptor, _aidl_android_hardware_bluetooth_audio_IBluetoothAudioProviderFactory_onTransact);
 
-BpBluetoothAudioProviderFactory::BpBluetoothAudioProviderFactory(const ::ndk::SpAIBinder& binder) : BpCInterface(binder) {}
+BpBluetoothAudioProviderFactory::BpBluetoothAudioProviderFactory(const ::ndk::SpAIBinder& binder) : BpCInterface(binder) {
+#ifdef _MSC_VER
+    m_getProviderCapabilitiesFun = std::bind( &BpBluetoothAudioProviderFactory::getProviderCapabilities, this, std::placeholders::_1, std::placeholders::_2 );
+    m_openProviderFun = std::bind(&BpBluetoothAudioProviderFactory::openProvider, this, std::placeholders::_1, std::placeholders::_2 );
+    m_getProviderInfoFun = std::bind(&BpBluetoothAudioProviderFactory::getProviderInfo, this, std::placeholders::_1, std::placeholders::_2 );
+    m_getInterfaceVersion = std::bind(&BpBluetoothAudioProviderFactory::getInterfaceVersion, this, std::placeholders::_1);
+#endif
+}
 BpBluetoothAudioProviderFactory::~BpBluetoothAudioProviderFactory() {}
 
 ::ndk::ScopedAStatus BpBluetoothAudioProviderFactory::getProviderCapabilities(::aidl::android::hardware::bluetooth::audio::SessionType in_sessionType, std::vector<::aidl::android::hardware::bluetooth::audio::AudioCapabilities>* _aidl_return) {
@@ -324,7 +331,11 @@ BpBluetoothAudioProviderFactory::~BpBluetoothAudioProviderFactory() {}
   return _aidl_status;
 }
 // Source for BnBluetoothAudioProviderFactory
-BnBluetoothAudioProviderFactory::BnBluetoothAudioProviderFactory() {}
+BnBluetoothAudioProviderFactory::BnBluetoothAudioProviderFactory() {
+#ifdef _MSC_VER
+    m_getInterfaceVersion = std::bind(&BnBluetoothAudioProviderFactory::getInterfaceVersion, this, std::placeholders::_1);
+#endif
+}
 BnBluetoothAudioProviderFactory::~BnBluetoothAudioProviderFactory() {}
 ::ndk::SpAIBinder BnBluetoothAudioProviderFactory::createBinder() {
   AIBinder* binder = AIBinder_new(_g_aidl_android_hardware_bluetooth_audio_IBluetoothAudioProviderFactory_clazz, static_cast<void*>(this));
