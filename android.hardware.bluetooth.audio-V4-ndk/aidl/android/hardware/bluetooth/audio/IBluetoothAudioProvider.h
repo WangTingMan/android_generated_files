@@ -301,7 +301,7 @@ public:
     typedef std::false_type fixed_size;
     static const char* descriptor;
 
-    class AseDirectionConfiguration {
+    class ANDROIDHARDWAREBLUETOOTHAUDIOV4NDK_EXPORTS_API AseDirectionConfiguration {
     public:
       typedef std::false_type fixed_size;
       static const char* descriptor;
