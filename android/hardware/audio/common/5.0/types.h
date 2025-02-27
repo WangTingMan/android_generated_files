@@ -8,6 +8,12 @@
 #include <utils/NativeHandle.h>
 #include <utils/misc.h>
 
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 namespace android {
 namespace hardware {
 namespace audio {

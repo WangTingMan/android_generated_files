@@ -7,6 +7,12 @@
 #include <utils/misc.h>
 #include <android\hardware\bluetooth\audio\2.0\ANDROIDHARDWAREBLUETOOTHAUDIO20_EXPORTS_.h>
 
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 namespace android {
 namespace hardware {
 namespace bluetooth {

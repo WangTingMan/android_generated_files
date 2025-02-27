@@ -24,7 +24,7 @@ const char* IBase::getDescriptorName()
     return descriptor;
 }
 
-__attribute__((constructor)) static void static_constructor() {
+/*__attribute__((constructor))*/ static void static_constructor() {
     ::android::hardware::details::getBnConstructorMap().set(IBase::getDescriptorName(),
             [](void *iIntf) -> ::android::sp<::android::hardware::IBinder> {
                 return new BnHwBase(static_cast<IBase *>(iIntf));
@@ -35,7 +35,7 @@ __attribute__((constructor)) static void static_constructor() {
             });
 }
 
-__attribute__((destructor))static void static_destructor() {
+/*__attribute__((destructor))*/static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IBase::getDescriptorName() );
     ::android::hardware::details::getBsConstructorMap().erase(IBase::getDescriptorName() );
 }

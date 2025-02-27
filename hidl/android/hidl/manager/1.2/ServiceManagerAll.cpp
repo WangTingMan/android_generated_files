@@ -21,6 +21,10 @@
 
 #include <binder_driver/ipc_connection_token.h>
 
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+
 namespace android {
 namespace hidl {
 namespace manager {

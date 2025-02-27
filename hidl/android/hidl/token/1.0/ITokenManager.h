@@ -256,7 +256,7 @@ struct ANDROIDHIDLTOKEN10_API ITokenManager : public ::android::hidl::base::V1_0
      * Registers a service with the service manager. For Trebilized devices, the service
      * must also be in the VINTF manifest.
      */
-    __attribute__ ((warn_unused_result))::android::status_t registerAsService(const std::string &serviceName="default");
+    /*__attribute__ ((warn_unused_result))*/::android::status_t registerAsService(const std::string &serviceName="default");
     /**
      * Registers for notifications for when a service is registered.
      */

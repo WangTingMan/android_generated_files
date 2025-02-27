@@ -16,6 +16,10 @@
 #include <hidl/ServiceManagement.h>
 #include <utils/AutoHolder.h>
 
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+
 namespace android {
 namespace hidl {
 namespace manager {

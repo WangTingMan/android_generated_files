@@ -121,8 +121,10 @@ public:
     static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
     enum : int32_t { US7500 = 1 };
     enum : int32_t { US10000 = 2 };
+    enum : int32_t { US20000 = 4 };
     enum : int32_t { US7500PREFERRED = 16 };
     enum : int32_t { US10000PREFERRED = 32 };
+    enum : int32_t { US20000PREFERRED = 0x40 };
     inline std::string toString() const {
       std::ostringstream _aidl_os;
       _aidl_os << "SupportedFrameDurations{";

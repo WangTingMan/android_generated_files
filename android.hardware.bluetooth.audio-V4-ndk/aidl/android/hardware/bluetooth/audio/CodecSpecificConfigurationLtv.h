@@ -57,6 +57,7 @@ public:
   enum class FrameDuration : int8_t {
     US7500 = 0,
     US10000 = 1,
+    US20000 = 2,
   };
 
   class AudioChannelAllocation {
@@ -90,6 +91,7 @@ public:
 
     static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
     enum : int32_t { NOT_ALLOWED = 0 };
+    enum : int32_t { MONO = 0 };
     enum : int32_t { FRONT_LEFT = 1 };
     enum : int32_t { FRONT_RIGHT = 2 };
     enum : int32_t { FRONT_CENTER = 4 };
