@@ -21,7 +21,7 @@ struct BsServiceManager : IServiceManager, ::android::hardware::details::HidlIns
      */
     typedef IServiceManager Pure;
 
-    typedef android::hardware::details::bs_tag _hidl_tag;
+    typedef ::android::hardware::details::bs_tag _hidl_tag;
 
     // Methods from ::android::hidl::manager::V1_0::IServiceManager follow.
     ::android::hardware::Return<::android::sp<::android::hidl::base::V1_0::IBase>> get(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name) override {
@@ -148,12 +148,6 @@ struct BsServiceManager : IServiceManager, ::android::hardware::details::HidlIns
         return _hidl_return;
     }
     ::android::hardware::Return<void> list(list_cb _hidl_cb) override {
-        if (_hidl_cb == nullptr) {
-            return ::android::hardware::Status::fromExceptionCode(
-                    ::android::hardware::Status::EX_ILLEGAL_ARGUMENT,
-                    "Null synchronous callback passed.");
-        }
-
         atrace_begin(ATRACE_TAG_HAL, "HIDL::IServiceManager::list::passthrough");
         #ifdef __ANDROID_DEBUGGABLE__
         if (UNLIKELY(mEnableInstrumentation)) {
@@ -184,12 +178,6 @@ struct BsServiceManager : IServiceManager, ::android::hardware::details::HidlIns
         return _hidl_return;
     }
     ::android::hardware::Return<void> listByInterface(const ::android::hardware::hidl_string& fqName, listByInterface_cb _hidl_cb) override {
-        if (_hidl_cb == nullptr) {
-            return ::android::hardware::Status::fromExceptionCode(
-                    ::android::hardware::Status::EX_ILLEGAL_ARGUMENT,
-                    "Null synchronous callback passed.");
-        }
-
         atrace_begin(ATRACE_TAG_HAL, "HIDL::IServiceManager::listByInterface::passthrough");
         #ifdef __ANDROID_DEBUGGABLE__
         if (UNLIKELY(mEnableInstrumentation)) {
@@ -266,12 +254,6 @@ struct BsServiceManager : IServiceManager, ::android::hardware::details::HidlIns
         return _hidl_return;
     }
     ::android::hardware::Return<void> debugDump(debugDump_cb _hidl_cb) override {
-        if (_hidl_cb == nullptr) {
-            return ::android::hardware::Status::fromExceptionCode(
-                    ::android::hardware::Status::EX_ILLEGAL_ARGUMENT,
-                    "Null synchronous callback passed.");
-        }
-
         atrace_begin(ATRACE_TAG_HAL, "HIDL::IServiceManager::debugDump::passthrough");
         #ifdef __ANDROID_DEBUGGABLE__
         if (UNLIKELY(mEnableInstrumentation)) {
@@ -380,12 +362,6 @@ struct BsServiceManager : IServiceManager, ::android::hardware::details::HidlIns
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
     ::android::hardware::Return<void> interfaceChain(interfaceChain_cb _hidl_cb) override {
-        if (_hidl_cb == nullptr) {
-            return ::android::hardware::Status::fromExceptionCode(
-                    ::android::hardware::Status::EX_ILLEGAL_ARGUMENT,
-                    "Null synchronous callback passed.");
-        }
-
         atrace_begin(ATRACE_TAG_HAL, "HIDL::IServiceManager::interfaceChain::passthrough");
         #ifdef __ANDROID_DEBUGGABLE__
         if (UNLIKELY(mEnableInstrumentation)) {
@@ -445,12 +421,6 @@ struct BsServiceManager : IServiceManager, ::android::hardware::details::HidlIns
         return _hidl_return;
     }
     ::android::hardware::Return<void> interfaceDescriptor(interfaceDescriptor_cb _hidl_cb) override {
-        if (_hidl_cb == nullptr) {
-            return ::android::hardware::Status::fromExceptionCode(
-                    ::android::hardware::Status::EX_ILLEGAL_ARGUMENT,
-                    "Null synchronous callback passed.");
-        }
-
         atrace_begin(ATRACE_TAG_HAL, "HIDL::IServiceManager::interfaceDescriptor::passthrough");
         #ifdef __ANDROID_DEBUGGABLE__
         if (UNLIKELY(mEnableInstrumentation)) {
@@ -481,12 +451,6 @@ struct BsServiceManager : IServiceManager, ::android::hardware::details::HidlIns
         return _hidl_return;
     }
     ::android::hardware::Return<void> getHashChain(getHashChain_cb _hidl_cb) override {
-        if (_hidl_cb == nullptr) {
-            return ::android::hardware::Status::fromExceptionCode(
-                    ::android::hardware::Status::EX_ILLEGAL_ARGUMENT,
-                    "Null synchronous callback passed.");
-        }
-
         atrace_begin(ATRACE_TAG_HAL, "HIDL::IServiceManager::getHashChain::passthrough");
         #ifdef __ANDROID_DEBUGGABLE__
         if (UNLIKELY(mEnableInstrumentation)) {
@@ -581,12 +545,6 @@ struct BsServiceManager : IServiceManager, ::android::hardware::details::HidlIns
         return _hidl_return;
     }
     ::android::hardware::Return<void> getDebugInfo(getDebugInfo_cb _hidl_cb) override {
-        if (_hidl_cb == nullptr) {
-            return ::android::hardware::Status::fromExceptionCode(
-                    ::android::hardware::Status::EX_ILLEGAL_ARGUMENT,
-                    "Null synchronous callback passed.");
-        }
-
         atrace_begin(ATRACE_TAG_HAL, "HIDL::IServiceManager::getDebugInfo::passthrough");
         #ifdef __ANDROID_DEBUGGABLE__
         if (UNLIKELY(mEnableInstrumentation)) {

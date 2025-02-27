@@ -1,0 +1,23 @@
+#pragma once
+
+#if defined(WIN32) || defined(_MSC_VER)
+
+#if defined(ANDROIDHARDWAREBLUETOOTHFINDERV1NDK_EXPORTS)
+#define ANDROIDHARDWAREBLUETOOTHFINDERV1NDK_API __declspec(dllexport)
+#else
+#define ANDROIDHARDWAREBLUETOOTHFINDERV1NDK_API __declspec(dllimport)
+#endif  // defined(ANDROIDHARDWAREBLUETOOTHFINDERV1NDK_EXPORTS)
+
+#else  // defined(WIN32)
+#if defined(ANDROIDHARDWAREBLUETOOTHFINDERV1NDK_EXPORTS)
+#define ANDROIDHARDWAREBLUETOOTHFINDERV1NDK_API __attribute__((visibility("default")))
+#else
+#define ANDROIDHARDWAREBLUETOOTHFINDERV1NDK_API
+#endif  // defined(ANDROIDHARDWAREBLUETOOTHFINDERV1NDK_EXPORTS)
+#endif
+
+#ifdef _WIN32
+#ifdef interface
+#undef interface
+#endif
+#endif

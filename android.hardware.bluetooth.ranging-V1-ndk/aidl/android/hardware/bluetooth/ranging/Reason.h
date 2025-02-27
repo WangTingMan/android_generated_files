@@ -1,0 +1,76 @@
+/*
+ * This file is auto-generated.  DO NOT MODIFY.
+ * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 1 --hash d257bb74ef61a4cbb5854f4663604dd491b4a7bf --stability vintf --min_sdk_version 33 --ninja -d out/soong/.intermediates/hardware/interfaces/bluetooth/ranging/aidl/android.hardware.bluetooth.ranging-V1-ndk-source/gen/staging/android/hardware/bluetooth/ranging/Reason.cpp.d -h out/soong/.intermediates/hardware/interfaces/bluetooth/ranging/aidl/android.hardware.bluetooth.ranging-V1-ndk-source/gen/include/staging -o out/soong/.intermediates/hardware/interfaces/bluetooth/ranging/aidl/android.hardware.bluetooth.ranging-V1-ndk-source/gen/staging -Nhardware/interfaces/bluetooth/ranging/aidl/aidl_api/android.hardware.bluetooth.ranging/1 hardware/interfaces/bluetooth/ranging/aidl/aidl_api/android.hardware.bluetooth.ranging/1/android/hardware/bluetooth/ranging/Reason.aidl
+ */
+#pragma once
+
+#include <array>
+#include <cstdint>
+#include <memory>
+#include <optional>
+#include <string>
+#include <vector>
+#include <android/binder_enums.h>
+#ifdef BINDER_STABILITY_SUPPORT
+#include <android/binder_stability.h>
+#endif  // BINDER_STABILITY_SUPPORT
+
+namespace aidl {
+namespace android {
+namespace hardware {
+namespace bluetooth {
+namespace ranging {
+enum class Reason : int32_t {
+  LOCAL_STACK_REQUEST = 0,
+  HAL_INITIATED = 1,
+  HARDWARE_INITIATED = 2,
+  ERROR_INVALID_PARAMETER = 3,
+  ERROR_UNKNOWN = 4,
+};
+
+}  // namespace ranging
+}  // namespace bluetooth
+}  // namespace hardware
+}  // namespace android
+}  // namespace aidl
+namespace aidl {
+namespace android {
+namespace hardware {
+namespace bluetooth {
+namespace ranging {
+[[nodiscard]] static inline std::string toString(Reason val) {
+  switch(val) {
+  case Reason::LOCAL_STACK_REQUEST:
+    return "LOCAL_STACK_REQUEST";
+  case Reason::HAL_INITIATED:
+    return "HAL_INITIATED";
+  case Reason::HARDWARE_INITIATED:
+    return "HARDWARE_INITIATED";
+  case Reason::ERROR_INVALID_PARAMETER:
+    return "ERROR_INVALID_PARAMETER";
+  case Reason::ERROR_UNKNOWN:
+    return "ERROR_UNKNOWN";
+  default:
+    return std::to_string(static_cast<int32_t>(val));
+  }
+}
+}  // namespace ranging
+}  // namespace bluetooth
+}  // namespace hardware
+}  // namespace android
+}  // namespace aidl
+namespace ndk {
+namespace internal {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+template <>
+constexpr inline std::array<aidl::android::hardware::bluetooth::ranging::Reason, 5> enum_values<aidl::android::hardware::bluetooth::ranging::Reason> = {
+  aidl::android::hardware::bluetooth::ranging::Reason::LOCAL_STACK_REQUEST,
+  aidl::android::hardware::bluetooth::ranging::Reason::HAL_INITIATED,
+  aidl::android::hardware::bluetooth::ranging::Reason::HARDWARE_INITIATED,
+  aidl::android::hardware::bluetooth::ranging::Reason::ERROR_INVALID_PARAMETER,
+  aidl::android::hardware::bluetooth::ranging::Reason::ERROR_UNKNOWN,
+};
+#pragma clang diagnostic pop
+}  // namespace internal
+}  // namespace ndk

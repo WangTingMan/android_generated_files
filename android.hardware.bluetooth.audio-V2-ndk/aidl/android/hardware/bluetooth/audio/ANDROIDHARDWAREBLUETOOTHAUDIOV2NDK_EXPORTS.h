@@ -1,0 +1,23 @@
+#pragma once
+
+#if defined(WIN32) || defined(_MSC_VER)
+
+#if defined(ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS)
+#define ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS_API __declspec(dllexport)
+#else
+#define ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS_API __declspec(dllimport)
+#endif  // defined(ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS)
+
+#else  // defined(WIN32)
+#if defined(ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS)
+#define ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS_API __attribute__((visibility("default")))
+#else
+#define ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS_API
+#endif  // defined(ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS)
+#endif
+
+#ifdef _WIN32
+#ifdef interface
+#undef interface
+#endif
+#endif

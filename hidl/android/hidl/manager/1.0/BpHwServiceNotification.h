@@ -5,6 +5,7 @@
 
 #include <android/hidl/manager/1.0/IHwServiceNotification.h>
 
+#include <mutex>
 namespace android {
 namespace hidl {
 namespace manager {

@@ -5,6 +5,7 @@
 
 #include <android/hidl/base/1.0/IHwBase.h>
 
+#include <mutex>
 namespace android {
 namespace hidl {
 namespace base {

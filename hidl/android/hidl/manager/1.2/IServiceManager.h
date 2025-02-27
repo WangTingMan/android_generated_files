@@ -46,7 +46,7 @@ struct IServiceManager : public ::android::hidl::manager::V1_1::IServiceManager 
      * @return service Handle to requested service, same as provided in
      *                 IServiceManager::add. Will be nullptr if not available.
      */
-    virtual ::android::hardware::Return<::android::sp<::android::hidl::base::V1_0::IBase>> get(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name) = 0;
+    virtual ::android::hardware::Return<::android::sp<::android::hidl::base::V1_0::IBase>> get(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name) override = 0;
 
     /**
      * Register a service. The service manager must retrieve the (inherited)
@@ -68,7 +68,7 @@ struct IServiceManager : public ::android::hidl::manager::V1_1::IServiceManager 
      * @return success       Whether or not the service was registered.
      *
      */
-    virtual ::android::hardware::Return<bool> add(const ::android::hardware::hidl_string& name, const ::android::sp<::android::hidl::base::V1_0::IBase>& service) = 0;
+    virtual ::android::hardware::Return<bool> add(const ::android::hardware::hidl_string& name, const ::android::sp<::android::hidl::base::V1_0::IBase>& service) override = 0;
 
     /**
      * Get the transport of a service.
@@ -78,7 +78,7 @@ struct IServiceManager : public ::android::hidl::manager::V1_1::IServiceManager 
      *
      * @return transport Transport of service if known.
      */
-    virtual ::android::hardware::Return<::android::hidl::manager::V1_0::IServiceManager::Transport> getTransport(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name) = 0;
+    virtual ::android::hardware::Return<::android::hidl::manager::V1_0::IServiceManager::Transport> getTransport(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name) override = 0;
 
     /**
      * Return callback for list
@@ -89,7 +89,7 @@ struct IServiceManager : public ::android::hidl::manager::V1_1::IServiceManager 
      *
      * @return fqInstanceNames List of fully-qualified instance names.
      */
-    virtual ::android::hardware::Return<void> list(list_cb _hidl_cb) = 0;
+    virtual ::android::hardware::Return<void> list(list_cb _hidl_cb) override = 0;
 
     /**
      * Return callback for listByInterface
@@ -102,7 +102,7 @@ struct IServiceManager : public ::android::hidl::manager::V1_1::IServiceManager 
      *
      * @return instanceNames List of instance names running the particular service.
      */
-    virtual ::android::hardware::Return<void> listByInterface(const ::android::hardware::hidl_string& fqName, listByInterface_cb _hidl_cb) = 0;
+    virtual ::android::hardware::Return<void> listByInterface(const ::android::hardware::hidl_string& fqName, listByInterface_cb _hidl_cb) override = 0;
 
     /**
      * Register for service notifications for a particular service. Must support
@@ -122,7 +122,7 @@ struct IServiceManager : public ::android::hidl::manager::V1_1::IServiceManager 
      *
      * @return success Whether or not registration was successful.
      */
-    virtual ::android::hardware::Return<bool> registerForNotifications(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name, const ::android::sp<::android::hidl::manager::V1_0::IServiceNotification>& callback) = 0;
+    virtual ::android::hardware::Return<bool> registerForNotifications(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name, const ::android::sp<::android::hidl::manager::V1_0::IServiceNotification>& callback) override = 0;
 
     /**
      * Return callback for debugDump
@@ -133,7 +133,7 @@ struct IServiceManager : public ::android::hidl::manager::V1_1::IServiceManager 
      * @return info a vector where each item contains debug information for each
      *         instance.
      */
-    virtual ::android::hardware::Return<void> debugDump(debugDump_cb _hidl_cb) = 0;
+    virtual ::android::hardware::Return<void> debugDump(debugDump_cb _hidl_cb) override = 0;
 
     /**
      * When the passthrough service manager returns a service via
@@ -142,7 +142,7 @@ struct IServiceManager : public ::android::hidl::manager::V1_1::IServiceManager 
      * called get(). Binderized service manager must record this PID, which can
      * be retrieved via debugDump.
      */
-    virtual ::android::hardware::Return<void> registerPassthroughClient(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name) = 0;
+    virtual ::android::hardware::Return<void> registerPassthroughClient(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name) override = 0;
 
     /**
      * Unregister for service notifications for a specific callback.
@@ -155,7 +155,7 @@ struct IServiceManager : public ::android::hidl::manager::V1_1::IServiceManager 
      *
      * @return success Whether or not deregistration was successful.
      */
-    virtual ::android::hardware::Return<bool> unregisterForNotifications(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name, const ::android::sp<::android::hidl::manager::V1_0::IServiceNotification>& callback) = 0;
+    virtual ::android::hardware::Return<bool> unregisterForNotifications(const ::android::hardware::hidl_string& fqName, const ::android::hardware::hidl_string& name, const ::android::sp<::android::hidl::manager::V1_0::IServiceNotification>& callback) override = 0;
 
     /**
      * Adds a callback that must be called when the specified server has no clients.

@@ -5,6 +5,7 @@
 
 #include <android/hidl/manager/1.2/IHwServiceManager.h>
 
+#include <mutex>
 namespace android {
 namespace hidl {
 namespace manager {

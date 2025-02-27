@@ -33,7 +33,7 @@ struct BnHwBase : public ::android::hardware::BHwBinder, public ::android::hardw
     typedef ::android::hardware::details::bnhw_tag _hidl_tag;
 
     ::android::sp<IBase> getImpl() { return _hidl_mImpl; }
-    bool checkSubclass(const void* subclassID) const;
+    bool checkSubclass(const void* subclassID) const override;
     // Methods from ::android::hidl::base::V1_0::IBase follow.
     static ::android::status_t _hidl_interfaceChain(
             ::android::hidl::base::V1_0::BnHwBase* _hidl_this,

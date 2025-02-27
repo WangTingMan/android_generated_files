@@ -1,9 +1,12 @@
 #define LOG_TAG "android.hidl.base@1.0::types"
 
-#include <android/log.h>
+#include <log/log.h>
 #include <cutils/trace.h>
 #include <hidl/HidlTransportSupport.h>
 
+#include <hidl/Static.h>
+#include <hwbinder/ProcessState.h>
+#include <utils/Trace.h>
 #include <android/hidl/base/1.0/types.h>
 #include <android/hidl/base/1.0/hwtypes.h>
 
