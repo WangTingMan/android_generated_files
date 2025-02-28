@@ -1,3 +1,7 @@
+/*
+ * This file is auto-generated.  DO NOT MODIFY.
+ * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 2 --hash b82d5b9f717bbf63bef774ee8f72572065ca61ce --stability vintf --min_sdk_version 31 -pout/soong/.intermediates/hardware/interfaces/common/aidl/android.hardware.common_interface/2/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/common/fmq/aidl/android.hardware.common.fmq_interface/1/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.common_interface/1/preprocessed.aidl --ninja -d out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V2-ndk-source/gen/staging/android/hardware/bluetooth/audio/UnicastCapability.cpp.d -h out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V2-ndk-source/gen/include/staging -o out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V2-ndk-source/gen/staging -Nhardware/interfaces/bluetooth/audio/aidl/aidl_api/android.hardware.bluetooth.audio/2 hardware/interfaces/bluetooth/audio/aidl/aidl_api/android.hardware.bluetooth.audio/2/android/hardware/bluetooth/audio/UnicastCapability.aidl
+ */
 #pragma once
 
 #include <array>
@@ -28,6 +32,9 @@
 
 #include "ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS.h"
 
+namespace aidl::android::hardware::bluetooth::audio {
+class Lc3Capabilities;
+}  // namespace aidl::android::hardware::bluetooth::audio
 namespace aidl {
 namespace android {
 namespace hardware {
@@ -48,32 +55,32 @@ public:
     binder_status_t readFromParcel(const AParcel* parcel);
     binder_status_t writeToParcel(AParcel* parcel) const;
 
-    inline bool operator!=(const VendorCapabilities& rhs) const {
-      return std::tie(extension) != std::tie(rhs.extension);
+    inline bool operator==(const VendorCapabilities& _rhs) const {
+      return std::tie(extension) == std::tie(_rhs.extension);
     }
-    inline bool operator<(const VendorCapabilities& rhs) const {
-      return std::tie(extension) < std::tie(rhs.extension);
+    inline bool operator<(const VendorCapabilities& _rhs) const {
+      return std::tie(extension) < std::tie(_rhs.extension);
     }
-    inline bool operator<=(const VendorCapabilities& rhs) const {
-      return std::tie(extension) <= std::tie(rhs.extension);
+    inline bool operator!=(const VendorCapabilities& _rhs) const {
+      return !(*this == _rhs);
     }
-    inline bool operator==(const VendorCapabilities& rhs) const {
-      return std::tie(extension) == std::tie(rhs.extension);
+    inline bool operator>(const VendorCapabilities& _rhs) const {
+      return _rhs < *this;
     }
-    inline bool operator>(const VendorCapabilities& rhs) const {
-      return std::tie(extension) > std::tie(rhs.extension);
+    inline bool operator>=(const VendorCapabilities& _rhs) const {
+      return !(*this < _rhs);
     }
-    inline bool operator>=(const VendorCapabilities& rhs) const {
-      return std::tie(extension) >= std::tie(rhs.extension);
+    inline bool operator<=(const VendorCapabilities& _rhs) const {
+      return !(_rhs < *this);
     }
 
     static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
     inline std::string toString() const {
-      std::ostringstream os;
-      os << "VendorCapabilities{";
-      os << "extension: " << ::android::internal::ToString(extension);
-      os << "}";
-      return os.str();
+      std::ostringstream _aidl_os;
+      _aidl_os << "VendorCapabilities{";
+      _aidl_os << "extension: " << ::android::internal::ToString(extension);
+      _aidl_os << "}";
+      return _aidl_os.str();
     }
   };
   class LeAudioCodecCapabilities {
@@ -138,23 +145,23 @@ public:
     binder_status_t readFromParcel(const AParcel* _parcel);
     binder_status_t writeToParcel(AParcel* _parcel) const;
 
-    inline bool operator!=(const LeAudioCodecCapabilities& rhs) const {
-      return _value != rhs._value;
+    inline bool operator==(const LeAudioCodecCapabilities& _rhs) const {
+      return _value == _rhs._value;
     }
-    inline bool operator<(const LeAudioCodecCapabilities& rhs) const {
-      return _value < rhs._value;
+    inline bool operator<(const LeAudioCodecCapabilities& _rhs) const {
+      return _value < _rhs._value;
     }
-    inline bool operator<=(const LeAudioCodecCapabilities& rhs) const {
-      return _value <= rhs._value;
+    inline bool operator!=(const LeAudioCodecCapabilities& _rhs) const {
+      return !(*this == _rhs);
     }
-    inline bool operator==(const LeAudioCodecCapabilities& rhs) const {
-      return _value == rhs._value;
+    inline bool operator>(const LeAudioCodecCapabilities& _rhs) const {
+      return _rhs < *this;
     }
-    inline bool operator>(const LeAudioCodecCapabilities& rhs) const {
-      return _value > rhs._value;
+    inline bool operator>=(const LeAudioCodecCapabilities& _rhs) const {
+      return !(*this < _rhs);
     }
-    inline bool operator>=(const LeAudioCodecCapabilities& rhs) const {
-      return _value >= rhs._value;
+    inline bool operator<=(const LeAudioCodecCapabilities& _rhs) const {
+      return !(_rhs < *this);
     }
 
     static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
@@ -180,36 +187,36 @@ public:
   binder_status_t readFromParcel(const AParcel* parcel);
   binder_status_t writeToParcel(AParcel* parcel) const;
 
-  inline bool operator!=(const UnicastCapability& rhs) const {
-    return std::tie(codecType, supportedChannel, deviceCount, channelCountPerDevice, leAudioCodecCapabilities) != std::tie(rhs.codecType, rhs.supportedChannel, rhs.deviceCount, rhs.channelCountPerDevice, rhs.leAudioCodecCapabilities);
+  inline bool operator==(const UnicastCapability& _rhs) const {
+    return std::tie(codecType, supportedChannel, deviceCount, channelCountPerDevice, leAudioCodecCapabilities) == std::tie(_rhs.codecType, _rhs.supportedChannel, _rhs.deviceCount, _rhs.channelCountPerDevice, _rhs.leAudioCodecCapabilities);
   }
-  inline bool operator<(const UnicastCapability& rhs) const {
-    return std::tie(codecType, supportedChannel, deviceCount, channelCountPerDevice, leAudioCodecCapabilities) < std::tie(rhs.codecType, rhs.supportedChannel, rhs.deviceCount, rhs.channelCountPerDevice, rhs.leAudioCodecCapabilities);
+  inline bool operator<(const UnicastCapability& _rhs) const {
+    return std::tie(codecType, supportedChannel, deviceCount, channelCountPerDevice, leAudioCodecCapabilities) < std::tie(_rhs.codecType, _rhs.supportedChannel, _rhs.deviceCount, _rhs.channelCountPerDevice, _rhs.leAudioCodecCapabilities);
   }
-  inline bool operator<=(const UnicastCapability& rhs) const {
-    return std::tie(codecType, supportedChannel, deviceCount, channelCountPerDevice, leAudioCodecCapabilities) <= std::tie(rhs.codecType, rhs.supportedChannel, rhs.deviceCount, rhs.channelCountPerDevice, rhs.leAudioCodecCapabilities);
+  inline bool operator!=(const UnicastCapability& _rhs) const {
+    return !(*this == _rhs);
   }
-  inline bool operator==(const UnicastCapability& rhs) const {
-    return std::tie(codecType, supportedChannel, deviceCount, channelCountPerDevice, leAudioCodecCapabilities) == std::tie(rhs.codecType, rhs.supportedChannel, rhs.deviceCount, rhs.channelCountPerDevice, rhs.leAudioCodecCapabilities);
+  inline bool operator>(const UnicastCapability& _rhs) const {
+    return _rhs < *this;
   }
-  inline bool operator>(const UnicastCapability& rhs) const {
-    return std::tie(codecType, supportedChannel, deviceCount, channelCountPerDevice, leAudioCodecCapabilities) > std::tie(rhs.codecType, rhs.supportedChannel, rhs.deviceCount, rhs.channelCountPerDevice, rhs.leAudioCodecCapabilities);
+  inline bool operator>=(const UnicastCapability& _rhs) const {
+    return !(*this < _rhs);
   }
-  inline bool operator>=(const UnicastCapability& rhs) const {
-    return std::tie(codecType, supportedChannel, deviceCount, channelCountPerDevice, leAudioCodecCapabilities) >= std::tie(rhs.codecType, rhs.supportedChannel, rhs.deviceCount, rhs.channelCountPerDevice, rhs.leAudioCodecCapabilities);
+  inline bool operator<=(const UnicastCapability& _rhs) const {
+    return !(_rhs < *this);
   }
 
   static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
   inline std::string toString() const {
-    std::ostringstream os;
-    os << "UnicastCapability{";
-    os << "codecType: " << ::android::internal::ToString(codecType);
-    os << ", supportedChannel: " << ::android::internal::ToString(supportedChannel);
-    os << ", deviceCount: " << ::android::internal::ToString(deviceCount);
-    os << ", channelCountPerDevice: " << ::android::internal::ToString(channelCountPerDevice);
-    os << ", leAudioCodecCapabilities: " << ::android::internal::ToString(leAudioCodecCapabilities);
-    os << "}";
-    return os.str();
+    std::ostringstream _aidl_os;
+    _aidl_os << "UnicastCapability{";
+    _aidl_os << "codecType: " << ::android::internal::ToString(codecType);
+    _aidl_os << ", supportedChannel: " << ::android::internal::ToString(supportedChannel);
+    _aidl_os << ", deviceCount: " << ::android::internal::ToString(deviceCount);
+    _aidl_os << ", channelCountPerDevice: " << ::android::internal::ToString(channelCountPerDevice);
+    _aidl_os << ", leAudioCodecCapabilities: " << ::android::internal::ToString(leAudioCodecCapabilities);
+    _aidl_os << "}";
+    return _aidl_os.str();
   }
 };
 }  // namespace audio

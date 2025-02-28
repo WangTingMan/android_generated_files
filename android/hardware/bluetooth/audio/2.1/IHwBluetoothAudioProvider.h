@@ -13,7 +13,6 @@
 #include <hidl/Status.h>
 #include <hwbinder/IBinder.h>
 #include <hwbinder/Parcel.h>
-#include <android\hardware\bluetooth\audio\2.1\ANDROIDHARDWAREBLUETOOTHAUDIO21_EXPORTS_.h>
 
 namespace android {
 namespace hardware {

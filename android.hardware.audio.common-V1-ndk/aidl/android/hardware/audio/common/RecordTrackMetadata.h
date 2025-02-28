@@ -17,6 +17,9 @@
 
 #include "ANDROIDHARDWAREAUDIOCOMMONV1NDK_EXPORTS.h"
 
+namespace aidl::android::media::audio::common{
+class AudioDevice;
+}  // namespace aidl::android::media::audio::common
 namespace aidl {
 namespace android {
 namespace hardware {
@@ -36,36 +39,36 @@ public:
   binder_status_t readFromParcel(const AParcel* parcel);
   binder_status_t writeToParcel(AParcel* parcel) const;
 
-  inline bool operator!=(const RecordTrackMetadata& rhs) const {
-    return std::tie(source, gain, destinationDevice, channelMask, tags) != std::tie(rhs.source, rhs.gain, rhs.destinationDevice, rhs.channelMask, rhs.tags);
+  inline bool operator==(const RecordTrackMetadata& _rhs) const {
+    return std::tie(source, gain, destinationDevice, channelMask, tags) == std::tie(_rhs.source, _rhs.gain, _rhs.destinationDevice, _rhs.channelMask, _rhs.tags);
   }
-  inline bool operator<(const RecordTrackMetadata& rhs) const {
-    return std::tie(source, gain, destinationDevice, channelMask, tags) < std::tie(rhs.source, rhs.gain, rhs.destinationDevice, rhs.channelMask, rhs.tags);
+  inline bool operator<(const RecordTrackMetadata& _rhs) const {
+    return std::tie(source, gain, destinationDevice, channelMask, tags) < std::tie(_rhs.source, _rhs.gain, _rhs.destinationDevice, _rhs.channelMask, _rhs.tags);
   }
-  inline bool operator<=(const RecordTrackMetadata& rhs) const {
-    return std::tie(source, gain, destinationDevice, channelMask, tags) <= std::tie(rhs.source, rhs.gain, rhs.destinationDevice, rhs.channelMask, rhs.tags);
+  inline bool operator!=(const RecordTrackMetadata& _rhs) const {
+    return !(*this == _rhs);
   }
-  inline bool operator==(const RecordTrackMetadata& rhs) const {
-    return std::tie(source, gain, destinationDevice, channelMask, tags) == std::tie(rhs.source, rhs.gain, rhs.destinationDevice, rhs.channelMask, rhs.tags);
+  inline bool operator>(const RecordTrackMetadata& _rhs) const {
+    return _rhs < *this;
   }
-  inline bool operator>(const RecordTrackMetadata& rhs) const {
-    return std::tie(source, gain, destinationDevice, channelMask, tags) > std::tie(rhs.source, rhs.gain, rhs.destinationDevice, rhs.channelMask, rhs.tags);
+  inline bool operator>=(const RecordTrackMetadata& _rhs) const {
+    return !(*this < _rhs);
   }
-  inline bool operator>=(const RecordTrackMetadata& rhs) const {
-    return std::tie(source, gain, destinationDevice, channelMask, tags) >= std::tie(rhs.source, rhs.gain, rhs.destinationDevice, rhs.channelMask, rhs.tags);
+  inline bool operator<=(const RecordTrackMetadata& _rhs) const {
+    return !(_rhs < *this);
   }
 
   static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
   inline std::string toString() const {
-    std::ostringstream os;
-    os << "RecordTrackMetadata{";
-    os << "source: " << ::android::internal::ToString(source);
-    os << ", gain: " << ::android::internal::ToString(gain);
-    os << ", destinationDevice: " << ::android::internal::ToString(destinationDevice);
-    os << ", channelMask: " << ::android::internal::ToString(channelMask);
-    os << ", tags: " << ::android::internal::ToString(tags);
-    os << "}";
-    return os.str();
+    std::ostringstream _aidl_os;
+    _aidl_os << "RecordTrackMetadata{";
+    _aidl_os << "source: " << ::android::internal::ToString(source);
+    _aidl_os << ", gain: " << ::android::internal::ToString(gain);
+    _aidl_os << ", destinationDevice: " << ::android::internal::ToString(destinationDevice);
+    _aidl_os << ", channelMask: " << ::android::internal::ToString(channelMask);
+    _aidl_os << ", tags: " << ::android::internal::ToString(tags);
+    _aidl_os << "}";
+    return _aidl_os.str();
   }
 };
 }  // namespace common

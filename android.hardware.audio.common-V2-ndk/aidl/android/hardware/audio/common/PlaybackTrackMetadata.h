@@ -41,37 +41,37 @@ public:
   binder_status_t readFromParcel(const AParcel* parcel);
   binder_status_t writeToParcel(AParcel* parcel) const;
 
-  inline bool operator!=(const PlaybackTrackMetadata& rhs) const {
-    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) != std::tie(rhs.usage, rhs.contentType, rhs.gain, rhs.channelMask, rhs.sourceDevice, rhs.tags);
+  inline bool operator==(const PlaybackTrackMetadata& _rhs) const {
+    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) == std::tie(_rhs.usage, _rhs.contentType, _rhs.gain, _rhs.channelMask, _rhs.sourceDevice, _rhs.tags);
   }
-  inline bool operator<(const PlaybackTrackMetadata& rhs) const {
-    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) < std::tie(rhs.usage, rhs.contentType, rhs.gain, rhs.channelMask, rhs.sourceDevice, rhs.tags);
+  inline bool operator<(const PlaybackTrackMetadata& _rhs) const {
+    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) < std::tie(_rhs.usage, _rhs.contentType, _rhs.gain, _rhs.channelMask, _rhs.sourceDevice, _rhs.tags);
   }
-  inline bool operator<=(const PlaybackTrackMetadata& rhs) const {
-    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) <= std::tie(rhs.usage, rhs.contentType, rhs.gain, rhs.channelMask, rhs.sourceDevice, rhs.tags);
+  inline bool operator!=(const PlaybackTrackMetadata& _rhs) const {
+    return !(*this == _rhs);
   }
-  inline bool operator==(const PlaybackTrackMetadata& rhs) const {
-    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) == std::tie(rhs.usage, rhs.contentType, rhs.gain, rhs.channelMask, rhs.sourceDevice, rhs.tags);
+  inline bool operator>(const PlaybackTrackMetadata& _rhs) const {
+    return _rhs < *this;
   }
-  inline bool operator>(const PlaybackTrackMetadata& rhs) const {
-    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) > std::tie(rhs.usage, rhs.contentType, rhs.gain, rhs.channelMask, rhs.sourceDevice, rhs.tags);
+  inline bool operator>=(const PlaybackTrackMetadata& _rhs) const {
+    return !(*this < _rhs);
   }
-  inline bool operator>=(const PlaybackTrackMetadata& rhs) const {
-    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) >= std::tie(rhs.usage, rhs.contentType, rhs.gain, rhs.channelMask, rhs.sourceDevice, rhs.tags);
+  inline bool operator<=(const PlaybackTrackMetadata& _rhs) const {
+    return !(_rhs < *this);
   }
 
   static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
   inline std::string toString() const {
-    std::ostringstream os;
-    os << "PlaybackTrackMetadata{";
-    os << "usage: " << ::android::internal::ToString(usage);
-    os << ", contentType: " << ::android::internal::ToString(contentType);
-    os << ", gain: " << ::android::internal::ToString(gain);
-    os << ", channelMask: " << ::android::internal::ToString(channelMask);
-    os << ", sourceDevice: " << ::android::internal::ToString(sourceDevice);
-    os << ", tags: " << ::android::internal::ToString(tags);
-    os << "}";
-    return os.str();
+    std::ostringstream _aidl_os;
+    _aidl_os << "PlaybackTrackMetadata{";
+    _aidl_os << "usage: " << ::android::internal::ToString(usage);
+    _aidl_os << ", contentType: " << ::android::internal::ToString(contentType);
+    _aidl_os << ", gain: " << ::android::internal::ToString(gain);
+    _aidl_os << ", channelMask: " << ::android::internal::ToString(channelMask);
+    _aidl_os << ", sourceDevice: " << ::android::internal::ToString(sourceDevice);
+    _aidl_os << ", tags: " << ::android::internal::ToString(tags);
+    _aidl_os << "}";
+    return _aidl_os.str();
   }
 };
 }  // namespace common

@@ -1,3 +1,7 @@
+/*
+ * This file is auto-generated.  DO NOT MODIFY.
+ * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 1 --hash 985ad49c876a50c60c726dc87f60cb598fd087ad --stability vintf --min_sdk_version 29 --ninja -d out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V1-ndk-source/gen/staging/android/media/audio/common/AudioPortConfig.cpp.d -h out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V1-ndk-source/gen/include/staging -o out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V1-ndk-source/gen/staging -Nsystem/hardware/interfaces/media/aidl_api/android.media.audio.common.types/1 system/hardware/interfaces/media/aidl_api/android.media.audio.common.types/1/android/media/audio/common/AudioPortConfig.aidl
+ */
 #pragma once
 
 #include <cstdint>
@@ -19,7 +23,11 @@
 #endif  // BINDER_STABILITY_SUPPORT
 
 #include "ANDROIDMEDIAAUDIOCOMMONTYPESV1NDK_EXPORTS.h"
-
+namespace aidl::android::media::audio::common {
+class AudioFormatDescription;
+class AudioGainConfig;
+class Int;
+}  // namespace aidl::android::media::audio::common
 namespace aidl {
 namespace android {
 namespace media {
@@ -42,39 +50,39 @@ public:
   binder_status_t readFromParcel(const AParcel* parcel);
   binder_status_t writeToParcel(AParcel* parcel) const;
 
-  inline bool operator!=(const AudioPortConfig& rhs) const {
-    return std::tie(id, portId, sampleRate, channelMask, format, gain, flags, ext) != std::tie(rhs.id, rhs.portId, rhs.sampleRate, rhs.channelMask, rhs.format, rhs.gain, rhs.flags, rhs.ext);
+  inline bool operator==(const AudioPortConfig& _rhs) const {
+    return std::tie(id, portId, sampleRate, channelMask, format, gain, flags, ext) == std::tie(_rhs.id, _rhs.portId, _rhs.sampleRate, _rhs.channelMask, _rhs.format, _rhs.gain, _rhs.flags, _rhs.ext);
   }
-  inline bool operator<(const AudioPortConfig& rhs) const {
-    return std::tie(id, portId, sampleRate, channelMask, format, gain, flags, ext) < std::tie(rhs.id, rhs.portId, rhs.sampleRate, rhs.channelMask, rhs.format, rhs.gain, rhs.flags, rhs.ext);
+  inline bool operator<(const AudioPortConfig& _rhs) const {
+    return std::tie(id, portId, sampleRate, channelMask, format, gain, flags, ext) < std::tie(_rhs.id, _rhs.portId, _rhs.sampleRate, _rhs.channelMask, _rhs.format, _rhs.gain, _rhs.flags, _rhs.ext);
   }
-  inline bool operator<=(const AudioPortConfig& rhs) const {
-    return std::tie(id, portId, sampleRate, channelMask, format, gain, flags, ext) <= std::tie(rhs.id, rhs.portId, rhs.sampleRate, rhs.channelMask, rhs.format, rhs.gain, rhs.flags, rhs.ext);
+  inline bool operator!=(const AudioPortConfig& _rhs) const {
+    return !(*this == _rhs);
   }
-  inline bool operator==(const AudioPortConfig& rhs) const {
-    return std::tie(id, portId, sampleRate, channelMask, format, gain, flags, ext) == std::tie(rhs.id, rhs.portId, rhs.sampleRate, rhs.channelMask, rhs.format, rhs.gain, rhs.flags, rhs.ext);
+  inline bool operator>(const AudioPortConfig& _rhs) const {
+    return _rhs < *this;
   }
-  inline bool operator>(const AudioPortConfig& rhs) const {
-    return std::tie(id, portId, sampleRate, channelMask, format, gain, flags, ext) > std::tie(rhs.id, rhs.portId, rhs.sampleRate, rhs.channelMask, rhs.format, rhs.gain, rhs.flags, rhs.ext);
+  inline bool operator>=(const AudioPortConfig& _rhs) const {
+    return !(*this < _rhs);
   }
-  inline bool operator>=(const AudioPortConfig& rhs) const {
-    return std::tie(id, portId, sampleRate, channelMask, format, gain, flags, ext) >= std::tie(rhs.id, rhs.portId, rhs.sampleRate, rhs.channelMask, rhs.format, rhs.gain, rhs.flags, rhs.ext);
+  inline bool operator<=(const AudioPortConfig& _rhs) const {
+    return !(_rhs < *this);
   }
 
   static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
   inline std::string toString() const {
-    std::ostringstream os;
-    os << "AudioPortConfig{";
-    os << "id: " << ::android::internal::ToString(id);
-    os << ", portId: " << ::android::internal::ToString(portId);
-    os << ", sampleRate: " << ::android::internal::ToString(sampleRate);
-    os << ", channelMask: " << ::android::internal::ToString(channelMask);
-    os << ", format: " << ::android::internal::ToString(format);
-    os << ", gain: " << ::android::internal::ToString(gain);
-    os << ", flags: " << ::android::internal::ToString(flags);
-    os << ", ext: " << ::android::internal::ToString(ext);
-    os << "}";
-    return os.str();
+    std::ostringstream _aidl_os;
+    _aidl_os << "AudioPortConfig{";
+    _aidl_os << "id: " << ::android::internal::ToString(id);
+    _aidl_os << ", portId: " << ::android::internal::ToString(portId);
+    _aidl_os << ", sampleRate: " << ::android::internal::ToString(sampleRate);
+    _aidl_os << ", channelMask: " << ::android::internal::ToString(channelMask);
+    _aidl_os << ", format: " << ::android::internal::ToString(format);
+    _aidl_os << ", gain: " << ::android::internal::ToString(gain);
+    _aidl_os << ", flags: " << ::android::internal::ToString(flags);
+    _aidl_os << ", ext: " << ::android::internal::ToString(ext);
+    _aidl_os << "}";
+    return _aidl_os.str();
   }
 };
 }  // namespace common

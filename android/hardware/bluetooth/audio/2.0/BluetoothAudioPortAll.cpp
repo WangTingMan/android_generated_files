@@ -7,7 +7,6 @@
 #include <hidl/Static.h>
 #include <hwbinder/ProcessState.h>
 #include <utils/Trace.h>
-#include <utils/AutoHolder.h>
 #include <android/hidl/manager/1.0/IServiceManager.h>
 #include <android/hardware/bluetooth/audio/2.0/BpHwBluetoothAudioPort.h>
 #include <android/hardware/bluetooth/audio/2.0/BnHwBluetoothAudioPort.h>

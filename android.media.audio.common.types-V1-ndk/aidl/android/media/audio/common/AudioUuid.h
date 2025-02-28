@@ -1,3 +1,7 @@
+/*
+ * This file is auto-generated.  DO NOT MODIFY.
+ * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 1 --hash 985ad49c876a50c60c726dc87f60cb598fd087ad --stability vintf --min_sdk_version 29 --ninja -d out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V1-ndk-source/gen/staging/android/media/audio/common/AudioUuid.cpp.d -h out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V1-ndk-source/gen/include/staging -o out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V1-ndk-source/gen/staging -Nsystem/hardware/interfaces/media/aidl_api/android.media.audio.common.types/1 system/hardware/interfaces/media/aidl_api/android.media.audio.common.types/1/android/media/audio/common/AudioUuid.aidl
+ */
 #pragma once
 
 #include <cstdint>
@@ -33,36 +37,36 @@ public:
   binder_status_t readFromParcel(const AParcel* parcel);
   binder_status_t writeToParcel(AParcel* parcel) const;
 
-  inline bool operator!=(const AudioUuid& rhs) const {
-    return std::tie(timeLow, timeMid, timeHiAndVersion, clockSeq, node) != std::tie(rhs.timeLow, rhs.timeMid, rhs.timeHiAndVersion, rhs.clockSeq, rhs.node);
+  inline bool operator==(const AudioUuid& _rhs) const {
+    return std::tie(timeLow, timeMid, timeHiAndVersion, clockSeq, node) == std::tie(_rhs.timeLow, _rhs.timeMid, _rhs.timeHiAndVersion, _rhs.clockSeq, _rhs.node);
   }
-  inline bool operator<(const AudioUuid& rhs) const {
-    return std::tie(timeLow, timeMid, timeHiAndVersion, clockSeq, node) < std::tie(rhs.timeLow, rhs.timeMid, rhs.timeHiAndVersion, rhs.clockSeq, rhs.node);
+  inline bool operator<(const AudioUuid& _rhs) const {
+    return std::tie(timeLow, timeMid, timeHiAndVersion, clockSeq, node) < std::tie(_rhs.timeLow, _rhs.timeMid, _rhs.timeHiAndVersion, _rhs.clockSeq, _rhs.node);
   }
-  inline bool operator<=(const AudioUuid& rhs) const {
-    return std::tie(timeLow, timeMid, timeHiAndVersion, clockSeq, node) <= std::tie(rhs.timeLow, rhs.timeMid, rhs.timeHiAndVersion, rhs.clockSeq, rhs.node);
+  inline bool operator!=(const AudioUuid& _rhs) const {
+    return !(*this == _rhs);
   }
-  inline bool operator==(const AudioUuid& rhs) const {
-    return std::tie(timeLow, timeMid, timeHiAndVersion, clockSeq, node) == std::tie(rhs.timeLow, rhs.timeMid, rhs.timeHiAndVersion, rhs.clockSeq, rhs.node);
+  inline bool operator>(const AudioUuid& _rhs) const {
+    return _rhs < *this;
   }
-  inline bool operator>(const AudioUuid& rhs) const {
-    return std::tie(timeLow, timeMid, timeHiAndVersion, clockSeq, node) > std::tie(rhs.timeLow, rhs.timeMid, rhs.timeHiAndVersion, rhs.clockSeq, rhs.node);
+  inline bool operator>=(const AudioUuid& _rhs) const {
+    return !(*this < _rhs);
   }
-  inline bool operator>=(const AudioUuid& rhs) const {
-    return std::tie(timeLow, timeMid, timeHiAndVersion, clockSeq, node) >= std::tie(rhs.timeLow, rhs.timeMid, rhs.timeHiAndVersion, rhs.clockSeq, rhs.node);
+  inline bool operator<=(const AudioUuid& _rhs) const {
+    return !(_rhs < *this);
   }
 
   static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
   inline std::string toString() const {
-    std::ostringstream os;
-    os << "AudioUuid{";
-    os << "timeLow: " << ::android::internal::ToString(timeLow);
-    os << ", timeMid: " << ::android::internal::ToString(timeMid);
-    os << ", timeHiAndVersion: " << ::android::internal::ToString(timeHiAndVersion);
-    os << ", clockSeq: " << ::android::internal::ToString(clockSeq);
-    os << ", node: " << ::android::internal::ToString(node);
-    os << "}";
-    return os.str();
+    std::ostringstream _aidl_os;
+    _aidl_os << "AudioUuid{";
+    _aidl_os << "timeLow: " << ::android::internal::ToString(timeLow);
+    _aidl_os << ", timeMid: " << ::android::internal::ToString(timeMid);
+    _aidl_os << ", timeHiAndVersion: " << ::android::internal::ToString(timeHiAndVersion);
+    _aidl_os << ", clockSeq: " << ::android::internal::ToString(clockSeq);
+    _aidl_os << ", node: " << ::android::internal::ToString(node);
+    _aidl_os << "}";
+    return _aidl_os.str();
   }
 };
 }  // namespace common

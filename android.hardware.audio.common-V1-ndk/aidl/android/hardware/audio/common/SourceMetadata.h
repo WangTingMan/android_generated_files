@@ -15,6 +15,9 @@
 
 #include "ANDROIDHARDWAREAUDIOCOMMONV1NDK_EXPORTS.h"
 
+namespace aidl::android::hardware::audio::common {
+class PlaybackTrackMetadata;
+}  // namespace aidl::android::hardware::audio::common
 namespace aidl {
 namespace android {
 namespace hardware {
@@ -30,32 +33,32 @@ public:
   binder_status_t readFromParcel(const AParcel* parcel);
   binder_status_t writeToParcel(AParcel* parcel) const;
 
-  inline bool operator!=(const SourceMetadata& rhs) const {
-    return std::tie(tracks) != std::tie(rhs.tracks);
+  inline bool operator==(const SourceMetadata& _rhs) const {
+    return std::tie(tracks) == std::tie(_rhs.tracks);
   }
-  inline bool operator<(const SourceMetadata& rhs) const {
-    return std::tie(tracks) < std::tie(rhs.tracks);
+  inline bool operator<(const SourceMetadata& _rhs) const {
+    return std::tie(tracks) < std::tie(_rhs.tracks);
   }
-  inline bool operator<=(const SourceMetadata& rhs) const {
-    return std::tie(tracks) <= std::tie(rhs.tracks);
+  inline bool operator!=(const SourceMetadata& _rhs) const {
+    return !(*this == _rhs);
   }
-  inline bool operator==(const SourceMetadata& rhs) const {
-    return std::tie(tracks) == std::tie(rhs.tracks);
+  inline bool operator>(const SourceMetadata& _rhs) const {
+    return _rhs < *this;
   }
-  inline bool operator>(const SourceMetadata& rhs) const {
-    return std::tie(tracks) > std::tie(rhs.tracks);
+  inline bool operator>=(const SourceMetadata& _rhs) const {
+    return !(*this < _rhs);
   }
-  inline bool operator>=(const SourceMetadata& rhs) const {
-    return std::tie(tracks) >= std::tie(rhs.tracks);
+  inline bool operator<=(const SourceMetadata& _rhs) const {
+    return !(_rhs < *this);
   }
 
   static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
   inline std::string toString() const {
-    std::ostringstream os;
-    os << "SourceMetadata{";
-    os << "tracks: " << ::android::internal::ToString(tracks);
-    os << "}";
-    return os.str();
+    std::ostringstream _aidl_os;
+    _aidl_os << "SourceMetadata{";
+    _aidl_os << "tracks: " << ::android::internal::ToString(tracks);
+    _aidl_os << "}";
+    return _aidl_os.str();
   }
 };
 }  // namespace common
