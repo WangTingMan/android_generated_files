@@ -1,0 +1,1 @@
+out: android.hidl.token@1.0.so
