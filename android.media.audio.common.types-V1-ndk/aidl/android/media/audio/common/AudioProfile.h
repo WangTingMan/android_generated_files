@@ -21,6 +21,9 @@
 
 #include "ANDROIDMEDIAAUDIOCOMMONTYPESV1NDK_EXPORTS.h"
 
+namespace aidl::android::media::audio::common {
+class AudioFormatDescription;
+}  // namespace aidl::android::media::audio::common
 namespace aidl {
 namespace android {
 namespace media {
