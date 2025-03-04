@@ -1,3 +1,11 @@
+/*
+ * This file is auto-generated.  DO NOT MODIFY.
+ * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 1 --hash 985ad49c876a50c60c726dc87f60cb598fd087ad -t --stability vintf --min_sdk_version 29 --ninja -d out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V1-ndk-source/gen/staging/android/media/audio/common/AudioPortExt.cpp.d -h out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V1-ndk-source/gen/include/staging -o out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V1-ndk-source/gen/staging -Nsystem/hardware/interfaces/media/aidl_api/android.media.audio.common.types/1 system/hardware/interfaces/media/aidl_api/android.media.audio.common.types/1/android/media/audio/common/AudioPortExt.aidl
+ *
+ * DO NOT CHECK THIS FILE INTO A CODE TREE (e.g. git, etc..).
+ * ALWAYS GENERATE THIS FILE FROM UPDATED AIDL COMPILER
+ * AS A BUILD INTERMEDIATE ONLY. THIS IS NOT SOURCE CODE.
+ */
 #pragma once
 
 #include <array>
@@ -26,6 +34,10 @@
 
 #include "ANDROIDMEDIAAUDIOCOMMONTYPESV1NDK_EXPORTS.h"
 
+namespace aidl::android::media::audio::common {
+class AudioPortDeviceExt;
+class AudioPortMixExt;
+}  // namespace aidl::android::media::audio::common
 namespace aidl {
 namespace android {
 namespace media {
@@ -54,7 +66,10 @@ public:
 
   AudioPortExt() : _value(std::in_place_index<static_cast<size_t>(unspecified)>, bool(false)) { }
 
-  template <typename _Tp, typename = std::enable_if_t<_not_self<_Tp>>>
+  template <typename _Tp, typename = std::enable_if_t<
+      _not_self<_Tp> &&
+      std::is_constructible_v<std::variant<bool, ::aidl::android::media::audio::common::AudioPortDeviceExt, ::aidl::android::media::audio::common::AudioPortMixExt, int32_t>, _Tp>
+    >>
   // NOLINTNEXTLINE(google-explicit-constructor)
   constexpr AudioPortExt(_Tp&& _arg)
       : _value(std::forward<_Tp>(_arg)) {}
@@ -97,23 +112,23 @@ public:
   binder_status_t readFromParcel(const AParcel* _parcel);
   binder_status_t writeToParcel(AParcel* _parcel) const;
 
-  inline bool operator!=(const AudioPortExt& rhs) const {
-    return _value != rhs._value;
+  inline bool operator==(const AudioPortExt& _rhs) const {
+    return _value == _rhs._value;
   }
-  inline bool operator<(const AudioPortExt& rhs) const {
-    return _value < rhs._value;
+  inline bool operator<(const AudioPortExt& _rhs) const {
+    return _value < _rhs._value;
   }
-  inline bool operator<=(const AudioPortExt& rhs) const {
-    return _value <= rhs._value;
+  inline bool operator!=(const AudioPortExt& _rhs) const {
+    return !(*this == _rhs);
   }
-  inline bool operator==(const AudioPortExt& rhs) const {
-    return _value == rhs._value;
+  inline bool operator>(const AudioPortExt& _rhs) const {
+    return _rhs < *this;
   }
-  inline bool operator>(const AudioPortExt& rhs) const {
-    return _value > rhs._value;
+  inline bool operator>=(const AudioPortExt& _rhs) const {
+    return !(*this < _rhs);
   }
-  inline bool operator>=(const AudioPortExt& rhs) const {
-    return _value >= rhs._value;
+  inline bool operator<=(const AudioPortExt& _rhs) const {
+    return !(_rhs < *this);
   }
 
   static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;

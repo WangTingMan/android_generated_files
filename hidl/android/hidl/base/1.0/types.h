@@ -31,10 +31,15 @@ struct DebugInfo final {
         IS_64BIT = 1 /* ::android::hidl::base::V1_0::DebugInfo::Architecture.UNKNOWN implicitly + 1 */,
         IS_32BIT = 2 /* ::android::hidl::base::V1_0::DebugInfo::Architecture.IS_64BIT implicitly + 1 */,
     };
-
-    int32_t pid /*__attribute__ ((aligned(4)))*/;
-    uint64_t ptr /*__attribute__ ((aligned(8)))*/;
-    ::android::hidl::base::V1_0::DebugInfo::Architecture arch /*__attribute__ ((aligned(4)))*/;
+#ifdef _MSC_VER
+    int32_t pid;
+    uint64_t ptr;
+    ::android::hidl::base::V1_0::DebugInfo::Architecture arch;
+#else
+    int32_t pid __attribute__ ((aligned(4)));
+    uint64_t ptr __attribute__ ((aligned(8)));
+    ::android::hidl::base::V1_0::DebugInfo::Architecture arch __attribute__ ((aligned(4)));
+#endif
 };
 
 static_assert(offsetof(::android::hidl::base::V1_0::DebugInfo, pid) == 0, "wrong offset");

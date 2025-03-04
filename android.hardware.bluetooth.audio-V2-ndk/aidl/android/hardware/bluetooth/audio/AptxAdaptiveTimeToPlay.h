@@ -1,3 +1,11 @@
+/*
+ * This file is auto-generated.  DO NOT MODIFY.
+ * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 2 --hash b82d5b9f717bbf63bef774ee8f72572065ca61ce -t --stability vintf --min_sdk_version 31 -pout/soong/.intermediates/hardware/interfaces/common/aidl/android.hardware.common_interface/2/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/common/fmq/aidl/android.hardware.common.fmq_interface/1/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.common_interface/1/preprocessed.aidl --ninja -d out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V2-ndk-source/gen/staging/android/hardware/bluetooth/audio/AptxAdaptiveTimeToPlay.cpp.d -h out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V2-ndk-source/gen/include/staging -o out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V2-ndk-source/gen/staging -Nhardware/interfaces/bluetooth/audio/aidl/aidl_api/android.hardware.bluetooth.audio/2 hardware/interfaces/bluetooth/audio/aidl/aidl_api/android.hardware.bluetooth.audio/2/android/hardware/bluetooth/audio/AptxAdaptiveTimeToPlay.aidl
+ *
+ * DO NOT CHECK THIS FILE INTO A CODE TREE (e.g. git, etc..).
+ * ALWAYS GENERATE THIS FILE FROM UPDATED AIDL COMPILER
+ * AS A BUILD INTERMEDIATE ONLY. THIS IS NOT SOURCE CODE.
+ */
 #pragma once
 
 #include <cstdint>
@@ -34,37 +42,37 @@ public:
   binder_status_t readFromParcel(const AParcel* parcel);
   binder_status_t writeToParcel(AParcel* parcel) const;
 
-  inline bool operator!=(const AptxAdaptiveTimeToPlay& rhs) const {
-    return std::tie(lowLowLatency, highLowLatency, lowHighQuality, highHighQuality, lowTws, highTws) != std::tie(rhs.lowLowLatency, rhs.highLowLatency, rhs.lowHighQuality, rhs.highHighQuality, rhs.lowTws, rhs.highTws);
+  inline bool operator==(const AptxAdaptiveTimeToPlay& _rhs) const {
+    return std::tie(lowLowLatency, highLowLatency, lowHighQuality, highHighQuality, lowTws, highTws) == std::tie(_rhs.lowLowLatency, _rhs.highLowLatency, _rhs.lowHighQuality, _rhs.highHighQuality, _rhs.lowTws, _rhs.highTws);
   }
-  inline bool operator<(const AptxAdaptiveTimeToPlay& rhs) const {
-    return std::tie(lowLowLatency, highLowLatency, lowHighQuality, highHighQuality, lowTws, highTws) < std::tie(rhs.lowLowLatency, rhs.highLowLatency, rhs.lowHighQuality, rhs.highHighQuality, rhs.lowTws, rhs.highTws);
+  inline bool operator<(const AptxAdaptiveTimeToPlay& _rhs) const {
+    return std::tie(lowLowLatency, highLowLatency, lowHighQuality, highHighQuality, lowTws, highTws) < std::tie(_rhs.lowLowLatency, _rhs.highLowLatency, _rhs.lowHighQuality, _rhs.highHighQuality, _rhs.lowTws, _rhs.highTws);
   }
-  inline bool operator<=(const AptxAdaptiveTimeToPlay& rhs) const {
-    return std::tie(lowLowLatency, highLowLatency, lowHighQuality, highHighQuality, lowTws, highTws) <= std::tie(rhs.lowLowLatency, rhs.highLowLatency, rhs.lowHighQuality, rhs.highHighQuality, rhs.lowTws, rhs.highTws);
+  inline bool operator!=(const AptxAdaptiveTimeToPlay& _rhs) const {
+    return !(*this == _rhs);
   }
-  inline bool operator==(const AptxAdaptiveTimeToPlay& rhs) const {
-    return std::tie(lowLowLatency, highLowLatency, lowHighQuality, highHighQuality, lowTws, highTws) == std::tie(rhs.lowLowLatency, rhs.highLowLatency, rhs.lowHighQuality, rhs.highHighQuality, rhs.lowTws, rhs.highTws);
+  inline bool operator>(const AptxAdaptiveTimeToPlay& _rhs) const {
+    return _rhs < *this;
   }
-  inline bool operator>(const AptxAdaptiveTimeToPlay& rhs) const {
-    return std::tie(lowLowLatency, highLowLatency, lowHighQuality, highHighQuality, lowTws, highTws) > std::tie(rhs.lowLowLatency, rhs.highLowLatency, rhs.lowHighQuality, rhs.highHighQuality, rhs.lowTws, rhs.highTws);
+  inline bool operator>=(const AptxAdaptiveTimeToPlay& _rhs) const {
+    return !(*this < _rhs);
   }
-  inline bool operator>=(const AptxAdaptiveTimeToPlay& rhs) const {
-    return std::tie(lowLowLatency, highLowLatency, lowHighQuality, highHighQuality, lowTws, highTws) >= std::tie(rhs.lowLowLatency, rhs.highLowLatency, rhs.lowHighQuality, rhs.highHighQuality, rhs.lowTws, rhs.highTws);
+  inline bool operator<=(const AptxAdaptiveTimeToPlay& _rhs) const {
+    return !(_rhs < *this);
   }
 
   static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
   inline std::string toString() const {
-    std::ostringstream os;
-    os << "AptxAdaptiveTimeToPlay{";
-    os << "lowLowLatency: " << ::android::internal::ToString(lowLowLatency);
-    os << ", highLowLatency: " << ::android::internal::ToString(highLowLatency);
-    os << ", lowHighQuality: " << ::android::internal::ToString(lowHighQuality);
-    os << ", highHighQuality: " << ::android::internal::ToString(highHighQuality);
-    os << ", lowTws: " << ::android::internal::ToString(lowTws);
-    os << ", highTws: " << ::android::internal::ToString(highTws);
-    os << "}";
-    return os.str();
+    std::ostringstream _aidl_os;
+    _aidl_os << "AptxAdaptiveTimeToPlay{";
+    _aidl_os << "lowLowLatency: " << ::android::internal::ToString(lowLowLatency);
+    _aidl_os << ", highLowLatency: " << ::android::internal::ToString(highLowLatency);
+    _aidl_os << ", lowHighQuality: " << ::android::internal::ToString(lowHighQuality);
+    _aidl_os << ", highHighQuality: " << ::android::internal::ToString(highHighQuality);
+    _aidl_os << ", lowTws: " << ::android::internal::ToString(lowTws);
+    _aidl_os << ", highTws: " << ::android::internal::ToString(highTws);
+    _aidl_os << "}";
+    return _aidl_os.str();
   }
 };
 }  // namespace audio

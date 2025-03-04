@@ -1,3 +1,11 @@
+/*
+ * This file is auto-generated.  DO NOT MODIFY.
+ * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 1 --hash 985ad49c876a50c60c726dc87f60cb598fd087ad -t --stability vintf --min_sdk_version 29 --ninja -d out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V1-ndk-source/gen/staging/android/media/audio/common/AudioOffloadInfo.cpp.d -h out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V1-ndk-source/gen/include/staging -o out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V1-ndk-source/gen/staging -Nsystem/hardware/interfaces/media/aidl_api/android.media.audio.common.types/1 system/hardware/interfaces/media/aidl_api/android.media.audio.common.types/1/android/media/audio/common/AudioOffloadInfo.aidl
+ *
+ * DO NOT CHECK THIS FILE INTO A CODE TREE (e.g. git, etc..).
+ * ALWAYS GENERATE THIS FILE FROM UPDATED AIDL COMPILER
+ * AS A BUILD INTERMEDIATE ONLY. THIS IS NOT SOURCE CODE.
+ */
 #pragma once
 
 #include <cstdint>
@@ -17,7 +25,9 @@
 #endif  // BINDER_STABILITY_SUPPORT
 
 #include "ANDROIDMEDIAAUDIOCOMMONTYPESV1NDK_EXPORTS.h"
-
+namespace aidl::android::media::audio::common {
+class AudioConfigBase;
+}  // namespace aidl::android::media::audio::common
 namespace aidl {
 namespace android {
 namespace media {
@@ -44,43 +54,43 @@ public:
   binder_status_t readFromParcel(const AParcel* parcel);
   binder_status_t writeToParcel(AParcel* parcel) const;
 
-  inline bool operator!=(const AudioOffloadInfo& rhs) const {
-    return std::tie(base, streamType, bitRatePerSecond, durationUs, hasVideo, isStreaming, bitWidth, offloadBufferSize, usage, encapsulationMode, contentId, syncId) != std::tie(rhs.base, rhs.streamType, rhs.bitRatePerSecond, rhs.durationUs, rhs.hasVideo, rhs.isStreaming, rhs.bitWidth, rhs.offloadBufferSize, rhs.usage, rhs.encapsulationMode, rhs.contentId, rhs.syncId);
+  inline bool operator==(const AudioOffloadInfo& _rhs) const {
+    return std::tie(base, streamType, bitRatePerSecond, durationUs, hasVideo, isStreaming, bitWidth, offloadBufferSize, usage, encapsulationMode, contentId, syncId) == std::tie(_rhs.base, _rhs.streamType, _rhs.bitRatePerSecond, _rhs.durationUs, _rhs.hasVideo, _rhs.isStreaming, _rhs.bitWidth, _rhs.offloadBufferSize, _rhs.usage, _rhs.encapsulationMode, _rhs.contentId, _rhs.syncId);
   }
-  inline bool operator<(const AudioOffloadInfo& rhs) const {
-    return std::tie(base, streamType, bitRatePerSecond, durationUs, hasVideo, isStreaming, bitWidth, offloadBufferSize, usage, encapsulationMode, contentId, syncId) < std::tie(rhs.base, rhs.streamType, rhs.bitRatePerSecond, rhs.durationUs, rhs.hasVideo, rhs.isStreaming, rhs.bitWidth, rhs.offloadBufferSize, rhs.usage, rhs.encapsulationMode, rhs.contentId, rhs.syncId);
+  inline bool operator<(const AudioOffloadInfo& _rhs) const {
+    return std::tie(base, streamType, bitRatePerSecond, durationUs, hasVideo, isStreaming, bitWidth, offloadBufferSize, usage, encapsulationMode, contentId, syncId) < std::tie(_rhs.base, _rhs.streamType, _rhs.bitRatePerSecond, _rhs.durationUs, _rhs.hasVideo, _rhs.isStreaming, _rhs.bitWidth, _rhs.offloadBufferSize, _rhs.usage, _rhs.encapsulationMode, _rhs.contentId, _rhs.syncId);
   }
-  inline bool operator<=(const AudioOffloadInfo& rhs) const {
-    return std::tie(base, streamType, bitRatePerSecond, durationUs, hasVideo, isStreaming, bitWidth, offloadBufferSize, usage, encapsulationMode, contentId, syncId) <= std::tie(rhs.base, rhs.streamType, rhs.bitRatePerSecond, rhs.durationUs, rhs.hasVideo, rhs.isStreaming, rhs.bitWidth, rhs.offloadBufferSize, rhs.usage, rhs.encapsulationMode, rhs.contentId, rhs.syncId);
+  inline bool operator!=(const AudioOffloadInfo& _rhs) const {
+    return !(*this == _rhs);
   }
-  inline bool operator==(const AudioOffloadInfo& rhs) const {
-    return std::tie(base, streamType, bitRatePerSecond, durationUs, hasVideo, isStreaming, bitWidth, offloadBufferSize, usage, encapsulationMode, contentId, syncId) == std::tie(rhs.base, rhs.streamType, rhs.bitRatePerSecond, rhs.durationUs, rhs.hasVideo, rhs.isStreaming, rhs.bitWidth, rhs.offloadBufferSize, rhs.usage, rhs.encapsulationMode, rhs.contentId, rhs.syncId);
+  inline bool operator>(const AudioOffloadInfo& _rhs) const {
+    return _rhs < *this;
   }
-  inline bool operator>(const AudioOffloadInfo& rhs) const {
-    return std::tie(base, streamType, bitRatePerSecond, durationUs, hasVideo, isStreaming, bitWidth, offloadBufferSize, usage, encapsulationMode, contentId, syncId) > std::tie(rhs.base, rhs.streamType, rhs.bitRatePerSecond, rhs.durationUs, rhs.hasVideo, rhs.isStreaming, rhs.bitWidth, rhs.offloadBufferSize, rhs.usage, rhs.encapsulationMode, rhs.contentId, rhs.syncId);
+  inline bool operator>=(const AudioOffloadInfo& _rhs) const {
+    return !(*this < _rhs);
   }
-  inline bool operator>=(const AudioOffloadInfo& rhs) const {
-    return std::tie(base, streamType, bitRatePerSecond, durationUs, hasVideo, isStreaming, bitWidth, offloadBufferSize, usage, encapsulationMode, contentId, syncId) >= std::tie(rhs.base, rhs.streamType, rhs.bitRatePerSecond, rhs.durationUs, rhs.hasVideo, rhs.isStreaming, rhs.bitWidth, rhs.offloadBufferSize, rhs.usage, rhs.encapsulationMode, rhs.contentId, rhs.syncId);
+  inline bool operator<=(const AudioOffloadInfo& _rhs) const {
+    return !(_rhs < *this);
   }
 
   static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
   inline std::string toString() const {
-    std::ostringstream os;
-    os << "AudioOffloadInfo{";
-    os << "base: " << ::android::internal::ToString(base);
-    os << ", streamType: " << ::android::internal::ToString(streamType);
-    os << ", bitRatePerSecond: " << ::android::internal::ToString(bitRatePerSecond);
-    os << ", durationUs: " << ::android::internal::ToString(durationUs);
-    os << ", hasVideo: " << ::android::internal::ToString(hasVideo);
-    os << ", isStreaming: " << ::android::internal::ToString(isStreaming);
-    os << ", bitWidth: " << ::android::internal::ToString(bitWidth);
-    os << ", offloadBufferSize: " << ::android::internal::ToString(offloadBufferSize);
-    os << ", usage: " << ::android::internal::ToString(usage);
-    os << ", encapsulationMode: " << ::android::internal::ToString(encapsulationMode);
-    os << ", contentId: " << ::android::internal::ToString(contentId);
-    os << ", syncId: " << ::android::internal::ToString(syncId);
-    os << "}";
-    return os.str();
+    std::ostringstream _aidl_os;
+    _aidl_os << "AudioOffloadInfo{";
+    _aidl_os << "base: " << ::android::internal::ToString(base);
+    _aidl_os << ", streamType: " << ::android::internal::ToString(streamType);
+    _aidl_os << ", bitRatePerSecond: " << ::android::internal::ToString(bitRatePerSecond);
+    _aidl_os << ", durationUs: " << ::android::internal::ToString(durationUs);
+    _aidl_os << ", hasVideo: " << ::android::internal::ToString(hasVideo);
+    _aidl_os << ", isStreaming: " << ::android::internal::ToString(isStreaming);
+    _aidl_os << ", bitWidth: " << ::android::internal::ToString(bitWidth);
+    _aidl_os << ", offloadBufferSize: " << ::android::internal::ToString(offloadBufferSize);
+    _aidl_os << ", usage: " << ::android::internal::ToString(usage);
+    _aidl_os << ", encapsulationMode: " << ::android::internal::ToString(encapsulationMode);
+    _aidl_os << ", contentId: " << ::android::internal::ToString(contentId);
+    _aidl_os << ", syncId: " << ::android::internal::ToString(syncId);
+    _aidl_os << "}";
+    return _aidl_os.str();
   }
 };
 }  // namespace common

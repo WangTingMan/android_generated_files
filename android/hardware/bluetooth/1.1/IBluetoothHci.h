@@ -15,6 +15,12 @@
 
 #include <android/hardware/bluetooth/1.1/ANDROIDHARDWAREBLUETOOTH11_EXPORTS.h>
 
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 namespace android {
 namespace hardware {
 namespace bluetooth {
@@ -297,7 +303,7 @@ struct ANDROIDHARDWAREBLUETOOTH11_API IBluetoothHci : public ::android::hardware
      * Registers a service with the service manager. For Trebilized devices, the service
      * must also be in the VINTF manifest.
      */
-    /*__attribute__ ((warn_unused_result))*/::android::status_t registerAsService(const std::string &serviceName="default");
+    __attribute__ ((warn_unused_result))::android::status_t registerAsService(const std::string &serviceName="default");
     /**
      * Registers for notifications for when a service is registered.
      */
@@ -334,5 +340,8 @@ static inline std::string toString(const ::android::sp<::android::hardware::blue
 // global type declarations for package
 //
 
+#ifdef __attribute__
+#undef __attribute__
+#endif
 
 #endif  // HIDL_GENERATED_ANDROID_HARDWARE_BLUETOOTH_V1_1_IBLUETOOTHHCI_H

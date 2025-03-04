@@ -1,6 +1,10 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 4 --hash ac25616dda1c45dc2915d3f5ac82687a1a6f6e46 --stability vintf --min_sdk_version 31 -pout/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.common_interface/3/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/common/aidl/android.hardware.common_interface/2/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/common/fmq/aidl/android.hardware.common.fmq_interface/1/preprocessed.aidl --ninja -d out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V4-ndk-source/gen/staging/android/hardware/bluetooth/audio/CodecSpecificConfigurationLtv.cpp.d -h out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V4-ndk-source/gen/include/staging -o out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V4-ndk-source/gen/staging -Nhardware/interfaces/bluetooth/audio/aidl/aidl_api/android.hardware.bluetooth.audio/4 hardware/interfaces/bluetooth/audio/aidl/aidl_api/android.hardware.bluetooth.audio/4/android/hardware/bluetooth/audio/CodecSpecificConfigurationLtv.aidl
+ * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 4 --hash ac25616dda1c45dc2915d3f5ac82687a1a6f6e46 -t --stability vintf --min_sdk_version 31 -pout/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.common_interface/3/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/common/aidl/android.hardware.common_interface/2/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/common/fmq/aidl/android.hardware.common.fmq_interface/1/preprocessed.aidl --ninja -d out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V4-ndk-source/gen/staging/android/hardware/bluetooth/audio/CodecSpecificConfigurationLtv.cpp.d -h out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V4-ndk-source/gen/include/staging -o out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V4-ndk-source/gen/staging -Nhardware/interfaces/bluetooth/audio/aidl/aidl_api/android.hardware.bluetooth.audio/4 hardware/interfaces/bluetooth/audio/aidl/aidl_api/android.hardware.bluetooth.audio/4/android/hardware/bluetooth/audio/CodecSpecificConfigurationLtv.aidl
+ *
+ * DO NOT CHECK THIS FILE INTO A CODE TREE (e.g. git, etc..).
+ * ALWAYS GENERATE THIS FILE FROM UPDATED AIDL COMPILER
+ * AS A BUILD INTERMEDIATE ONLY. THIS IS NOT SOURCE CODE.
  */
 #pragma once
 
@@ -57,7 +61,6 @@ public:
   enum class FrameDuration : int8_t {
     US7500 = 0,
     US10000 = 1,
-    US20000 = 2,
   };
 
   class AudioChannelAllocation {
@@ -91,7 +94,6 @@ public:
 
     static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
     enum : int32_t { NOT_ALLOWED = 0 };
-    enum : int32_t { MONO = 0 };
     enum : int32_t { FRONT_LEFT = 1 };
     enum : int32_t { FRONT_RIGHT = 2 };
     enum : int32_t { FRONT_CENTER = 4 };
@@ -224,7 +226,10 @@ public:
 
   CodecSpecificConfigurationLtv() : _value(std::in_place_index<static_cast<size_t>(codecFrameBlocksPerSDU)>, ::aidl::android::hardware::bluetooth::audio::CodecSpecificConfigurationLtv::CodecFrameBlocksPerSDU()) { }
 
-  template <typename _Tp, typename = std::enable_if_t<_not_self<_Tp>>>
+  template <typename _Tp, typename = std::enable_if_t<
+      _not_self<_Tp> &&
+      std::is_constructible_v<std::variant<::aidl::android::hardware::bluetooth::audio::CodecSpecificConfigurationLtv::CodecFrameBlocksPerSDU, ::aidl::android::hardware::bluetooth::audio::CodecSpecificConfigurationLtv::SamplingFrequency, ::aidl::android::hardware::bluetooth::audio::CodecSpecificConfigurationLtv::FrameDuration, ::aidl::android::hardware::bluetooth::audio::CodecSpecificConfigurationLtv::AudioChannelAllocation, ::aidl::android::hardware::bluetooth::audio::CodecSpecificConfigurationLtv::OctetsPerCodecFrame>, _Tp>
+    >>
   // NOLINTNEXTLINE(google-explicit-constructor)
   constexpr CodecSpecificConfigurationLtv(_Tp&& _arg)
       : _value(std::forward<_Tp>(_arg)) {}

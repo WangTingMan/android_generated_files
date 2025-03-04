@@ -14,6 +14,12 @@
 #include <hidl/ServiceManagement.h>
 #include <utils/AutoHolder.h>
 
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 namespace android {
 namespace hidl {
 namespace base {
@@ -24,7 +30,7 @@ const char* IBase::getDescriptorName()
     return descriptor;
 }
 
-/*__attribute__((constructor))*/ static void static_constructor() {
+__attribute__((constructor)) static void static_constructor() {
     ::android::hardware::details::getBnConstructorMap().set(IBase::getDescriptorName(),
             [](void *iIntf) -> ::android::sp<::android::hardware::IBinder> {
                 return new BnHwBase(static_cast<IBase *>(iIntf));
@@ -35,7 +41,7 @@ const char* IBase::getDescriptorName()
             });
 }
 
-/*__attribute__((destructor))*/static void static_destructor() {
+__attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IBase::getDescriptorName() );
     ::android::hardware::details::getBsConstructorMap().erase(IBase::getDescriptorName() );
 }

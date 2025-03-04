@@ -1,6 +1,6 @@
 #pragma once
-#include "btaudiohal_flags_c_lib_export_.h"
 
+#include "btaudiohal_flags_c_lib_export_.h"
 
 #ifdef __cplusplus
 
@@ -12,13 +12,17 @@ class flag_provider_interface {
 public:
     virtual ~flag_provider_interface() = default;
     virtual bool dsa_lea() = 0;
+    virtual bool leaudio_report_broadcast_ac_to_hal() = 0;
 };
 
-BTAUDIOHALFLAGSCLIB_API extern std::unique_ptr<flag_provider_interface> provider_;
+extern BTAUDIOHALFLAGSCLIB_API std::unique_ptr<flag_provider_interface> provider_;
 
 
 inline bool dsa_lea() {
-    return false;
+    return true;
+}
+inline bool leaudio_report_broadcast_ac_to_hal() {
+    return true;
 }
 
 }
@@ -28,6 +32,7 @@ extern "C" {
 
 
 BTAUDIOHALFLAGSCLIB_API bool com_android_btaudio_hal_flags_dsa_lea();
+BTAUDIOHALFLAGSCLIB_API bool com_android_btaudio_hal_flags_leaudio_report_broadcast_ac_to_hal();
 
 #ifdef __cplusplus
 } // extern "C"

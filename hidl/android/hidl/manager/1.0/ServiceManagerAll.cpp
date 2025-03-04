@@ -18,8 +18,10 @@
 #include <binder_driver/ipc_connection_token.h>
 #include <hwbinder/BpHwBinder.h>
 
+#ifdef _MSC_VER
 #ifndef __attribute__
 #define __attribute__(...)
+#endif
 #endif
 
 namespace android {

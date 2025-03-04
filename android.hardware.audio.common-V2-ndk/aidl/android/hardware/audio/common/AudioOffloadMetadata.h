@@ -1,3 +1,11 @@
+/*
+ * This file is auto-generated.  DO NOT MODIFY.
+ * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 2 --hash 6780ccb29120b4c7d3ed60f55a23c13b0431f3a4 -t --stability vintf --min_sdk_version 31 -pout/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types_interface/2/preprocessed.aidl --ninja -d out/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.common-V2-ndk-source/gen/staging/android/hardware/audio/common/AudioOffloadMetadata.cpp.d -h out/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.common-V2-ndk-source/gen/include/staging -o out/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.common-V2-ndk-source/gen/staging -Nhardware/interfaces/audio/aidl/aidl_api/android.hardware.audio.common/2 hardware/interfaces/audio/aidl/aidl_api/android.hardware.audio.common/2/android/hardware/audio/common/AudioOffloadMetadata.aidl
+ *
+ * DO NOT CHECK THIS FILE INTO A CODE TREE (e.g. git, etc..).
+ * ALWAYS GENERATE THIS FILE FROM UPDATED AIDL COMPILER
+ * AS A BUILD INTERMEDIATE ONLY. THIS IS NOT SOURCE CODE.
+ */
 #pragma once
 
 #include <cstdint>
@@ -34,36 +42,36 @@ public:
   binder_status_t readFromParcel(const AParcel* parcel);
   binder_status_t writeToParcel(AParcel* parcel) const;
 
-  inline bool operator!=(const AudioOffloadMetadata& rhs) const {
-    return std::tie(sampleRate, channelMask, averageBitRatePerSecond, delayFrames, paddingFrames) != std::tie(rhs.sampleRate, rhs.channelMask, rhs.averageBitRatePerSecond, rhs.delayFrames, rhs.paddingFrames);
+  inline bool operator==(const AudioOffloadMetadata& _rhs) const {
+    return std::tie(sampleRate, channelMask, averageBitRatePerSecond, delayFrames, paddingFrames) == std::tie(_rhs.sampleRate, _rhs.channelMask, _rhs.averageBitRatePerSecond, _rhs.delayFrames, _rhs.paddingFrames);
   }
-  inline bool operator<(const AudioOffloadMetadata& rhs) const {
-    return std::tie(sampleRate, channelMask, averageBitRatePerSecond, delayFrames, paddingFrames) < std::tie(rhs.sampleRate, rhs.channelMask, rhs.averageBitRatePerSecond, rhs.delayFrames, rhs.paddingFrames);
+  inline bool operator<(const AudioOffloadMetadata& _rhs) const {
+    return std::tie(sampleRate, channelMask, averageBitRatePerSecond, delayFrames, paddingFrames) < std::tie(_rhs.sampleRate, _rhs.channelMask, _rhs.averageBitRatePerSecond, _rhs.delayFrames, _rhs.paddingFrames);
   }
-  inline bool operator<=(const AudioOffloadMetadata& rhs) const {
-    return std::tie(sampleRate, channelMask, averageBitRatePerSecond, delayFrames, paddingFrames) <= std::tie(rhs.sampleRate, rhs.channelMask, rhs.averageBitRatePerSecond, rhs.delayFrames, rhs.paddingFrames);
+  inline bool operator!=(const AudioOffloadMetadata& _rhs) const {
+    return !(*this == _rhs);
   }
-  inline bool operator==(const AudioOffloadMetadata& rhs) const {
-    return std::tie(sampleRate, channelMask, averageBitRatePerSecond, delayFrames, paddingFrames) == std::tie(rhs.sampleRate, rhs.channelMask, rhs.averageBitRatePerSecond, rhs.delayFrames, rhs.paddingFrames);
+  inline bool operator>(const AudioOffloadMetadata& _rhs) const {
+    return _rhs < *this;
   }
-  inline bool operator>(const AudioOffloadMetadata& rhs) const {
-    return std::tie(sampleRate, channelMask, averageBitRatePerSecond, delayFrames, paddingFrames) > std::tie(rhs.sampleRate, rhs.channelMask, rhs.averageBitRatePerSecond, rhs.delayFrames, rhs.paddingFrames);
+  inline bool operator>=(const AudioOffloadMetadata& _rhs) const {
+    return !(*this < _rhs);
   }
-  inline bool operator>=(const AudioOffloadMetadata& rhs) const {
-    return std::tie(sampleRate, channelMask, averageBitRatePerSecond, delayFrames, paddingFrames) >= std::tie(rhs.sampleRate, rhs.channelMask, rhs.averageBitRatePerSecond, rhs.delayFrames, rhs.paddingFrames);
+  inline bool operator<=(const AudioOffloadMetadata& _rhs) const {
+    return !(_rhs < *this);
   }
 
   static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
   inline std::string toString() const {
-    std::ostringstream os;
-    os << "AudioOffloadMetadata{";
-    os << "sampleRate: " << ::android::internal::ToString(sampleRate);
-    os << ", channelMask: " << ::android::internal::ToString(channelMask);
-    os << ", averageBitRatePerSecond: " << ::android::internal::ToString(averageBitRatePerSecond);
-    os << ", delayFrames: " << ::android::internal::ToString(delayFrames);
-    os << ", paddingFrames: " << ::android::internal::ToString(paddingFrames);
-    os << "}";
-    return os.str();
+    std::ostringstream _aidl_os;
+    _aidl_os << "AudioOffloadMetadata{";
+    _aidl_os << "sampleRate: " << ::android::internal::ToString(sampleRate);
+    _aidl_os << ", channelMask: " << ::android::internal::ToString(channelMask);
+    _aidl_os << ", averageBitRatePerSecond: " << ::android::internal::ToString(averageBitRatePerSecond);
+    _aidl_os << ", delayFrames: " << ::android::internal::ToString(delayFrames);
+    _aidl_os << ", paddingFrames: " << ::android::internal::ToString(paddingFrames);
+    _aidl_os << "}";
+    return _aidl_os.str();
   }
 };
 }  // namespace common

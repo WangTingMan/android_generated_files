@@ -1,3 +1,11 @@
+/*
+ * This file is auto-generated.  DO NOT MODIFY.
+ * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 1 --hash 985ad49c876a50c60c726dc87f60cb598fd087ad -t --stability vintf --min_sdk_version 29 --ninja -d out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V1-ndk-source/gen/staging/android/media/audio/common/AudioGain.cpp.d -h out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V1-ndk-source/gen/include/staging -o out/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types-V1-ndk-source/gen/staging -Nsystem/hardware/interfaces/media/aidl_api/android.media.audio.common.types/1 system/hardware/interfaces/media/aidl_api/android.media.audio.common.types/1/android/media/audio/common/AudioGain.aidl
+ *
+ * DO NOT CHECK THIS FILE INTO A CODE TREE (e.g. git, etc..).
+ * ALWAYS GENERATE THIS FILE FROM UPDATED AIDL COMPILER
+ * AS A BUILD INTERMEDIATE ONLY. THIS IS NOT SOURCE CODE.
+ */
 #include "aidl/android/media/audio/common/AudioGain.h"
 
 #include <android/binder_parcel_utils.h>
@@ -86,7 +94,7 @@ binder_status_t AudioGain::readFromParcel(const AParcel* _aidl_parcel) {
 }
 binder_status_t AudioGain::writeToParcel(AParcel* _aidl_parcel) const {
   binder_status_t _aidl_ret_status;
-  size_t _aidl_start_pos = AParcel_getDataPosition(_aidl_parcel);
+  int32_t _aidl_start_pos = AParcel_getDataPosition(_aidl_parcel);
   _aidl_ret_status = AParcel_writeInt32(_aidl_parcel, 0);
   if (_aidl_ret_status != STATUS_OK) return _aidl_ret_status;
 
@@ -117,7 +125,7 @@ binder_status_t AudioGain::writeToParcel(AParcel* _aidl_parcel) const {
   _aidl_ret_status = ::ndk::AParcel_writeData(_aidl_parcel, useForVolume);
   if (_aidl_ret_status != STATUS_OK) return _aidl_ret_status;
 
-  size_t _aidl_end_pos = AParcel_getDataPosition(_aidl_parcel);
+  int32_t _aidl_end_pos = AParcel_getDataPosition(_aidl_parcel);
   AParcel_setDataPosition(_aidl_parcel, _aidl_start_pos);
   AParcel_writeInt32(_aidl_parcel, _aidl_end_pos - _aidl_start_pos);
   AParcel_setDataPosition(_aidl_parcel, _aidl_end_pos);

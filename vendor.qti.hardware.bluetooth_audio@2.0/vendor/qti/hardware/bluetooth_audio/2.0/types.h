@@ -6,6 +6,12 @@
 #include <utils/NativeHandle.h>
 #include <utils/misc.h>
 
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 namespace vendor {
 namespace qti {
 namespace hardware {
@@ -3526,5 +3532,8 @@ template<> inline constexpr std::array<::vendor::qti::hardware::bluetooth_audio:
 }  // namespace hardware
 }  // namespace android
 
+#ifdef __attribute__
+#undef __attribute__
+#endif
 
 #endif  // HIDL_GENERATED_VENDOR_QTI_HARDWARE_BLUETOOTH_AUDIO_V2_0_TYPES_H

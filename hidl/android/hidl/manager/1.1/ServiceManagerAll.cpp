@@ -16,8 +16,10 @@
 #include <hidl/ServiceManagement.h>
 #include <utils/AutoHolder.h>
 
+#ifdef _MSC_VER
 #ifndef __attribute__
 #define __attribute__(...)
+#endif
 #endif
 
 namespace android {

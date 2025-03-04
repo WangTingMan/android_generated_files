@@ -1,6 +1,12 @@
 #ifndef HIDL_GENERATED_ANDROID_HIDL_MANAGER_V1_0_ISERVICENOTIFICATION_H
 #define HIDL_GENERATED_ANDROID_HIDL_MANAGER_V1_0_ISERVICENOTIFICATION_H
 
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 #include <android/hidl/base/1.0/IBase.h>
 
 #include <android/hidl/manager/1.0/IServiceNotification.h>
@@ -232,7 +238,7 @@ struct LIBHIDL_EXPORT IServiceNotification : public ::android::hidl::base::V1_0:
      * Registers a service with the service manager. For Trebilized devices, the service
      * must also be in the VINTF manifest.
      */
-    /*__attribute__ ((warn_unused_result))*/::android::status_t registerAsService(const std::string &serviceName="default");
+    __attribute__ ((warn_unused_result))::android::status_t registerAsService(const std::string &serviceName="default");
     /**
      * Registers for notifications for when a service is registered.
      */
@@ -269,5 +275,10 @@ static inline std::string toString(const ::android::sp<::android::hidl::manager:
 // global type declarations for package
 //
 
+#ifdef _MSC_VER
+#ifdef __attribute__
+#undef __attribute__
+#endif
+#endif
 
 #endif  // HIDL_GENERATED_ANDROID_HIDL_MANAGER_V1_0_ISERVICENOTIFICATION_H

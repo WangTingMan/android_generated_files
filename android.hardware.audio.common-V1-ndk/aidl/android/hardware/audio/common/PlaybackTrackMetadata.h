@@ -1,3 +1,11 @@
+/*
+ * This file is auto-generated.  DO NOT MODIFY.
+ * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 1 --hash 90d0a7ea5cee4579d33066885d8648f180387f55 -t --stability vintf --min_sdk_version 31 -pout/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types_interface/2/preprocessed.aidl --ninja -d out/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.common-V1-ndk-source/gen/staging/android/hardware/audio/common/PlaybackTrackMetadata.cpp.d -h out/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.common-V1-ndk-source/gen/include/staging -o out/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.common-V1-ndk-source/gen/staging -Nhardware/interfaces/audio/aidl/aidl_api/android.hardware.audio.common/1 hardware/interfaces/audio/aidl/aidl_api/android.hardware.audio.common/1/android/hardware/audio/common/PlaybackTrackMetadata.aidl
+ *
+ * DO NOT CHECK THIS FILE INTO A CODE TREE (e.g. git, etc..).
+ * ALWAYS GENERATE THIS FILE FROM UPDATED AIDL COMPILER
+ * AS A BUILD INTERMEDIATE ONLY. THIS IS NOT SOURCE CODE.
+ */
 #pragma once
 
 #include <cstdint>
@@ -18,6 +26,9 @@
 
 #include "ANDROIDHARDWAREAUDIOCOMMONV1NDK_EXPORTS.h"
 
+namespace aidl::android::media::audio::common {
+class AudioDevice;
+}  // namespace aidl::android::media::audio::common
 namespace aidl {
 namespace android {
 namespace hardware {
@@ -38,37 +49,37 @@ public:
   binder_status_t readFromParcel(const AParcel* parcel);
   binder_status_t writeToParcel(AParcel* parcel) const;
 
-  inline bool operator!=(const PlaybackTrackMetadata& rhs) const {
-    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) != std::tie(rhs.usage, rhs.contentType, rhs.gain, rhs.channelMask, rhs.sourceDevice, rhs.tags);
+  inline bool operator==(const PlaybackTrackMetadata& _rhs) const {
+    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) == std::tie(_rhs.usage, _rhs.contentType, _rhs.gain, _rhs.channelMask, _rhs.sourceDevice, _rhs.tags);
   }
-  inline bool operator<(const PlaybackTrackMetadata& rhs) const {
-    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) < std::tie(rhs.usage, rhs.contentType, rhs.gain, rhs.channelMask, rhs.sourceDevice, rhs.tags);
+  inline bool operator<(const PlaybackTrackMetadata& _rhs) const {
+    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) < std::tie(_rhs.usage, _rhs.contentType, _rhs.gain, _rhs.channelMask, _rhs.sourceDevice, _rhs.tags);
   }
-  inline bool operator<=(const PlaybackTrackMetadata& rhs) const {
-    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) <= std::tie(rhs.usage, rhs.contentType, rhs.gain, rhs.channelMask, rhs.sourceDevice, rhs.tags);
+  inline bool operator!=(const PlaybackTrackMetadata& _rhs) const {
+    return !(*this == _rhs);
   }
-  inline bool operator==(const PlaybackTrackMetadata& rhs) const {
-    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) == std::tie(rhs.usage, rhs.contentType, rhs.gain, rhs.channelMask, rhs.sourceDevice, rhs.tags);
+  inline bool operator>(const PlaybackTrackMetadata& _rhs) const {
+    return _rhs < *this;
   }
-  inline bool operator>(const PlaybackTrackMetadata& rhs) const {
-    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) > std::tie(rhs.usage, rhs.contentType, rhs.gain, rhs.channelMask, rhs.sourceDevice, rhs.tags);
+  inline bool operator>=(const PlaybackTrackMetadata& _rhs) const {
+    return !(*this < _rhs);
   }
-  inline bool operator>=(const PlaybackTrackMetadata& rhs) const {
-    return std::tie(usage, contentType, gain, channelMask, sourceDevice, tags) >= std::tie(rhs.usage, rhs.contentType, rhs.gain, rhs.channelMask, rhs.sourceDevice, rhs.tags);
+  inline bool operator<=(const PlaybackTrackMetadata& _rhs) const {
+    return !(_rhs < *this);
   }
 
   static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
   inline std::string toString() const {
-    std::ostringstream os;
-    os << "PlaybackTrackMetadata{";
-    os << "usage: " << ::android::internal::ToString(usage);
-    os << ", contentType: " << ::android::internal::ToString(contentType);
-    os << ", gain: " << ::android::internal::ToString(gain);
-    os << ", channelMask: " << ::android::internal::ToString(channelMask);
-    os << ", sourceDevice: " << ::android::internal::ToString(sourceDevice);
-    os << ", tags: " << ::android::internal::ToString(tags);
-    os << "}";
-    return os.str();
+    std::ostringstream _aidl_os;
+    _aidl_os << "PlaybackTrackMetadata{";
+    _aidl_os << "usage: " << ::android::internal::ToString(usage);
+    _aidl_os << ", contentType: " << ::android::internal::ToString(contentType);
+    _aidl_os << ", gain: " << ::android::internal::ToString(gain);
+    _aidl_os << ", channelMask: " << ::android::internal::ToString(channelMask);
+    _aidl_os << ", sourceDevice: " << ::android::internal::ToString(sourceDevice);
+    _aidl_os << ", tags: " << ::android::internal::ToString(tags);
+    _aidl_os << "}";
+    return _aidl_os.str();
   }
 };
 }  // namespace common

@@ -13,6 +13,12 @@
 
 #include <hwbinder/libhidl_export.h>
 
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 namespace android {
 namespace hidl {
 namespace manager {
@@ -237,7 +243,7 @@ struct LIBHIDL_EXPORT IClientCallback : public ::android::hidl::base::V1_0::IBas
      * Registers a service with the service manager. For Trebilized devices, the service
      * must also be in the VINTF manifest.
      */
-    /*__attribute__ ((warn_unused_result))*/::android::status_t registerAsService(const std::string &serviceName="default");
+    __attribute__ ((warn_unused_result))::android::status_t registerAsService(const std::string &serviceName="default");
     /**
      * Registers for notifications for when a service is registered.
      */
@@ -274,5 +280,8 @@ static inline std::string toString(const ::android::sp<::android::hidl::manager:
 // global type declarations for package
 //
 
+#if defined(_MSC_VER) && defined(__attribute__)
+#undef __attribute__
+#endif
 
 #endif  // HIDL_GENERATED_ANDROID_HIDL_MANAGER_V1_2_ICLIENTCALLBACK_H

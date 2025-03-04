@@ -7,6 +7,12 @@
 #include <utils/misc.h>
 #include "VENDORMEDIATEKHARDWAREBLUETOOTHAUDIO21_EXPORTS_.h"
 
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 namespace vendor {
 namespace mediatek {
 namespace hardware {
@@ -3052,5 +3058,8 @@ template<> inline constexpr std::array<::vendor::mediatek::hardware::bluetooth::
 }  // namespace hardware
 }  // namespace android
 
+#ifdef __attribute__
+#undef __attribute__
+#endif
 
 #endif  // HIDL_GENERATED_VENDOR_MEDIATEK_HARDWARE_BLUETOOTH_AUDIO_V2_1_TYPES_H

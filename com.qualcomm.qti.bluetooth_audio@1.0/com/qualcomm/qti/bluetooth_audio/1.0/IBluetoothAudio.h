@@ -15,6 +15,12 @@
 
 #include "COMQUALCOMMQTIBLUETOOTHAUDIO10_EXPORTS.h"
 
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 namespace com {
 namespace qualcomm {
 namespace qti {
@@ -347,5 +353,8 @@ static inline std::string toString(const ::android::sp<::com::qualcomm::qti::blu
 // global type declarations for package
 //
 
+#ifdef __attribute__
+#undef __attribute__
+#endif
 
 #endif  // HIDL_GENERATED_COM_QUALCOMM_QTI_BLUETOOTH_AUDIO_V1_0_IBLUETOOTHAUDIO_H

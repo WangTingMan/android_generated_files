@@ -15,6 +15,12 @@
 
 #include <hwbinder/libhidl_export.h>
 
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 namespace android {
 namespace hidl {
 namespace manager {
@@ -73,11 +79,11 @@ struct LIBHIDL_EXPORT IServiceManager : public ::android::hidl::base::V1_0::IBas
      * Returned object for debugDump().
      */
     struct InstanceDebugInfo final {
-        ::android::hardware::hidl_string interfaceName /*__attribute__ ((aligned(8)))*/;
-        ::android::hardware::hidl_string instanceName /*__attribute__ ((aligned(8)))*/;
-        int32_t pid /*__attribute__ ((aligned(4)))*/;
-        ::android::hardware::hidl_vec<int32_t> clientPids /*__attribute__ ((aligned(8)))*/;
-        ::android::hidl::base::V1_0::DebugInfo::Architecture arch /*__attribute__ ((aligned(4)))*/;
+        ::android::hardware::hidl_string interfaceName __attribute__ ((aligned(8)));
+        ::android::hardware::hidl_string instanceName __attribute__ ((aligned(8)));
+        int32_t pid __attribute__ ((aligned(4)));
+        ::android::hardware::hidl_vec<int32_t> clientPids __attribute__ ((aligned(8)));
+        ::android::hidl::base::V1_0::DebugInfo::Architecture arch __attribute__ ((aligned(4)));
     };
 
     static_assert(offsetof(::android::hidl::manager::V1_0::IServiceManager::InstanceDebugInfo, interfaceName) == 0, "wrong offset");
@@ -389,7 +395,7 @@ struct LIBHIDL_EXPORT IServiceManager : public ::android::hidl::base::V1_0::IBas
      * Registers a service with the service manager. For Trebilized devices, the service
      * must also be in the VINTF manifest.
      */
-    /*__attribute__ ((warn_unused_result))*/::android::status_t registerAsService(const std::string &serviceName="default");
+    __attribute__ ((warn_unused_result))::android::status_t registerAsService(const std::string &serviceName="default");
     /**
      * Registers for notifications for when a service is registered.
      */
@@ -653,5 +659,10 @@ template<> inline constexpr std::array<::android::hidl::manager::V1_0::IServiceM
 }  // namespace hardware
 }  // namespace android
 
+#ifdef _MSC_VER
+#ifdef __attribute__
+#undef __attribute__
+#endif
+#endif
 
 #endif  // HIDL_GENERATED_ANDROID_HIDL_MANAGER_V1_0_ISERVICEMANAGER_H

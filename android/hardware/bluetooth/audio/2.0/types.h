@@ -2749,5 +2749,10 @@ template<> inline constexpr std::array<::android::hardware::bluetooth::audio::V2
 }  // namespace hardware
 }  // namespace android
 
+#ifdef _MSC_VER
+#ifdef __attribute__
+#undef __attribute__
+#endif
+#endif
 
 #endif  // HIDL_GENERATED_ANDROID_HARDWARE_BLUETOOTH_AUDIO_V2_0_TYPES_H

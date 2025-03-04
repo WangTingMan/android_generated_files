@@ -1,6 +1,10 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 4 --hash ac25616dda1c45dc2915d3f5ac82687a1a6f6e46 --stability vintf --min_sdk_version 31 -pout/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.common_interface/3/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/common/aidl/android.hardware.common_interface/2/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/common/fmq/aidl/android.hardware.common.fmq_interface/1/preprocessed.aidl --ninja -d out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V4-ndk-source/gen/staging/android/hardware/bluetooth/audio/CodecInfo.cpp.d -h out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V4-ndk-source/gen/include/staging -o out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V4-ndk-source/gen/staging -Nhardware/interfaces/bluetooth/audio/aidl/aidl_api/android.hardware.bluetooth.audio/4 hardware/interfaces/bluetooth/audio/aidl/aidl_api/android.hardware.bluetooth.audio/4/android/hardware/bluetooth/audio/CodecInfo.aidl
+ * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 4 --hash ac25616dda1c45dc2915d3f5ac82687a1a6f6e46 -t --stability vintf --min_sdk_version 31 -pout/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.common_interface/3/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/common/aidl/android.hardware.common_interface/2/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/common/fmq/aidl/android.hardware.common.fmq_interface/1/preprocessed.aidl --ninja -d out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V4-ndk-source/gen/staging/android/hardware/bluetooth/audio/CodecInfo.cpp.d -h out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V4-ndk-source/gen/include/staging -o out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V4-ndk-source/gen/staging -Nhardware/interfaces/bluetooth/audio/aidl/aidl_api/android.hardware.bluetooth.audio/4 hardware/interfaces/bluetooth/audio/aidl/aidl_api/android.hardware.bluetooth.audio/4/android/hardware/bluetooth/audio/CodecInfo.aidl
+ *
+ * DO NOT CHECK THIS FILE INTO A CODE TREE (e.g. git, etc..).
+ * ALWAYS GENERATE THIS FILE FROM UPDATED AIDL COMPILER
+ * AS A BUILD INTERMEDIATE ONLY. THIS IS NOT SOURCE CODE.
  */
 #include "aidl/android/hardware/bluetooth/audio/CodecInfo.h"
 
@@ -48,7 +52,7 @@ binder_status_t CodecInfo::readFromParcel(const AParcel* _aidl_parcel) {
 }
 binder_status_t CodecInfo::writeToParcel(AParcel* _aidl_parcel) const {
   binder_status_t _aidl_ret_status;
-  size_t _aidl_start_pos = AParcel_getDataPosition(_aidl_parcel);
+  int32_t _aidl_start_pos = AParcel_getDataPosition(_aidl_parcel);
   _aidl_ret_status = AParcel_writeInt32(_aidl_parcel, 0);
   if (_aidl_ret_status != STATUS_OK) return _aidl_ret_status;
 
@@ -61,7 +65,7 @@ binder_status_t CodecInfo::writeToParcel(AParcel* _aidl_parcel) const {
   _aidl_ret_status = ::ndk::AParcel_writeData(_aidl_parcel, transport);
   if (_aidl_ret_status != STATUS_OK) return _aidl_ret_status;
 
-  size_t _aidl_end_pos = AParcel_getDataPosition(_aidl_parcel);
+  int32_t _aidl_end_pos = AParcel_getDataPosition(_aidl_parcel);
   AParcel_setDataPosition(_aidl_parcel, _aidl_start_pos);
   AParcel_writeInt32(_aidl_parcel, _aidl_end_pos - _aidl_start_pos);
   AParcel_setDataPosition(_aidl_parcel, _aidl_end_pos);
@@ -129,7 +133,7 @@ binder_status_t CodecInfo::A2dp::readFromParcel(const AParcel* _aidl_parcel) {
 }
 binder_status_t CodecInfo::A2dp::writeToParcel(AParcel* _aidl_parcel) const {
   binder_status_t _aidl_ret_status;
-  size_t _aidl_start_pos = AParcel_getDataPosition(_aidl_parcel);
+  int32_t _aidl_start_pos = AParcel_getDataPosition(_aidl_parcel);
   _aidl_ret_status = AParcel_writeInt32(_aidl_parcel, 0);
   if (_aidl_ret_status != STATUS_OK) return _aidl_ret_status;
 
@@ -148,7 +152,7 @@ binder_status_t CodecInfo::A2dp::writeToParcel(AParcel* _aidl_parcel) const {
   _aidl_ret_status = ::ndk::AParcel_writeData(_aidl_parcel, lossless);
   if (_aidl_ret_status != STATUS_OK) return _aidl_ret_status;
 
-  size_t _aidl_end_pos = AParcel_getDataPosition(_aidl_parcel);
+  int32_t _aidl_end_pos = AParcel_getDataPosition(_aidl_parcel);
   AParcel_setDataPosition(_aidl_parcel, _aidl_start_pos);
   AParcel_writeInt32(_aidl_parcel, _aidl_end_pos - _aidl_start_pos);
   AParcel_setDataPosition(_aidl_parcel, _aidl_end_pos);
@@ -202,7 +206,7 @@ binder_status_t CodecInfo::Hfp::readFromParcel(const AParcel* _aidl_parcel) {
 }
 binder_status_t CodecInfo::Hfp::writeToParcel(AParcel* _aidl_parcel) const {
   binder_status_t _aidl_ret_status;
-  size_t _aidl_start_pos = AParcel_getDataPosition(_aidl_parcel);
+  int32_t _aidl_start_pos = AParcel_getDataPosition(_aidl_parcel);
   _aidl_ret_status = AParcel_writeInt32(_aidl_parcel, 0);
   if (_aidl_ret_status != STATUS_OK) return _aidl_ret_status;
 
@@ -215,7 +219,7 @@ binder_status_t CodecInfo::Hfp::writeToParcel(AParcel* _aidl_parcel) const {
   _aidl_ret_status = ::ndk::AParcel_writeData(_aidl_parcel, useControllerCodec);
   if (_aidl_ret_status != STATUS_OK) return _aidl_ret_status;
 
-  size_t _aidl_end_pos = AParcel_getDataPosition(_aidl_parcel);
+  int32_t _aidl_end_pos = AParcel_getDataPosition(_aidl_parcel);
   AParcel_setDataPosition(_aidl_parcel, _aidl_start_pos);
   AParcel_writeInt32(_aidl_parcel, _aidl_end_pos - _aidl_start_pos);
   AParcel_setDataPosition(_aidl_parcel, _aidl_end_pos);
@@ -283,7 +287,7 @@ binder_status_t CodecInfo::LeAudio::readFromParcel(const AParcel* _aidl_parcel) 
 }
 binder_status_t CodecInfo::LeAudio::writeToParcel(AParcel* _aidl_parcel) const {
   binder_status_t _aidl_ret_status;
-  size_t _aidl_start_pos = AParcel_getDataPosition(_aidl_parcel);
+  int32_t _aidl_start_pos = AParcel_getDataPosition(_aidl_parcel);
   _aidl_ret_status = AParcel_writeInt32(_aidl_parcel, 0);
   if (_aidl_ret_status != STATUS_OK) return _aidl_ret_status;
 
@@ -302,7 +306,7 @@ binder_status_t CodecInfo::LeAudio::writeToParcel(AParcel* _aidl_parcel) const {
   _aidl_ret_status = ::ndk::AParcel_writeNullableData(_aidl_parcel, flags);
   if (_aidl_ret_status != STATUS_OK) return _aidl_ret_status;
 
-  size_t _aidl_end_pos = AParcel_getDataPosition(_aidl_parcel);
+  int32_t _aidl_end_pos = AParcel_getDataPosition(_aidl_parcel);
   AParcel_setDataPosition(_aidl_parcel, _aidl_start_pos);
   AParcel_writeInt32(_aidl_parcel, _aidl_end_pos - _aidl_start_pos);
   AParcel_setDataPosition(_aidl_parcel, _aidl_end_pos);

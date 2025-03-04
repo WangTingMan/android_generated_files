@@ -7222,5 +7222,10 @@ template<> inline constexpr std::array<::android::hardware::audio::common::V5_0:
 }  // namespace hardware
 }  // namespace android
 
+#ifdef _MSC_VER
+#ifdef __attribute__
+#undef __attribute__
+#endif
+#endif
 
 #endif  // HIDL_GENERATED_ANDROID_HARDWARE_AUDIO_COMMON_V5_0_TYPES_H

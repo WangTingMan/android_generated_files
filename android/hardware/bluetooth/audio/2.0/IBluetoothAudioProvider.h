@@ -15,6 +15,12 @@
 #include <utils/NativeHandle.h>
 #include <utils/misc.h>
 
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 namespace android {
 namespace hardware {
 namespace bluetooth {
@@ -322,5 +328,10 @@ static inline std::string toString(const ::android::sp<::android::hardware::blue
 // global type declarations for package
 //
 
+#ifdef _MSC_VER
+#ifdef __attribute__
+#undef __attribute__
+#endif
+#endif
 
 #endif  // HIDL_GENERATED_ANDROID_HARDWARE_BLUETOOTH_AUDIO_V2_0_IBLUETOOTHAUDIOPROVIDER_H

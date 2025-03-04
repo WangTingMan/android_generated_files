@@ -15,6 +15,12 @@
 #include <utils/misc.h>
 #include "VENDORMEDIATEKHARDWAREBLUETOOTHAUDIO22_EXPORTS_.h"
 
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 namespace vendor {
 namespace mediatek {
 namespace hardware {
@@ -370,5 +376,8 @@ static inline std::string toString(const ::android::sp<::vendor::mediatek::hardw
 // global type declarations for package
 //
 
+#ifdef __attribute__
+#undef __attribute__
+#endif
 
 #endif  // HIDL_GENERATED_VENDOR_MEDIATEK_HARDWARE_BLUETOOTH_AUDIO_V2_2_IBLUETOOTHAUDIOPROVIDER_H

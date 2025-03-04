@@ -9,6 +9,12 @@
 #include <utils/misc.h>
 #include <android\hardware\bluetooth\audio\2.1\ANDROIDHARDWAREBLUETOOTHAUDIO21_EXPORTS_.h>
 
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 namespace android {
 namespace hardware {
 namespace bluetooth {
@@ -1163,5 +1169,10 @@ template<> inline constexpr std::array<::android::hardware::bluetooth::audio::V2
 }  // namespace hardware
 }  // namespace android
 
+#ifdef _MSC_VER
+#ifdef __attribute__
+#undef __attribute__
+#endif
+#endif
 
 #endif  // HIDL_GENERATED_ANDROID_HARDWARE_BLUETOOTH_AUDIO_V2_1_TYPES_H

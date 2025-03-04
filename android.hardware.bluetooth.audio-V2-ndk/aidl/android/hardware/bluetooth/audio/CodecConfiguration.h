@@ -1,3 +1,11 @@
+/*
+ * This file is auto-generated.  DO NOT MODIFY.
+ * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 2 --hash b82d5b9f717bbf63bef774ee8f72572065ca61ce -t --stability vintf --min_sdk_version 31 -pout/soong/.intermediates/hardware/interfaces/common/aidl/android.hardware.common_interface/2/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/common/fmq/aidl/android.hardware.common.fmq_interface/1/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.common_interface/1/preprocessed.aidl --ninja -d out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V2-ndk-source/gen/staging/android/hardware/bluetooth/audio/CodecConfiguration.cpp.d -h out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V2-ndk-source/gen/include/staging -o out/soong/.intermediates/hardware/interfaces/bluetooth/audio/aidl/android.hardware.bluetooth.audio-V2-ndk-source/gen/staging -Nhardware/interfaces/bluetooth/audio/aidl/aidl_api/android.hardware.bluetooth.audio/2 hardware/interfaces/bluetooth/audio/aidl/aidl_api/android.hardware.bluetooth.audio/2/android/hardware/bluetooth/audio/CodecConfiguration.aidl
+ *
+ * DO NOT CHECK THIS FILE INTO A CODE TREE (e.g. git, etc..).
+ * ALWAYS GENERATE THIS FILE FROM UPDATED AIDL COMPILER
+ * AS A BUILD INTERMEDIATE ONLY. THIS IS NOT SOURCE CODE.
+ */
 #pragma once
 
 #include <array>
@@ -32,7 +40,15 @@
 #endif
 
 #include "ANDROIDHARDWAREBLUETOOTHAUDIOV2NDK_EXPORTS.h"
-
+namespace aidl::android::hardware::bluetooth::audio {
+class AacConfiguration;
+class AptxAdaptiveConfiguration;
+class AptxConfiguration;
+class Lc3Configuration;
+class LdacConfiguration;
+class OpusConfiguration;
+class SbcConfiguration;
+}  // namespace aidl::android::hardware::bluetooth::audio
 namespace aidl {
 namespace android {
 namespace hardware {
@@ -55,34 +71,34 @@ public:
     binder_status_t readFromParcel(const AParcel* parcel);
     binder_status_t writeToParcel(AParcel* parcel) const;
 
-    inline bool operator!=(const VendorConfiguration& rhs) const {
-      return std::tie(vendorId, codecId, codecConfig) != std::tie(rhs.vendorId, rhs.codecId, rhs.codecConfig);
+    inline bool operator==(const VendorConfiguration& _rhs) const {
+      return std::tie(vendorId, codecId, codecConfig) == std::tie(_rhs.vendorId, _rhs.codecId, _rhs.codecConfig);
     }
-    inline bool operator<(const VendorConfiguration& rhs) const {
-      return std::tie(vendorId, codecId, codecConfig) < std::tie(rhs.vendorId, rhs.codecId, rhs.codecConfig);
+    inline bool operator<(const VendorConfiguration& _rhs) const {
+      return std::tie(vendorId, codecId, codecConfig) < std::tie(_rhs.vendorId, _rhs.codecId, _rhs.codecConfig);
     }
-    inline bool operator<=(const VendorConfiguration& rhs) const {
-      return std::tie(vendorId, codecId, codecConfig) <= std::tie(rhs.vendorId, rhs.codecId, rhs.codecConfig);
+    inline bool operator!=(const VendorConfiguration& _rhs) const {
+      return !(*this == _rhs);
     }
-    inline bool operator==(const VendorConfiguration& rhs) const {
-      return std::tie(vendorId, codecId, codecConfig) == std::tie(rhs.vendorId, rhs.codecId, rhs.codecConfig);
+    inline bool operator>(const VendorConfiguration& _rhs) const {
+      return _rhs < *this;
     }
-    inline bool operator>(const VendorConfiguration& rhs) const {
-      return std::tie(vendorId, codecId, codecConfig) > std::tie(rhs.vendorId, rhs.codecId, rhs.codecConfig);
+    inline bool operator>=(const VendorConfiguration& _rhs) const {
+      return !(*this < _rhs);
     }
-    inline bool operator>=(const VendorConfiguration& rhs) const {
-      return std::tie(vendorId, codecId, codecConfig) >= std::tie(rhs.vendorId, rhs.codecId, rhs.codecConfig);
+    inline bool operator<=(const VendorConfiguration& _rhs) const {
+      return !(_rhs < *this);
     }
 
     static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
     inline std::string toString() const {
-      std::ostringstream os;
-      os << "VendorConfiguration{";
-      os << "vendorId: " << ::android::internal::ToString(vendorId);
-      os << ", codecId: " << ::android::internal::ToString(codecId);
-      os << ", codecConfig: " << ::android::internal::ToString(codecConfig);
-      os << "}";
-      return os.str();
+      std::ostringstream _aidl_os;
+      _aidl_os << "VendorConfiguration{";
+      _aidl_os << "vendorId: " << ::android::internal::ToString(vendorId);
+      _aidl_os << ", codecId: " << ::android::internal::ToString(codecId);
+      _aidl_os << ", codecConfig: " << ::android::internal::ToString(codecConfig);
+      _aidl_os << "}";
+      return _aidl_os.str();
     }
   };
   class CodecSpecific {
@@ -116,7 +132,10 @@ public:
 
     CodecSpecific() : _value(std::in_place_index<static_cast<size_t>(sbcConfig)>, ::aidl::android::hardware::bluetooth::audio::SbcConfiguration()) { }
 
-    template <typename _Tp, typename = std::enable_if_t<_not_self<_Tp>>>
+    template <typename _Tp, typename = std::enable_if_t<
+        _not_self<_Tp> &&
+        std::is_constructible_v<std::variant<::aidl::android::hardware::bluetooth::audio::SbcConfiguration, ::aidl::android::hardware::bluetooth::audio::AacConfiguration, ::aidl::android::hardware::bluetooth::audio::LdacConfiguration, ::aidl::android::hardware::bluetooth::audio::AptxConfiguration, ::aidl::android::hardware::bluetooth::audio::AptxAdaptiveConfiguration, ::aidl::android::hardware::bluetooth::audio::Lc3Configuration, ::aidl::android::hardware::bluetooth::audio::CodecConfiguration::VendorConfiguration, std::optional<::aidl::android::hardware::bluetooth::audio::OpusConfiguration>>, _Tp>
+      >>
     // NOLINTNEXTLINE(google-explicit-constructor)
     constexpr CodecSpecific(_Tp&& _arg)
         : _value(std::forward<_Tp>(_arg)) {}
@@ -159,23 +178,23 @@ public:
     binder_status_t readFromParcel(const AParcel* _parcel);
     binder_status_t writeToParcel(AParcel* _parcel) const;
 
-    inline bool operator!=(const CodecSpecific& rhs) const {
-      return _value != rhs._value;
+    inline bool operator==(const CodecSpecific& _rhs) const {
+      return _value == _rhs._value;
     }
-    inline bool operator<(const CodecSpecific& rhs) const {
-      return _value < rhs._value;
+    inline bool operator<(const CodecSpecific& _rhs) const {
+      return _value < _rhs._value;
     }
-    inline bool operator<=(const CodecSpecific& rhs) const {
-      return _value <= rhs._value;
+    inline bool operator!=(const CodecSpecific& _rhs) const {
+      return !(*this == _rhs);
     }
-    inline bool operator==(const CodecSpecific& rhs) const {
-      return _value == rhs._value;
+    inline bool operator>(const CodecSpecific& _rhs) const {
+      return _rhs < *this;
     }
-    inline bool operator>(const CodecSpecific& rhs) const {
-      return _value > rhs._value;
+    inline bool operator>=(const CodecSpecific& _rhs) const {
+      return !(*this < _rhs);
     }
-    inline bool operator>=(const CodecSpecific& rhs) const {
-      return _value >= rhs._value;
+    inline bool operator<=(const CodecSpecific& _rhs) const {
+      return !(_rhs < *this);
     }
 
     static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
@@ -207,36 +226,36 @@ public:
   binder_status_t readFromParcel(const AParcel* parcel);
   binder_status_t writeToParcel(AParcel* parcel) const;
 
-  inline bool operator!=(const CodecConfiguration& rhs) const {
-    return std::tie(codecType, encodedAudioBitrate, peerMtu, isScmstEnabled, config) != std::tie(rhs.codecType, rhs.encodedAudioBitrate, rhs.peerMtu, rhs.isScmstEnabled, rhs.config);
+  inline bool operator==(const CodecConfiguration& _rhs) const {
+    return std::tie(codecType, encodedAudioBitrate, peerMtu, isScmstEnabled, config) == std::tie(_rhs.codecType, _rhs.encodedAudioBitrate, _rhs.peerMtu, _rhs.isScmstEnabled, _rhs.config);
   }
-  inline bool operator<(const CodecConfiguration& rhs) const {
-    return std::tie(codecType, encodedAudioBitrate, peerMtu, isScmstEnabled, config) < std::tie(rhs.codecType, rhs.encodedAudioBitrate, rhs.peerMtu, rhs.isScmstEnabled, rhs.config);
+  inline bool operator<(const CodecConfiguration& _rhs) const {
+    return std::tie(codecType, encodedAudioBitrate, peerMtu, isScmstEnabled, config) < std::tie(_rhs.codecType, _rhs.encodedAudioBitrate, _rhs.peerMtu, _rhs.isScmstEnabled, _rhs.config);
   }
-  inline bool operator<=(const CodecConfiguration& rhs) const {
-    return std::tie(codecType, encodedAudioBitrate, peerMtu, isScmstEnabled, config) <= std::tie(rhs.codecType, rhs.encodedAudioBitrate, rhs.peerMtu, rhs.isScmstEnabled, rhs.config);
+  inline bool operator!=(const CodecConfiguration& _rhs) const {
+    return !(*this == _rhs);
   }
-  inline bool operator==(const CodecConfiguration& rhs) const {
-    return std::tie(codecType, encodedAudioBitrate, peerMtu, isScmstEnabled, config) == std::tie(rhs.codecType, rhs.encodedAudioBitrate, rhs.peerMtu, rhs.isScmstEnabled, rhs.config);
+  inline bool operator>(const CodecConfiguration& _rhs) const {
+    return _rhs < *this;
   }
-  inline bool operator>(const CodecConfiguration& rhs) const {
-    return std::tie(codecType, encodedAudioBitrate, peerMtu, isScmstEnabled, config) > std::tie(rhs.codecType, rhs.encodedAudioBitrate, rhs.peerMtu, rhs.isScmstEnabled, rhs.config);
+  inline bool operator>=(const CodecConfiguration& _rhs) const {
+    return !(*this < _rhs);
   }
-  inline bool operator>=(const CodecConfiguration& rhs) const {
-    return std::tie(codecType, encodedAudioBitrate, peerMtu, isScmstEnabled, config) >= std::tie(rhs.codecType, rhs.encodedAudioBitrate, rhs.peerMtu, rhs.isScmstEnabled, rhs.config);
+  inline bool operator<=(const CodecConfiguration& _rhs) const {
+    return !(_rhs < *this);
   }
 
   static const ::ndk::parcelable_stability_t _aidl_stability = ::ndk::STABILITY_VINTF;
   inline std::string toString() const {
-    std::ostringstream os;
-    os << "CodecConfiguration{";
-    os << "codecType: " << ::android::internal::ToString(codecType);
-    os << ", encodedAudioBitrate: " << ::android::internal::ToString(encodedAudioBitrate);
-    os << ", peerMtu: " << ::android::internal::ToString(peerMtu);
-    os << ", isScmstEnabled: " << ::android::internal::ToString(isScmstEnabled);
-    os << ", config: " << ::android::internal::ToString(config);
-    os << "}";
-    return os.str();
+    std::ostringstream _aidl_os;
+    _aidl_os << "CodecConfiguration{";
+    _aidl_os << "codecType: " << ::android::internal::ToString(codecType);
+    _aidl_os << ", encodedAudioBitrate: " << ::android::internal::ToString(encodedAudioBitrate);
+    _aidl_os << ", peerMtu: " << ::android::internal::ToString(peerMtu);
+    _aidl_os << ", isScmstEnabled: " << ::android::internal::ToString(isScmstEnabled);
+    _aidl_os << ", config: " << ::android::internal::ToString(config);
+    _aidl_os << "}";
+    return _aidl_os.str();
   }
 };
 }  // namespace audio
