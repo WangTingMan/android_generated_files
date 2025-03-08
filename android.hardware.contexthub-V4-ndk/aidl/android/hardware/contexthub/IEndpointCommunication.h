@@ -23,6 +23,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWARECONTEXTHUBV4NDK_EXPORTS_.h"
+
 namespace aidl::android::hardware::contexthub {
 class EndpointId;
 class EndpointInfo;
@@ -35,7 +37,7 @@ namespace hardware {
 namespace contexthub {
 class IEndpointCommunicationDelegator;
 
-class IEndpointCommunication : public ::ndk::ICInterface {
+class ANDROIDHARDWARECONTEXTHUBV4NDK_API IEndpointCommunication : public ::ndk::ICInterface {
 public:
   typedef IEndpointCommunicationDelegator DefaultDelegator;
   static const char* descriptor;
@@ -73,7 +75,7 @@ public:
 private:
   static std::shared_ptr<IEndpointCommunication> default_impl;
 };
-class IEndpointCommunicationDefault : public IEndpointCommunication {
+class ANDROIDHARDWARECONTEXTHUBV4NDK_API IEndpointCommunicationDefault : public IEndpointCommunication {
 public:
   ::ndk::ScopedAStatus registerEndpoint(const ::aidl::android::hardware::contexthub::EndpointInfo& in_endpoint) override;
   ::ndk::ScopedAStatus unregisterEndpoint(const ::aidl::android::hardware::contexthub::EndpointInfo& in_endpoint) override;

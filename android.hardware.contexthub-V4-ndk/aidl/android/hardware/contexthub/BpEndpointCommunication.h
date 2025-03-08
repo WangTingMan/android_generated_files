@@ -12,11 +12,13 @@
 
 #include <android/binder_ibinder.h>
 
+#include "ANDROIDHARDWARECONTEXTHUBV4NDK_EXPORTS_.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace contexthub {
-class BpEndpointCommunication : public ::ndk::BpCInterface<IEndpointCommunication> {
+class ANDROIDHARDWARECONTEXTHUBV4NDK_API BpEndpointCommunication : public ::ndk::BpCInterface<IEndpointCommunication> {
 public:
   explicit BpEndpointCommunication(const ::ndk::SpAIBinder& binder);
   virtual ~BpEndpointCommunication();

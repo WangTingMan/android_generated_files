@@ -22,6 +22,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREBLUETOOTHSOCKETV1NDK_EXPORTS_.h"
+
 namespace aidl::android::hardware::contexthub {
 class EndpointId;
 }  // namespace aidl::android::hardware::contexthub
@@ -30,7 +32,7 @@ namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace socket {
-class SocketContext {
+class ANDROIDHARDWAREBLUETOOTHSOCKETV1NDK_API SocketContext {
 public:
   typedef std::false_type fixed_size;
   static const char* descriptor;

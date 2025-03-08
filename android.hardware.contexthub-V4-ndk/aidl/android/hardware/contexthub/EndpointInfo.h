@@ -25,6 +25,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWARECONTEXTHUBV4NDK_EXPORTS_.h"
+
 namespace aidl::android::hardware::contexthub {
 class EndpointId;
 class Service;
@@ -33,7 +35,7 @@ namespace aidl {
 namespace android {
 namespace hardware {
 namespace contexthub {
-class EndpointInfo {
+class ANDROIDHARDWARECONTEXTHUBV4NDK_API EndpointInfo {
 public:
   typedef std::false_type fixed_size;
   static const char* descriptor;

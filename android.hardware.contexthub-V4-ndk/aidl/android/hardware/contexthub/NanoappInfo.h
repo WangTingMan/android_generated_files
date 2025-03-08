@@ -21,6 +21,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWARECONTEXTHUBV4NDK_EXPORTS_.h"
+
 namespace aidl::android::hardware::contexthub {
 class NanoappRpcService;
 }  // namespace aidl::android::hardware::contexthub
@@ -28,7 +30,7 @@ namespace aidl {
 namespace android {
 namespace hardware {
 namespace contexthub {
-class NanoappInfo {
+class ANDROIDHARDWARECONTEXTHUBV4NDK_API NanoappInfo {
 public:
   typedef std::false_type fixed_size;
   static const char* descriptor;

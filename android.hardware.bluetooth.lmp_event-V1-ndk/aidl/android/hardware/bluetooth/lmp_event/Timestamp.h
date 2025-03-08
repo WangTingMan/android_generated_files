@@ -20,12 +20,14 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREBLUETOOTHLMPEVENTV1NDK_EXPORTS_.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace lmp_event {
-class Timestamp {
+class ANDROIDHARDWAREBLUETOOTHLMPEVENTV1NDK_API Timestamp {
 public:
   typedef std::false_type fixed_size;
   static const char* descriptor;

@@ -21,11 +21,13 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWARECONTEXTHUBV4NDK_EXPORTS_.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace contexthub {
-class MessageDeliveryStatus {
+class ANDROIDHARDWARECONTEXTHUBV4NDK_API MessageDeliveryStatus {
 public:
   typedef std::false_type fixed_size;
   static const char* descriptor;

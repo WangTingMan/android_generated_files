@@ -13,6 +13,8 @@
 #include <android/binder_ibinder.h>
 #include <cassert>
 
+#include "ANDROIDHARDWAREBLUETOOTHLMPEVENTV1NDK_EXPORTS_.h"
+
 #ifndef __BIONIC__
 #ifndef __assert2
 #define __assert2(a,b,c,d) ((void)0)
@@ -24,7 +26,7 @@ namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace lmp_event {
-class BnBluetoothLmpEvent : public ::ndk::BnCInterface<IBluetoothLmpEvent> {
+class ANDROIDHARDWAREBLUETOOTHLMPEVENTV1NDK_API BnBluetoothLmpEvent : public ::ndk::BnCInterface<IBluetoothLmpEvent> {
 public:
   BnBluetoothLmpEvent();
   virtual ~BnBluetoothLmpEvent();

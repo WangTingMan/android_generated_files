@@ -29,6 +29,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWARECONTEXTHUBV4NDK_EXPORTS_.h"
+
 #ifndef __BIONIC__
 #define __assert2(a,b,c,d) ((void)0)
 #endif
@@ -41,12 +43,12 @@ namespace aidl {
 namespace android {
 namespace hardware {
 namespace contexthub {
-class HubInfo {
+class ANDROIDHARDWARECONTEXTHUBV4NDK_API HubInfo {
 public:
   typedef std::false_type fixed_size;
   static const char* descriptor;
 
-  class HubDetails {
+  class ANDROIDHARDWARECONTEXTHUBV4NDK_API HubDetails {
   public:
     typedef std::false_type fixed_size;
     static const char* descriptor;

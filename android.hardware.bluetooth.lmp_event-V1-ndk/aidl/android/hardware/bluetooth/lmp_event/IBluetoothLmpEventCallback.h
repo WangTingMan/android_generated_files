@@ -22,6 +22,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREBLUETOOTHLMPEVENTV1NDK_EXPORTS_.h"
+
 namespace aidl::android::hardware::bluetooth::lmp_event {
 class Timestamp;
 }  // namespace aidl::android::hardware::bluetooth::lmp_event
@@ -32,7 +34,7 @@ namespace bluetooth {
 namespace lmp_event {
 class IBluetoothLmpEventCallbackDelegator;
 
-class IBluetoothLmpEventCallback : public ::ndk::ICInterface {
+class ANDROIDHARDWAREBLUETOOTHLMPEVENTV1NDK_API IBluetoothLmpEventCallback : public ::ndk::ICInterface {
 public:
   typedef IBluetoothLmpEventCallbackDelegator DefaultDelegator;
   static const char* descriptor;
@@ -56,7 +58,7 @@ public:
 private:
   static std::shared_ptr<IBluetoothLmpEventCallback> default_impl;
 };
-class IBluetoothLmpEventCallbackDefault : public IBluetoothLmpEventCallback {
+class ANDROIDHARDWAREBLUETOOTHLMPEVENTV1NDK_API IBluetoothLmpEventCallbackDefault : public IBluetoothLmpEventCallback {
 public:
   ::ndk::ScopedAStatus onEventGenerated(const ::aidl::android::hardware::bluetooth::lmp_event::Timestamp& in_timestamp, ::aidl::android::hardware::bluetooth::lmp_event::AddressType in_addressType, const std::array<uint8_t, 6>& in_address, ::aidl::android::hardware::bluetooth::lmp_event::Direction in_direction, ::aidl::android::hardware::bluetooth::lmp_event::LmpEventId in_lmpEventId, char16_t in_connEventCounter) override;
   ::ndk::ScopedAStatus onRegistered(bool in_status) override;

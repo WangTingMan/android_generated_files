@@ -12,11 +12,13 @@
 
 #include <android/binder_ibinder.h>
 
+#include "ANDROIDHARDWARECONTEXTHUBV4NDK_EXPORTS_.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace contexthub {
-class BpContextHubCallback : public ::ndk::BpCInterface<IContextHubCallback> {
+class ANDROIDHARDWARECONTEXTHUBV4NDK_API BpContextHubCallback : public ::ndk::BpCInterface<IContextHubCallback> {
 public:
   explicit BpContextHubCallback(const ::ndk::SpAIBinder& binder);
   virtual ~BpContextHubCallback();

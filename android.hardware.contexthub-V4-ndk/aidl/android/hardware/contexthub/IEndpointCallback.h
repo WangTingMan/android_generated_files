@@ -23,6 +23,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWARECONTEXTHUBV4NDK_EXPORTS_.h"
+
 namespace aidl::android::hardware::contexthub {
 class EndpointId;
 class EndpointInfo;
@@ -35,7 +37,7 @@ namespace hardware {
 namespace contexthub {
 class IEndpointCallbackDelegator;
 
-class IEndpointCallback : public ::ndk::ICInterface {
+class ANDROIDHARDWARECONTEXTHUBV4NDK_API IEndpointCallback : public ::ndk::ICInterface {
 public:
   typedef IEndpointCallbackDelegator DefaultDelegator;
   static const char* descriptor;
@@ -69,7 +71,7 @@ public:
 private:
   static std::shared_ptr<IEndpointCallback> default_impl;
 };
-class IEndpointCallbackDefault : public IEndpointCallback {
+class ANDROIDHARDWARECONTEXTHUBV4NDK_API IEndpointCallbackDefault : public IEndpointCallback {
 public:
   ::ndk::ScopedAStatus onEndpointStarted(const std::vector<::aidl::android::hardware::contexthub::EndpointInfo>& in_endpointInfos) override;
   ::ndk::ScopedAStatus onEndpointStopped(const std::vector<::aidl::android::hardware::contexthub::EndpointId>& in_endpointIds, ::aidl::android::hardware::contexthub::Reason in_reason) override;

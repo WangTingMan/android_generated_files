@@ -13,6 +13,8 @@
 #include <android/binder_ibinder.h>
 #include <cassert>
 
+#include "ANDROIDHARDWARECONTEXTHUBV4NDK_EXPORTS_.h"
+
 #ifndef __BIONIC__
 #ifndef __assert2
 #define __assert2(a,b,c,d) ((void)0)
@@ -23,7 +25,7 @@ namespace aidl {
 namespace android {
 namespace hardware {
 namespace contexthub {
-class BnEndpointCommunication : public ::ndk::BnCInterface<IEndpointCommunication> {
+class ANDROIDHARDWARECONTEXTHUBV4NDK_API BnEndpointCommunication : public ::ndk::BnCInterface<IEndpointCommunication> {
 public:
   BnEndpointCommunication();
   virtual ~BnEndpointCommunication();

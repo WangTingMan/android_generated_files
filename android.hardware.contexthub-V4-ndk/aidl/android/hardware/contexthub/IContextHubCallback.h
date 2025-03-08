@@ -23,6 +23,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWARECONTEXTHUBV4NDK_EXPORTS_.h"
+
 namespace aidl::android::hardware::contexthub {
 class ContextHubMessage;
 class MessageDeliveryStatus;
@@ -35,7 +37,7 @@ namespace hardware {
 namespace contexthub {
 class IContextHubCallbackDelegator;
 
-class IContextHubCallback : public ::ndk::ICInterface {
+class ANDROIDHARDWARECONTEXTHUBV4NDK_API IContextHubCallback : public ::ndk::ICInterface {
 public:
   typedef IContextHubCallbackDelegator DefaultDelegator;
   static const char* descriptor;
@@ -72,7 +74,7 @@ public:
 private:
   static std::shared_ptr<IContextHubCallback> default_impl;
 };
-class IContextHubCallbackDefault : public IContextHubCallback {
+class ANDROIDHARDWARECONTEXTHUBV4NDK_API IContextHubCallbackDefault : public IContextHubCallback {
 public:
   ::ndk::ScopedAStatus handleNanoappInfo(const std::vector<::aidl::android::hardware::contexthub::NanoappInfo>& in_appInfo) override;
   ::ndk::ScopedAStatus handleContextHubMessage(const ::aidl::android::hardware::contexthub::ContextHubMessage& in_msg, const std::vector<std::string>& in_msgContentPerms) override;

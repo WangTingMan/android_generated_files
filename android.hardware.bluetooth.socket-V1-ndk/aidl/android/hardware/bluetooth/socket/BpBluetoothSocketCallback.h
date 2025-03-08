@@ -12,12 +12,14 @@
 
 #include <android/binder_ibinder.h>
 
+#include "ANDROIDHARDWAREBLUETOOTHSOCKETV1NDK_EXPORTS_.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace socket {
-class BpBluetoothSocketCallback : public ::ndk::BpCInterface<IBluetoothSocketCallback> {
+class ANDROIDHARDWAREBLUETOOTHSOCKETV1NDK_API BpBluetoothSocketCallback : public ::ndk::BpCInterface<IBluetoothSocketCallback> {
 public:
   explicit BpBluetoothSocketCallback(const ::ndk::SpAIBinder& binder);
   virtual ~BpBluetoothSocketCallback();

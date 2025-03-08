@@ -19,6 +19,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREBLUETOOTHSOCKETV1NDK_EXPORTS_.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
@@ -26,7 +28,7 @@ namespace bluetooth {
 namespace socket {
 class IBluetoothSocketCallbackDelegator;
 
-class IBluetoothSocketCallback : public ::ndk::ICInterface {
+class ANDROIDHARDWAREBLUETOOTHSOCKETV1NDK_API IBluetoothSocketCallback : public ::ndk::ICInterface {
 public:
   typedef IBluetoothSocketCallbackDelegator DefaultDelegator;
   static const char* descriptor;
@@ -50,7 +52,7 @@ public:
 private:
   static std::shared_ptr<IBluetoothSocketCallback> default_impl;
 };
-class IBluetoothSocketCallbackDefault : public IBluetoothSocketCallback {
+class ANDROIDHARDWAREBLUETOOTHSOCKETV1NDK_API IBluetoothSocketCallbackDefault : public IBluetoothSocketCallback {
 public:
   ::ndk::ScopedAStatus openedComplete(int64_t in_socketId, ::aidl::android::hardware::bluetooth::socket::Status in_status, const std::string& in_reason) override;
   ::ndk::ScopedAStatus close(int64_t in_socketId, const std::string& in_reason) override;

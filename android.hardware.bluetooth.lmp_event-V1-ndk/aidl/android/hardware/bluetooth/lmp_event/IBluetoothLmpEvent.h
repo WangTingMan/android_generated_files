@@ -21,6 +21,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREBLUETOOTHLMPEVENTV1NDK_EXPORTS_.h"
+
 namespace aidl::android::hardware::bluetooth::lmp_event {
 class IBluetoothLmpEventCallback;
 }  // namespace aidl::android::hardware::bluetooth::lmp_event
@@ -31,7 +33,7 @@ namespace bluetooth {
 namespace lmp_event {
 class IBluetoothLmpEventDelegator;
 
-class IBluetoothLmpEvent : public ::ndk::ICInterface {
+class ANDROIDHARDWAREBLUETOOTHLMPEVENTV1NDK_API IBluetoothLmpEvent : public ::ndk::ICInterface {
 public:
   typedef IBluetoothLmpEventDelegator DefaultDelegator;
   static const char* descriptor;
@@ -55,7 +57,7 @@ public:
 private:
   static std::shared_ptr<IBluetoothLmpEvent> default_impl;
 };
-class IBluetoothLmpEventDefault : public IBluetoothLmpEvent {
+class ANDROIDHARDWAREBLUETOOTHLMPEVENTV1NDK_API IBluetoothLmpEventDefault : public IBluetoothLmpEvent {
 public:
   ::ndk::ScopedAStatus registerForLmpEvents(const std::shared_ptr<::aidl::android::hardware::bluetooth::lmp_event::IBluetoothLmpEventCallback>& in_callback, ::aidl::android::hardware::bluetooth::lmp_event::AddressType in_addressType, const std::array<uint8_t, 6>& in_address, const std::vector<::aidl::android::hardware::bluetooth::lmp_event::LmpEventId>& in_lmpEventIds) override;
   ::ndk::ScopedAStatus unregisterLmpEvents(::aidl::android::hardware::bluetooth::lmp_event::AddressType in_addressType, const std::array<uint8_t, 6>& in_address) override;

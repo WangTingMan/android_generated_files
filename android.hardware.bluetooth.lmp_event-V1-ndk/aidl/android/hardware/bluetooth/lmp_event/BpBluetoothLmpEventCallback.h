@@ -12,12 +12,14 @@
 
 #include <android/binder_ibinder.h>
 
+#include "ANDROIDHARDWAREBLUETOOTHLMPEVENTV1NDK_EXPORTS_.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace lmp_event {
-class BpBluetoothLmpEventCallback : public ::ndk::BpCInterface<IBluetoothLmpEventCallback> {
+class ANDROIDHARDWAREBLUETOOTHLMPEVENTV1NDK_API BpBluetoothLmpEventCallback : public ::ndk::BpCInterface<IBluetoothLmpEventCallback> {
 public:
   explicit BpBluetoothLmpEventCallback(const ::ndk::SpAIBinder& binder);
   virtual ~BpBluetoothLmpEventCallback();
