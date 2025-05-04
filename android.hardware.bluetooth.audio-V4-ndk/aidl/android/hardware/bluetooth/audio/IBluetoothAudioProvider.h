@@ -936,6 +936,50 @@ public:
   static constexpr uint32_t TRANSACTION_getLeAudioBroadcastConfiguration = FIRST_CALL_TRANSACTION + 14;
   static constexpr uint32_t TRANSACTION_getLeAudioBroadcastDatapathConfiguration = FIRST_CALL_TRANSACTION + 15;
 
+#ifdef _MSC_VER
+  std::function <::ndk::ScopedAStatus()> m_endSession;
+  std::function <::ndk::ScopedAStatus(const std::shared_ptr<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioPort>& in_hostIf,
+      const ::aidl::android::hardware::bluetooth::audio::AudioConfiguration& in_audioConfig,
+      const std::vector<::aidl::android::hardware::bluetooth::audio::LatencyMode>& in_supportedLatencyModes,
+      ::aidl::android::hardware::common::fmq::MQDescriptor<int8_t, ::aidl::android::hardware::common::fmq::SynchronizedReadWrite>* _aidl_return
+        )> m_startSession;
+  std::function <::ndk::ScopedAStatus(::aidl::android::hardware::bluetooth::audio::BluetoothAudioStatus in_status)> m_streamStarted;
+  std::function <::ndk::ScopedAStatus(::aidl::android::hardware::bluetooth::audio::BluetoothAudioStatus in_status)> m_streamSuspended;
+  std::function <::ndk::ScopedAStatus(const ::aidl::android::hardware::bluetooth::audio::AudioConfiguration& in_audioConfig)> m_updateAudioConfiguration;
+  std::function <::ndk::ScopedAStatus(bool in_allowed)> m_setLowLatencyModeAllowed;
+  std::function <::ndk::ScopedAStatus(const ::aidl::android::hardware::bluetooth::audio::CodecId& in_codecId,
+      const std::vector<uint8_t>& in_configuration,
+      ::aidl::android::hardware::bluetooth::audio::CodecParameters* out_codecParameters,
+      ::aidl::android::hardware::bluetooth::audio::A2dpStatus* _aidl_return)> m_parseA2dpConfiguration;
+  std::function <::ndk::ScopedAStatus(const std::vector<::aidl::android::hardware::bluetooth::audio::A2dpRemoteCapabilities>& in_remoteA2dpCapabilities,
+      const ::aidl::android::hardware::bluetooth::audio::A2dpConfigurationHint& in_hint,
+      std::optional<::aidl::android::hardware::bluetooth::audio::A2dpConfiguration>* _aidl_return)> m_getA2dpConfiguration;
+  std::function <::ndk::ScopedAStatus(const ::aidl::android::hardware::bluetooth::audio::CodecId& in_codecId, int32_t in_priority)> m_setCodecPriority;
+  std::function <::ndk::ScopedAStatus(const std::optional<std::vector<std::optional<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider::LeAudioDeviceCapabilities>>>& in_remoteSinkAudioCapabilities,
+      const std::optional<std::vector<std::optional<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider::LeAudioDeviceCapabilities>>>& in_remoteSourceAudioCapabilities,
+      const std::vector<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider::LeAudioConfigurationRequirement>& in_requirements,
+      std::vector<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider::LeAudioAseConfigurationSetting>* _aidl_return)> m_getLeAudioAseConfiguration;
+  std::function <::ndk::ScopedAStatus(const ::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider::LeAudioAseQosConfigurationRequirement& in_qosRequirement,
+      ::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider::LeAudioAseQosConfigurationPair* _aidl_return)> m_getLeAudioAseQosConfiguration;
+  std::function <::ndk::ScopedAStatus(const std::optional<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider::StreamConfig>& in_sinkConfig,
+      const std::optional<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider::StreamConfig>& in_sourceConfig,
+      ::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider::LeAudioDataPathConfigurationPair* _aidl_return)> m_getLeAudioAseDatapathConfiguration;
+  std::function <::ndk::ScopedAStatus(::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider::AseState in_state,
+      int32_t in_cigId, int32_t in_cisId,
+      const std::optional<std::vector<std::optional<::aidl::android::hardware::bluetooth::audio::MetadataLtv>>>& in_metadata)> m_onSinkAseMetadataChanged;
+  std::function <::ndk::ScopedAStatus(::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider::AseState in_state, int32_t in_cigId,
+      int32_t in_cisId, const std::optional<std::vector<std::optional<::aidl::android::hardware::bluetooth::audio::MetadataLtv>>>& in_metadata)> m_onSourceAseMetadataChanged;
+  std::function <::ndk::ScopedAStatus(const std::optional<std::vector<std::optional<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider::LeAudioDeviceCapabilities>>>& in_remoteSinkAudioCapabilities,
+      const ::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider::LeAudioBroadcastConfigurationRequirement& in_requirement,
+      ::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider::LeAudioBroadcastConfigurationSetting* _aidl_return)> m_getLeAudioBroadcastConfiguration;
+  std::function <::ndk::ScopedAStatus(const ::aidl::android::hardware::bluetooth::audio::AudioContext& in_audioContext,
+      const std::vector<::aidl::android::hardware::bluetooth::audio::LeAudioBroadcastConfiguration::BroadcastStreamMap>& in_streamMap,
+      ::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider::LeAudioDataPathConfiguration* _aidl_return)> m_getLeAudioBroadcastDatapathConfiguration;
+
+  std::function<::ndk::ScopedAStatus(int32_t*)> m_getInterfaceVersionFun;
+  std::function<::ndk::ScopedAStatus(std::string*)> m_getInterfaceHashFun;
+#endif
+
   static std::shared_ptr<IBluetoothAudioProvider> fromBinder(const ::ndk::SpAIBinder& binder);
   static binder_status_t writeToParcel(AParcel* parcel, const std::shared_ptr<IBluetoothAudioProvider>& instance);
   static binder_status_t readFromParcel(const AParcel* parcel, std::shared_ptr<IBluetoothAudioProvider>* instance);

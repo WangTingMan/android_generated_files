@@ -35,8 +35,11 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
 
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_sessionType);
       if (_aidl_ret_status != STATUS_OK) break;
-
+#ifdef _MSC_VER
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getProviderCapabilitiesFun(in_sessionType, &_aidl_return);
+#else
       ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getProviderCapabilities(in_sessionType, &_aidl_return);
+#endif
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -53,8 +56,11 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
 
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_sessionType);
       if (_aidl_ret_status != STATUS_OK) break;
-
+#ifdef _MSC_VER
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_openProviderFun(in_sessionType, &_aidl_return);
+#else
       ::ndk::ScopedAStatus _aidl_status = _aidl_impl->openProvider(in_sessionType, &_aidl_return);
+#endif
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -338,11 +344,20 @@ BpBluetoothAudioProviderFactory::~BpBluetoothAudioProviderFactory() {}
 // Source for BnBluetoothAudioProviderFactory
 BnBluetoothAudioProviderFactory::BnBluetoothAudioProviderFactory() {
 #ifdef _MSC_VER
+    setBinderCreater(std::bind(&BnBluetoothAudioProviderFactory::createBinderDetail, this));
     m_getInterfaceVersion = std::bind(&BnBluetoothAudioProviderFactory::getInterfaceVersion, this, std::placeholders::_1);
 #endif
 }
 BnBluetoothAudioProviderFactory::~BnBluetoothAudioProviderFactory() {}
+#ifdef _MSC_VER
+::ndk::SpAIBinder BnBluetoothAudioProviderFactory::createBinder()
+{
+    return createBinderDetail();
+}
+::ndk::SpAIBinder BnBluetoothAudioProviderFactory::createBinderDetail() {
+#else
 ::ndk::SpAIBinder BnBluetoothAudioProviderFactory::createBinder() {
+#endif
   AIBinder* binder = AIBinder_new(_g_aidl_android_hardware_bluetooth_audio_IBluetoothAudioProviderFactory_clazz, static_cast<void*>(this));
   #ifdef BINDER_STABILITY_SUPPORT
   AIBinder_markVintfStability(binder);

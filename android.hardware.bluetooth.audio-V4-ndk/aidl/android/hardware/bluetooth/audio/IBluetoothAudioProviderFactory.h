@@ -45,7 +45,7 @@ public:
   IBluetoothAudioProviderFactory();
   virtual ~IBluetoothAudioProviderFactory();
 
-  class ProviderInfo {
+  class ANDROIDHARDWAREBLUETOOTHAUDIOV4NDK_EXPORTS_API ProviderInfo {
   public:
     typedef std::false_type fixed_size;
     static inline constexpr const char* descriptor = "android.hardware.bluetooth.audio.IBluetoothAudioProviderFactory.ProviderInfo";
