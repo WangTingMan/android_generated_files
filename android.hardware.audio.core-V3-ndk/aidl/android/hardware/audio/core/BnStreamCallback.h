@@ -13,6 +13,8 @@
 #include <android/binder_ibinder.h>
 #include <cassert>
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 #ifndef __BIONIC__
 #ifndef __assert2
 #define __assert2(a,b,c,d) ((void)0)
@@ -24,7 +26,7 @@ namespace android {
 namespace hardware {
 namespace audio {
 namespace core {
-class BnStreamCallback : public ::ndk::BnCInterface<IStreamCallback> {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API BnStreamCallback : public ::ndk::BnCInterface<IStreamCallback> {
 public:
   BnStreamCallback();
   virtual ~BnStreamCallback();
@@ -34,7 +36,7 @@ protected:
   ::ndk::SpAIBinder createBinder() override;
 private:
 };
-class IStreamCallbackDelegator : public BnStreamCallback {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IStreamCallbackDelegator : public BnStreamCallback {
 public:
   explicit IStreamCallbackDelegator(const std::shared_ptr<IStreamCallback> &impl) : _impl(impl) {
      int32_t _impl_ver = 0;

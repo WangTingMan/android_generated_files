@@ -12,12 +12,14 @@
 
 #include <android/binder_ibinder.h>
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace audio {
 namespace core {
-class BpConfig : public ::ndk::BpCInterface<IConfig> {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API BpConfig : public ::ndk::BpCInterface<IConfig> {
 public:
   explicit BpConfig(const ::ndk::SpAIBinder& binder);
   virtual ~BpConfig();

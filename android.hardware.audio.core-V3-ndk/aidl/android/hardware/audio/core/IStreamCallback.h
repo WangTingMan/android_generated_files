@@ -18,6 +18,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
@@ -25,7 +27,7 @@ namespace audio {
 namespace core {
 class IStreamCallbackDelegator;
 
-class IStreamCallback : public ::ndk::ICInterface {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IStreamCallback : public ::ndk::ICInterface {
 public:
   typedef IStreamCallbackDelegator DefaultDelegator;
   static const char* descriptor;
@@ -51,7 +53,7 @@ public:
 private:
   static std::shared_ptr<IStreamCallback> default_impl;
 };
-class IStreamCallbackDefault : public IStreamCallback {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IStreamCallbackDefault : public IStreamCallback {
 public:
   ::ndk::ScopedAStatus onTransferReady() override;
   ::ndk::ScopedAStatus onError() override;

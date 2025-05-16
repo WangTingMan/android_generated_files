@@ -13,6 +13,8 @@
 #include <android/binder_ibinder.h>
 #include <cassert>
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 #ifndef __BIONIC__
 #ifndef __assert2
 #define __assert2(a,b,c,d) ((void)0)
@@ -24,7 +26,7 @@ namespace android {
 namespace hardware {
 namespace audio {
 namespace core {
-class BnBluetoothA2dp : public ::ndk::BnCInterface<IBluetoothA2dp> {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API BnBluetoothA2dp : public ::ndk::BnCInterface<IBluetoothA2dp> {
 public:
   BnBluetoothA2dp();
   virtual ~BnBluetoothA2dp();
@@ -34,7 +36,7 @@ protected:
   ::ndk::SpAIBinder createBinder() override;
 private:
 };
-class IBluetoothA2dpDelegator : public BnBluetoothA2dp {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IBluetoothA2dpDelegator : public BnBluetoothA2dp {
 public:
   explicit IBluetoothA2dpDelegator(const std::shared_ptr<IBluetoothA2dp> &impl) : _impl(impl) {
      int32_t _impl_ver = 0;

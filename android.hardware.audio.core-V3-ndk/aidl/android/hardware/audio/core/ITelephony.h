@@ -26,6 +26,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 namespace aidl::android::media::audio::common {
 class Boolean;
 class Float;
@@ -37,14 +39,14 @@ namespace audio {
 namespace core {
 class ITelephonyDelegator;
 
-class ITelephony : public ::ndk::ICInterface {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API ITelephony : public ::ndk::ICInterface {
 public:
   typedef ITelephonyDelegator DefaultDelegator;
   static const char* descriptor;
   ITelephony();
   virtual ~ITelephony();
 
-  class TelecomConfig {
+  class ANDROIDHARDWAREAUDIOCOREV3NDK_API TelecomConfig {
   public:
     typedef std::false_type fixed_size;
     static const char* descriptor;
@@ -115,7 +117,7 @@ public:
 private:
   static std::shared_ptr<ITelephony> default_impl;
 };
-class ITelephonyDefault : public ITelephony {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API ITelephonyDefault : public ITelephony {
 public:
   ::ndk::ScopedAStatus getSupportedAudioModes(std::vector<::aidl::android::media::audio::common::AudioMode>* _aidl_return) override;
   ::ndk::ScopedAStatus switchAudioMode(::aidl::android::media::audio::common::AudioMode in_mode) override;

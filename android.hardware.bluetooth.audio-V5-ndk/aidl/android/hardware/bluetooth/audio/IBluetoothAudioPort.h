@@ -9,6 +9,7 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <string>
@@ -54,6 +55,18 @@ public:
   static constexpr uint32_t TRANSACTION_updateSourceMetadata = FIRST_CALL_TRANSACTION + 4;
   static constexpr uint32_t TRANSACTION_updateSinkMetadata = FIRST_CALL_TRANSACTION + 5;
   static constexpr uint32_t TRANSACTION_setLatencyMode = FIRST_CALL_TRANSACTION + 6;
+
+#ifdef _MSC_VER
+  std::function<::ndk::ScopedAStatus(::aidl::android::hardware::bluetooth::audio::PresentationPosition*)> m_getPresentationPosition = 0;
+  std::function<::ndk::ScopedAStatus(bool)> m_startStream = 0;
+  std::function<::ndk::ScopedAStatus()> m_stopStream = 0;
+  std::function<::ndk::ScopedAStatus()> m_suspendStream = 0;
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::hardware::audio::common::SourceMetadata&)> m_updateSourceMetadata = 0;
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::hardware::audio::common::SinkMetadata&)> m_updateSinkMetadata = 0;
+  std::function<::ndk::ScopedAStatus(::aidl::android::hardware::bluetooth::audio::LatencyMode)> m_setLatencyMode = 0;
+  std::function<::ndk::ScopedAStatus(int32_t*)> m_getInterfaceVersion = 0;
+  std::function<::ndk::ScopedAStatus(std::string*)> m_getInterfaceHash = 0;
+#endif
 
   static std::shared_ptr<IBluetoothAudioPort> fromBinder(const ::ndk::SpAIBinder& binder);
   static binder_status_t writeToParcel(AParcel* parcel, const std::shared_ptr<IBluetoothAudioPort>& instance);

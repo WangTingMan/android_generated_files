@@ -32,8 +32,17 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 #ifndef __BIONIC__
 #define __assert2(a,b,c,d) ((void)0)
+#endif
+
+#ifdef _MSC_VER
+#define __attribute__(...)
+#ifdef ERROR
+#undef ERROR
+#endif
 #endif
 
 namespace aidl::android::hardware::audio::core {
@@ -51,12 +60,12 @@ namespace android {
 namespace hardware {
 namespace audio {
 namespace core {
-class StreamDescriptor {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API StreamDescriptor {
 public:
   typedef std::false_type fixed_size;
   static const char* descriptor;
 
-  class Position {
+  class ANDROIDHARDWAREAUDIOCOREV3NDK_API Position {
   public:
     typedef std::true_type fixed_size;
     static const char* descriptor;
@@ -121,7 +130,7 @@ public:
     DRAIN_EARLY_NOTIFY = 2,
   };
 
-  class Command {
+  class ANDROIDHARDWAREAUDIOCOREV3NDK_API Command {
   public:
     typedef std::true_type fixed_size;
     static const char* descriptor;
@@ -253,7 +262,7 @@ public:
   static_assert(sizeof(::aidl::android::media::audio::common::Void) == 1);
   static_assert(alignof(Command) == 4);
   static_assert(sizeof(Command) == 8);
-  class Reply {
+  class ANDROIDHARDWAREAUDIOCOREV3NDK_API Reply {
   public:
     typedef std::true_type fixed_size;
     static const char* descriptor;
@@ -319,7 +328,7 @@ public:
   static_assert(sizeof(::aidl::android::hardware::audio::core::StreamDescriptor::State) == 4);
   static_assert(alignof(Reply) == 8);
   static_assert(sizeof(Reply) == 56);
-  class AudioBuffer {
+  class ANDROIDHARDWAREAUDIOCOREV3NDK_API AudioBuffer {
   public:
     typedef std::false_type fixed_size;
     static const char* descriptor;
@@ -634,3 +643,8 @@ constexpr inline std::array<aidl::android::hardware::audio::core::StreamDescript
 #pragma clang diagnostic pop
 }  // namespace internal
 }  // namespace ndk
+
+#ifdef _MSC_VER
+#undef __attribute__
+#endif
+

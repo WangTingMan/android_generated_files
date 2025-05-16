@@ -78,7 +78,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_sessionType);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getProviderInfo(in_sessionType, &_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getProviderInfoFun(in_sessionType, &_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -92,7 +92,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
     case (FIRST_CALL_TRANSACTION + 16777214 /*getInterfaceVersion*/): {
       int32_t _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceVersion(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getInterfaceVersion(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -106,7 +106,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
     case (FIRST_CALL_TRANSACTION + 16777213 /*getInterfaceHash*/): {
       std::string _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceHash(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getInterfaceHash(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -346,6 +346,7 @@ BnBluetoothAudioProviderFactory::BnBluetoothAudioProviderFactory() {
 #ifdef _MSC_VER
     setBinderCreater(std::bind(&BnBluetoothAudioProviderFactory::createBinderDetail, this));
     m_getInterfaceVersion = std::bind(&BnBluetoothAudioProviderFactory::getInterfaceVersion, this, std::placeholders::_1);
+    m_getInterfaceHash = std::bind(&BnBluetoothAudioProviderFactory::getInterfaceHash, this, std::placeholders::_1);
 #endif
 }
 BnBluetoothAudioProviderFactory::~BnBluetoothAudioProviderFactory() {}

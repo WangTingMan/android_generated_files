@@ -26,6 +26,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 namespace aidl::android::media::audio::common {
 class Boolean;
 class Float;
@@ -38,14 +40,14 @@ namespace audio {
 namespace core {
 class IBluetoothDelegator;
 
-class IBluetooth : public ::ndk::ICInterface {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IBluetooth : public ::ndk::ICInterface {
 public:
   typedef IBluetoothDelegator DefaultDelegator;
   static const char* descriptor;
   IBluetooth();
   virtual ~IBluetooth();
 
-  class ScoConfig {
+  class ANDROIDHARDWAREAUDIOCOREV3NDK_API ScoConfig {
   public:
     typedef std::false_type fixed_size;
     static const char* descriptor;
@@ -96,7 +98,7 @@ public:
       return _aidl_os.str();
     }
   };
-  class HfpConfig {
+  class ANDROIDHARDWAREAUDIOCOREV3NDK_API HfpConfig {
   public:
     typedef std::false_type fixed_size;
     static const char* descriptor;
@@ -157,7 +159,7 @@ public:
 private:
   static std::shared_ptr<IBluetooth> default_impl;
 };
-class IBluetoothDefault : public IBluetooth {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IBluetoothDefault : public IBluetooth {
 public:
   ::ndk::ScopedAStatus setScoConfig(const ::aidl::android::hardware::audio::core::IBluetooth::ScoConfig& in_config, ::aidl::android::hardware::audio::core::IBluetooth::ScoConfig* _aidl_return) override;
   ::ndk::ScopedAStatus setHfpConfig(const ::aidl::android::hardware::audio::core::IBluetooth::HfpConfig& in_config, ::aidl::android::hardware::audio::core::IBluetooth::HfpConfig* _aidl_return) override;

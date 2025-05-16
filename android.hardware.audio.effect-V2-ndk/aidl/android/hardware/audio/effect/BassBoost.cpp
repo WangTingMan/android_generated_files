@@ -1,0 +1,108 @@
+/*
+ * This file is auto-generated.  DO NOT MODIFY.
+ * Using: out/host/linux-x86/bin/aidl --lang=ndk --structured --version 2 --hash 54d5a2e1d59066b57e35eb7bcb5ebc72a1259c1c --stability vintf --min_sdk_version current -pout/soong/.intermediates/system/hardware/interfaces/media/android.media.audio.common.types_interface/4/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.common_interface/3/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/common/aidl/android.hardware.common_interface/2/preprocessed.aidl -pout/soong/.intermediates/hardware/interfaces/common/fmq/aidl/android.hardware.common.fmq_interface/1/preprocessed.aidl --ninja -d out/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.effect-V2-ndk-source/gen/staging/android/hardware/audio/effect/BassBoost.cpp.d -h out/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.effect-V2-ndk-source/gen/include/staging -o out/soong/.intermediates/hardware/interfaces/audio/aidl/android.hardware.audio.effect-V2-ndk-source/gen/staging -Nhardware/interfaces/audio/aidl/aidl_api/android.hardware.audio.effect/2 hardware/interfaces/audio/aidl/aidl_api/android.hardware.audio.effect/2/android/hardware/audio/effect/BassBoost.aidl
+ */
+#include "aidl/android/hardware/audio/effect/BassBoost.h"
+
+#include <android/binder_parcel_utils.h>
+
+namespace aidl {
+namespace android {
+namespace hardware {
+namespace audio {
+namespace effect {
+const char* BassBoost::descriptor = "android.hardware.audio.effect.BassBoost";
+
+binder_status_t BassBoost::readFromParcel(const AParcel* _parcel) {
+  binder_status_t _aidl_ret_status;
+  int32_t _aidl_tag;
+  if ((_aidl_ret_status = ::ndk::AParcel_readData(_parcel, &_aidl_tag)) != STATUS_OK) return _aidl_ret_status;
+  switch (static_cast<Tag>(_aidl_tag)) {
+  case vendor: {
+    ::aidl::android::hardware::audio::effect::VendorExtension _aidl_value;
+    if ((_aidl_ret_status = ::ndk::AParcel_readData(_parcel, &_aidl_value)) != STATUS_OK) return _aidl_ret_status;
+    if constexpr (std::is_trivially_copyable_v<::aidl::android::hardware::audio::effect::VendorExtension>) {
+      set<vendor>(_aidl_value);
+    } else {
+      // NOLINTNEXTLINE(performance-move-const-arg)
+      set<vendor>(std::move(_aidl_value));
+    }
+    return STATUS_OK; }
+  case strengthPm: {
+    int32_t _aidl_value;
+    if ((_aidl_ret_status = ::ndk::AParcel_readData(_parcel, &_aidl_value)) != STATUS_OK) return _aidl_ret_status;
+    if constexpr (std::is_trivially_copyable_v<int32_t>) {
+      set<strengthPm>(_aidl_value);
+    } else {
+      // NOLINTNEXTLINE(performance-move-const-arg)
+      set<strengthPm>(std::move(_aidl_value));
+    }
+    return STATUS_OK; }
+  }
+  return STATUS_BAD_VALUE;
+}
+binder_status_t BassBoost::writeToParcel(AParcel* _parcel) const {
+  binder_status_t _aidl_ret_status = ::ndk::AParcel_writeData(_parcel, static_cast<int32_t>(getTag()));
+  if (_aidl_ret_status != STATUS_OK) return _aidl_ret_status;
+  switch (getTag()) {
+  case vendor: return ::ndk::AParcel_writeData(_parcel, get<vendor>());
+  case strengthPm: return ::ndk::AParcel_writeData(_parcel, get<strengthPm>());
+  }
+  __assert2(__FILE__, __LINE__, __PRETTY_FUNCTION__, "can't reach here");
+}
+
+}  // namespace effect
+}  // namespace audio
+}  // namespace hardware
+}  // namespace android
+}  // namespace aidl
+namespace aidl {
+namespace android {
+namespace hardware {
+namespace audio {
+namespace effect {
+const char* BassBoost::Id::descriptor = "android.hardware.audio.effect.BassBoost.Id";
+
+binder_status_t BassBoost::Id::readFromParcel(const AParcel* _parcel) {
+  binder_status_t _aidl_ret_status;
+  int32_t _aidl_tag;
+  if ((_aidl_ret_status = ::ndk::AParcel_readData(_parcel, &_aidl_tag)) != STATUS_OK) return _aidl_ret_status;
+  switch (static_cast<Tag>(_aidl_tag)) {
+  case vendorExtensionTag: {
+    ::aidl::android::hardware::audio::effect::VendorExtension _aidl_value;
+    if ((_aidl_ret_status = ::ndk::AParcel_readData(_parcel, &_aidl_value)) != STATUS_OK) return _aidl_ret_status;
+    if constexpr (std::is_trivially_copyable_v<::aidl::android::hardware::audio::effect::VendorExtension>) {
+      set<vendorExtensionTag>(_aidl_value);
+    } else {
+      // NOLINTNEXTLINE(performance-move-const-arg)
+      set<vendorExtensionTag>(std::move(_aidl_value));
+    }
+    return STATUS_OK; }
+  case commonTag: {
+    ::aidl::android::hardware::audio::effect::BassBoost::Tag _aidl_value;
+    if ((_aidl_ret_status = ::ndk::AParcel_readData(_parcel, &_aidl_value)) != STATUS_OK) return _aidl_ret_status;
+    if constexpr (std::is_trivially_copyable_v<::aidl::android::hardware::audio::effect::BassBoost::Tag>) {
+      set<commonTag>(_aidl_value);
+    } else {
+      // NOLINTNEXTLINE(performance-move-const-arg)
+      set<commonTag>(std::move(_aidl_value));
+    }
+    return STATUS_OK; }
+  }
+  return STATUS_BAD_VALUE;
+}
+binder_status_t BassBoost::Id::writeToParcel(AParcel* _parcel) const {
+  binder_status_t _aidl_ret_status = ::ndk::AParcel_writeData(_parcel, static_cast<int32_t>(getTag()));
+  if (_aidl_ret_status != STATUS_OK) return _aidl_ret_status;
+  switch (getTag()) {
+  case vendorExtensionTag: return ::ndk::AParcel_writeData(_parcel, get<vendorExtensionTag>());
+  case commonTag: return ::ndk::AParcel_writeData(_parcel, get<commonTag>());
+  }
+  __assert2(__FILE__, __LINE__, __PRETTY_FUNCTION__, "can't reach here");
+}
+
+}  // namespace effect
+}  // namespace audio
+}  // namespace hardware
+}  // namespace android
+}  // namespace aidl

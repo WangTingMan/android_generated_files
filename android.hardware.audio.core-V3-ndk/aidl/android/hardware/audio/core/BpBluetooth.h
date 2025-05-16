@@ -12,12 +12,14 @@
 
 #include <android/binder_ibinder.h>
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace audio {
 namespace core {
-class BpBluetooth : public ::ndk::BpCInterface<IBluetooth> {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API BpBluetooth : public ::ndk::BpCInterface<IBluetooth> {
 public:
   explicit BpBluetooth(const ::ndk::SpAIBinder& binder);
   virtual ~BpBluetooth();

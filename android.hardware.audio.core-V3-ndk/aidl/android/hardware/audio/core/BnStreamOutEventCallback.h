@@ -24,7 +24,7 @@ namespace android {
 namespace hardware {
 namespace audio {
 namespace core {
-class BnStreamOutEventCallback : public ::ndk::BnCInterface<IStreamOutEventCallback> {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API BnStreamOutEventCallback : public ::ndk::BnCInterface<IStreamOutEventCallback> {
 public:
   BnStreamOutEventCallback();
   virtual ~BnStreamOutEventCallback();
@@ -34,7 +34,7 @@ protected:
   ::ndk::SpAIBinder createBinder() override;
 private:
 };
-class IStreamOutEventCallbackDelegator : public BnStreamOutEventCallback {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IStreamOutEventCallbackDelegator : public BnStreamOutEventCallback {
 public:
   explicit IStreamOutEventCallbackDelegator(const std::shared_ptr<IStreamOutEventCallback> &impl) : _impl(impl) {
      int32_t _impl_ver = 0;

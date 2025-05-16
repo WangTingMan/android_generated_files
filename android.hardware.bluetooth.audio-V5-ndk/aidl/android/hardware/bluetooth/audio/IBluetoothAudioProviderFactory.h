@@ -9,6 +9,7 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <string>
@@ -92,6 +93,17 @@ public:
   static constexpr uint32_t TRANSACTION_getProviderCapabilities = FIRST_CALL_TRANSACTION + 0;
   static constexpr uint32_t TRANSACTION_openProvider = FIRST_CALL_TRANSACTION + 1;
   static constexpr uint32_t TRANSACTION_getProviderInfo = FIRST_CALL_TRANSACTION + 2;
+
+#ifdef _MSC_VER
+  std::function<::ndk::ScopedAStatus(::aidl::android::hardware::bluetooth::audio::SessionType,
+      std::vector<::aidl::android::hardware::bluetooth::audio::AudioCapabilities>*)> m_getProviderCapabilities;
+  std::function<::ndk::ScopedAStatus(::aidl::android::hardware::bluetooth::audio::SessionType,
+      std::shared_ptr<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProvider>*)> m_openProvider;
+  std::function<::ndk::ScopedAStatus(::aidl::android::hardware::bluetooth::audio::SessionType,
+      std::optional<::aidl::android::hardware::bluetooth::audio::IBluetoothAudioProviderFactory::ProviderInfo>*)> m_getProviderInfo;
+  std::function<::ndk::ScopedAStatus(int32_t*)> m_getInterfaceVersion;
+  std::function<::ndk::ScopedAStatus(std::string*)> m_getInterfaceHash;
+#endif
 
   static std::shared_ptr<IBluetoothAudioProviderFactory> fromBinder(const ::ndk::SpAIBinder& binder);
   static binder_status_t writeToParcel(AParcel* parcel, const std::shared_ptr<IBluetoothAudioProviderFactory>& instance);

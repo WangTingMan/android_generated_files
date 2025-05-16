@@ -22,6 +22,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 namespace aidl::android::media::audio::common {
 class AudioFormatDescription;
 }  // namespace aidl::android::media::audio::common
@@ -30,12 +32,12 @@ namespace android {
 namespace hardware {
 namespace audio {
 namespace core {
-class SurroundSoundConfig {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API SurroundSoundConfig {
 public:
   typedef std::false_type fixed_size;
   static const char* descriptor;
 
-  class SurroundFormatFamily {
+  class ANDROIDHARDWAREAUDIOCOREV3NDK_API SurroundFormatFamily {
   public:
     typedef std::false_type fixed_size;
     static const char* descriptor;

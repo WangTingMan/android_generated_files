@@ -98,6 +98,7 @@ public:
   std::function<::ndk::ScopedAStatus(SessionType, std::shared_ptr<IBluetoothAudioProvider>*)> m_openProviderFun;
   std::function<::ndk::ScopedAStatus(SessionType, std::optional<IBluetoothAudioProviderFactory::ProviderInfo>*)> m_getProviderInfoFun;
   std::function<::ndk::ScopedAStatus(int32_t*)> m_getInterfaceVersion;
+  std::function<::ndk::ScopedAStatus(std::string*)> m_getInterfaceHash;
 #endif
 
   static std::shared_ptr<IBluetoothAudioProviderFactory> fromBinder(const ::ndk::SpAIBinder& binder);

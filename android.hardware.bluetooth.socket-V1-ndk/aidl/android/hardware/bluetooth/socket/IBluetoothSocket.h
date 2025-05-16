@@ -9,6 +9,7 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <string>
@@ -48,6 +49,15 @@ public:
   static constexpr uint32_t TRANSACTION_getSocketCapabilities = FIRST_CALL_TRANSACTION + 1;
   static constexpr uint32_t TRANSACTION_opened = FIRST_CALL_TRANSACTION + 2;
   static constexpr uint32_t TRANSACTION_closed = FIRST_CALL_TRANSACTION + 3;
+
+#ifdef _MSC_VER
+  std::function<::ndk::ScopedAStatus(const std::shared_ptr<::aidl::android::hardware::bluetooth::socket::IBluetoothSocketCallback>&)> m_registerCallback = 0;
+  std::function<::ndk::ScopedAStatus(::aidl::android::hardware::bluetooth::socket::SocketCapabilities*)> m_getSocketCapabilities = 0;
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::hardware::bluetooth::socket::SocketContext&)> m_opened = 0;
+  std::function<::ndk::ScopedAStatus(int64_t)> m_closed = 0;
+  std::function<::ndk::ScopedAStatus(int32_t*)> m_getInterfaceVersion = 0;
+  std::function<::ndk::ScopedAStatus(std::string*)> m_getInterfaceHash = 0;
+#endif
 
   static std::shared_ptr<IBluetoothSocket> fromBinder(const ::ndk::SpAIBinder& binder);
   static binder_status_t writeToParcel(AParcel* parcel, const std::shared_ptr<IBluetoothSocket>& instance);

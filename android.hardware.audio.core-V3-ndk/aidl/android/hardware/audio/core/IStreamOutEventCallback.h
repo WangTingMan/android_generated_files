@@ -19,6 +19,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
@@ -26,7 +28,7 @@ namespace audio {
 namespace core {
 class IStreamOutEventCallbackDelegator;
 
-class IStreamOutEventCallback : public ::ndk::ICInterface {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IStreamOutEventCallback : public ::ndk::ICInterface {
 public:
   typedef IStreamOutEventCallbackDelegator DefaultDelegator;
   static const char* descriptor;
@@ -50,7 +52,7 @@ public:
 private:
   static std::shared_ptr<IStreamOutEventCallback> default_impl;
 };
-class IStreamOutEventCallbackDefault : public IStreamOutEventCallback {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IStreamOutEventCallbackDefault : public IStreamOutEventCallback {
 public:
   ::ndk::ScopedAStatus onCodecFormatChanged(const std::vector<uint8_t>& in_audioMetadata) override;
   ::ndk::ScopedAStatus onRecommendedLatencyModeChanged(const std::vector<::aidl::android::media::audio::common::AudioLatencyMode>& in_modes) override;

@@ -20,6 +20,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 namespace aidl::android::hardware::audio::core {
 class SurroundSoundConfig;
 }  // namespace aidl::android::hardware::audio::core
@@ -33,7 +35,7 @@ namespace audio {
 namespace core {
 class IConfigDelegator;
 
-class IConfig : public ::ndk::ICInterface {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IConfig : public ::ndk::ICInterface {
 public:
   typedef IConfigDelegator DefaultDelegator;
   static const char* descriptor;
@@ -57,7 +59,7 @@ public:
 private:
   static std::shared_ptr<IConfig> default_impl;
 };
-class IConfigDefault : public IConfig {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IConfigDefault : public IConfig {
 public:
   ::ndk::ScopedAStatus getSurroundSoundConfig(::aidl::android::hardware::audio::core::SurroundSoundConfig* _aidl_return) override;
   ::ndk::ScopedAStatus getEngineConfig(::aidl::android::media::audio::common::AudioHalEngineConfig* _aidl_return) override;

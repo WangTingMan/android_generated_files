@@ -44,7 +44,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_socket_IBluetoothSocket_
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_callback);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->registerCallback(in_callback);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_registerCallback(in_callback);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -55,7 +55,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_socket_IBluetoothSocket_
     case (FIRST_CALL_TRANSACTION + 1 /*getSocketCapabilities*/): {
       ::aidl::android::hardware::bluetooth::socket::SocketCapabilities _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getSocketCapabilities(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getSocketCapabilities(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -72,7 +72,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_socket_IBluetoothSocket_
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_context);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->opened(in_context);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_opened(in_context);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -86,7 +86,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_socket_IBluetoothSocket_
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_socketId);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->closed(in_socketId);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_closed(in_socketId);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -97,7 +97,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_socket_IBluetoothSocket_
     case (FIRST_CALL_TRANSACTION + 16777214 /*getInterfaceVersion*/): {
       int32_t _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceVersion(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getInterfaceVersion(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -111,7 +111,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_socket_IBluetoothSocket_
     case (FIRST_CALL_TRANSACTION + 16777213 /*getInterfaceHash*/): {
       std::string _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceHash(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getInterfaceHash(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -129,7 +129,16 @@ static binder_status_t _aidl_android_hardware_bluetooth_socket_IBluetoothSocket_
 static const char* _g_aidl_android_hardware_bluetooth_socket_IBluetoothSocket_clazz_code_to_function[] = { "registerCallback","getSocketCapabilities","opened","closed",};
 static AIBinder_Class* _g_aidl_android_hardware_bluetooth_socket_IBluetoothSocket_clazz = ::ndk::ICInterface::defineClass(IBluetoothSocket::descriptor, _aidl_android_hardware_bluetooth_socket_IBluetoothSocket_onTransact, _g_aidl_android_hardware_bluetooth_socket_IBluetoothSocket_clazz_code_to_function, 4);
 
-BpBluetoothSocket::BpBluetoothSocket(const ::ndk::SpAIBinder& binder) : BpCInterface(binder) {}
+BpBluetoothSocket::BpBluetoothSocket(const ::ndk::SpAIBinder& binder) : BpCInterface(binder) {
+#ifdef _MSC_VER
+    m_getInterfaceHash = std::bind(&BpBluetoothSocket::getInterfaceHash, this, std::placeholders::_1);
+    m_getInterfaceVersion = std::bind(&BpBluetoothSocket::getInterfaceVersion, this, std::placeholders::_1);
+    m_closed = std::bind(&BpBluetoothSocket::closed, this, std::placeholders::_1);
+    m_opened = std::bind(&BpBluetoothSocket::opened, this, std::placeholders::_1);
+    m_getSocketCapabilities = std::bind(&BpBluetoothSocket::getSocketCapabilities, this, std::placeholders::_1);
+    m_registerCallback = std::bind(&BpBluetoothSocket::registerCallback, this, std::placeholders::_1);
+#endif
+}
 BpBluetoothSocket::~BpBluetoothSocket() {}
 
 ::ndk::ScopedAStatus BpBluetoothSocket::registerCallback(const std::shared_ptr<::aidl::android::hardware::bluetooth::socket::IBluetoothSocketCallback>& in_callback) {
@@ -368,9 +377,23 @@ BpBluetoothSocket::~BpBluetoothSocket() {}
   return _aidl_status;
 }
 // Source for BnBluetoothSocket
-BnBluetoothSocket::BnBluetoothSocket() {}
+BnBluetoothSocket::BnBluetoothSocket() {
+#ifdef _MSC_VER
+    setBinderCreater(std::bind(&BnBluetoothSocket::createBinderDetail,this));
+    m_getInterfaceHash = std::bind(&BnBluetoothSocket::getInterfaceHash, this, std::placeholders::_1);
+    m_getInterfaceVersion = std::bind(&BnBluetoothSocket::getInterfaceVersion, this, std::placeholders::_1);
+#endif
+}
 BnBluetoothSocket::~BnBluetoothSocket() {}
+#ifdef _MSC_VER
 ::ndk::SpAIBinder BnBluetoothSocket::createBinder() {
+    return createBinderDetail();
+}
+
+::ndk::SpAIBinder BnBluetoothSocket::createBinderDetail() {
+#else
+::ndk::SpAIBinder BnBluetoothSocket::createBinder() {
+#endif
   AIBinder* binder = AIBinder_new(_g_aidl_android_hardware_bluetooth_socket_IBluetoothSocket_clazz, static_cast<void*>(this));
   #ifdef BINDER_STABILITY_SUPPORT
   AIBinder_markVintfStability(binder);

@@ -13,6 +13,8 @@
 #include <android/binder_ibinder.h>
 #include <cassert>
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 #ifndef __BIONIC__
 #ifndef __assert2
 #define __assert2(a,b,c,d) ((void)0)
@@ -24,7 +26,7 @@ namespace android {
 namespace hardware {
 namespace audio {
 namespace core {
-class BnConfig : public ::ndk::BnCInterface<IConfig> {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API BnConfig : public ::ndk::BnCInterface<IConfig> {
 public:
   BnConfig();
   virtual ~BnConfig();
@@ -34,7 +36,7 @@ protected:
   ::ndk::SpAIBinder createBinder() override;
 private:
 };
-class IConfigDelegator : public BnConfig {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IConfigDelegator : public BnConfig {
 public:
   explicit IConfigDelegator(const std::shared_ptr<IConfig> &impl) : _impl(impl) {
      int32_t _impl_ver = 0;

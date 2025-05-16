@@ -36,7 +36,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_sessionType);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getProviderCapabilities(in_sessionType, &_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getProviderCapabilities(in_sessionType, &_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -54,7 +54,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_sessionType);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->openProvider(in_sessionType, &_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_openProvider(in_sessionType, &_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -72,7 +72,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_sessionType);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getProviderInfo(in_sessionType, &_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getProviderInfo(in_sessionType, &_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -86,7 +86,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
     case (FIRST_CALL_TRANSACTION + 16777214 /*getInterfaceVersion*/): {
       int32_t _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceVersion(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getInterfaceVersion(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -100,7 +100,7 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
     case (FIRST_CALL_TRANSACTION + 16777213 /*getInterfaceHash*/): {
       std::string _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceHash(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getInterfaceHash(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -118,7 +118,16 @@ static binder_status_t _aidl_android_hardware_bluetooth_audio_IBluetoothAudioPro
 static const char* _g_aidl_android_hardware_bluetooth_audio_IBluetoothAudioProviderFactory_clazz_code_to_function[] = { "getProviderCapabilities","openProvider","getProviderInfo",};
 static AIBinder_Class* _g_aidl_android_hardware_bluetooth_audio_IBluetoothAudioProviderFactory_clazz = ::ndk::ICInterface::defineClass(IBluetoothAudioProviderFactory::descriptor, _aidl_android_hardware_bluetooth_audio_IBluetoothAudioProviderFactory_onTransact, _g_aidl_android_hardware_bluetooth_audio_IBluetoothAudioProviderFactory_clazz_code_to_function, 3);
 
-BpBluetoothAudioProviderFactory::BpBluetoothAudioProviderFactory(const ::ndk::SpAIBinder& binder) : BpCInterface(binder) {}
+BpBluetoothAudioProviderFactory::BpBluetoothAudioProviderFactory(const ::ndk::SpAIBinder& binder) : BpCInterface(binder) {
+#ifdef _MSC_VER
+    using namespace std::placeholders;
+    m_getProviderCapabilities = std::bind(&BpBluetoothAudioProviderFactory::getProviderCapabilities, this, _1, _2);
+    m_openProvider = std::bind(&BpBluetoothAudioProviderFactory::openProvider, this, _1, _2);
+    m_getProviderInfo = std::bind(&BpBluetoothAudioProviderFactory::getProviderInfo, this, _1, _2);
+    m_getInterfaceVersion = std::bind(&BpBluetoothAudioProviderFactory::getInterfaceVersion, this, _1);
+    m_getInterfaceHash = std::bind(&BpBluetoothAudioProviderFactory::getInterfaceHash, this, _1);
+#endif
+}
 BpBluetoothAudioProviderFactory::~BpBluetoothAudioProviderFactory() {}
 
 ::ndk::ScopedAStatus BpBluetoothAudioProviderFactory::getProviderCapabilities(::aidl::android::hardware::bluetooth::audio::SessionType in_sessionType, std::vector<::aidl::android::hardware::bluetooth::audio::AudioCapabilities>* _aidl_return) {
@@ -329,9 +338,23 @@ BpBluetoothAudioProviderFactory::~BpBluetoothAudioProviderFactory() {}
   return _aidl_status;
 }
 // Source for BnBluetoothAudioProviderFactory
-BnBluetoothAudioProviderFactory::BnBluetoothAudioProviderFactory() {}
+BnBluetoothAudioProviderFactory::BnBluetoothAudioProviderFactory() {
+#ifdef _MSC_VER
+    setBinderCreater(std::bind(&BnBluetoothAudioProviderFactory::createBinderDetail, this));
+    m_getInterfaceVersion = std::bind(&BnBluetoothAudioProviderFactory::getInterfaceVersion, this, std::placeholders::_1);
+    m_getInterfaceHash = std::bind(&BnBluetoothAudioProviderFactory::getInterfaceHash, this, std::placeholders::_1);
+#endif
+}
 BnBluetoothAudioProviderFactory::~BnBluetoothAudioProviderFactory() {}
+#ifdef _MSC_VER
 ::ndk::SpAIBinder BnBluetoothAudioProviderFactory::createBinder() {
+    return createBinderDetail();
+}
+
+::ndk::SpAIBinder BnBluetoothAudioProviderFactory::createBinderDetail() {
+#else
+::ndk::SpAIBinder BnBluetoothAudioProviderFactory::createBinder() {
+#endif
   AIBinder* binder = AIBinder_new(_g_aidl_android_hardware_bluetooth_audio_IBluetoothAudioProviderFactory_clazz, static_cast<void*>(this));
   #ifdef BINDER_STABILITY_SUPPORT
   AIBinder_markVintfStability(binder);

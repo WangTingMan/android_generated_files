@@ -720,7 +720,54 @@ static binder_status_t _aidl_android_hardware_audio_core_IModule_onTransact(AIBi
 static const char* _g_aidl_android_hardware_audio_core_IModule_clazz_code_to_function[] = { "setModuleDebug","getTelephony","getBluetooth","getBluetoothA2dp","getBluetoothLe","connectExternalDevice","disconnectExternalDevice","getAudioPatches","getAudioPort","getAudioPortConfigs","getAudioPorts","getAudioRoutes","getAudioRoutesForAudioPort","openInputStream","openOutputStream","getSupportedPlaybackRateFactors","setAudioPatch","setAudioPortConfig","resetAudioPatch","resetAudioPortConfig","getMasterMute","setMasterMute","getMasterVolume","setMasterVolume","getMicMute","setMicMute","getMicrophones","updateAudioMode","updateScreenRotation","updateScreenState","getSoundDose","generateHwAvSyncId","getVendorParameters","setVendorParameters","addDeviceEffect","removeDeviceEffect","getMmapPolicyInfos","supportsVariableLatency","getAAudioMixerBurstCount","getAAudioHardwareBurstMinUsec","prepareToDisconnectExternalDevice",};
 static AIBinder_Class* _g_aidl_android_hardware_audio_core_IModule_clazz = ::ndk::ICInterface::defineClass(IModule::descriptor, _aidl_android_hardware_audio_core_IModule_onTransact, _g_aidl_android_hardware_audio_core_IModule_clazz_code_to_function, 41);
 
-BpModule::BpModule(const ::ndk::SpAIBinder& binder) : BpCInterface(binder) {}
+BpModule::BpModule(const ::ndk::SpAIBinder& binder) : BpCInterface(binder) {
+#ifdef _MSC_VER
+    using namespace std::placeholders;
+    m_setModuleDebug = std::bind(&BpModule::setModuleDebug, this, _1);
+    m_getTelephony = std::bind(&BpModule::getTelephony, this, _1);
+    m_getBluetooth = std::bind(&BpModule::getBluetooth, this, _1);
+    m_getBluetoothA2dp = std::bind(&BpModule::getBluetoothA2dp, this, _1);
+    m_getBluetoothLe = std::bind(&BpModule::getBluetoothLe, this, _1);
+    m_connectExternalDevice = std::bind(&BpModule::connectExternalDevice, this, _1, _2);
+    m_disconnectExternalDevice = std::bind(&BpModule::disconnectExternalDevice, this, _1);
+    m_getAudioPatches = std::bind(&BpModule::getAudioPatches, this, _1);
+    m_getAudioPort = std::bind(&BpModule::getAudioPort, this, _1, _2);
+    m_getAudioPortConfigs = std::bind(&BpModule::getAudioPortConfigs, this, _1);
+    m_getAudioPorts = std::bind(&BpModule::getAudioPorts, this, _1);
+    m_getAudioRoutes = std::bind(&BpModule::getAudioRoutes, this, _1);
+    m_getAudioRoutesForAudioPort = std::bind(&BpModule::getAudioRoutesForAudioPort, this, _1, _2);
+    m_openInputStream = std::bind(&BpModule::openInputStream, this, _1, _2);
+    m_openOutputStream = std::bind(&BpModule::openOutputStream, this, _1, _2);
+    m_getSupportedPlaybackRateFactors = std::bind(&BpModule::getSupportedPlaybackRateFactors, this, _1);
+    m_setAudioPatch = std::bind(&BpModule::setAudioPatch, this, _1, _2);
+    m_setAudioPortConfig = std::bind(&BpModule::setAudioPortConfig, this, _1, _2, _3);
+    m_resetAudioPatch = std::bind(&BpModule::resetAudioPatch, this, _1);
+    m_resetAudioPortConfig = std::bind(&BpModule::resetAudioPortConfig, this, _1);
+    m_getMasterMute = std::bind(&BpModule::getMasterMute, this, _1);
+    m_setMasterMute = std::bind(&BpModule::setMasterMute, this, _1);
+    m_getMasterVolume = std::bind(&BpModule::getMasterVolume, this, _1);
+    m_setMasterVolume = std::bind(&BpModule::setMasterVolume, this, _1);
+    m_getMicMute = std::bind(&BpModule::getMicMute, this, _1);
+    m_setMicMute = std::bind(&BpModule::setMicMute, this, _1);
+    m_getMicrophones = std::bind(&BpModule::getMicrophones, this, _1);
+    m_updateAudioMode = std::bind(&BpModule::updateAudioMode, this, _1);
+    m_updateScreenRotation = std::bind(&BpModule::updateScreenRotation, this, _1);
+    m_updateScreenState = std::bind(&BpModule::updateScreenState, this, _1);
+    m_getSoundDose = std::bind(&BpModule::getSoundDose, this, _1);
+    m_generateHwAvSyncId = std::bind(&BpModule::generateHwAvSyncId, this, _1);
+    m_getVendorParameters = std::bind(&BpModule::getVendorParameters, this, _1, _2);
+    m_setVendorParameters = std::bind(&BpModule::setVendorParameters, this, _1, _2);
+    m_addDeviceEffect = std::bind(&BpModule::addDeviceEffect, this, _1, _2);
+    m_removeDeviceEffect = std::bind(&BpModule::removeDeviceEffect, this, _1, _2);
+    m_getMmapPolicyInfos = std::bind(&BpModule::getMmapPolicyInfos, this, _1, _2);
+    m_supportsVariableLatency = std::bind(&BpModule::supportsVariableLatency, this, _1);
+    m_getAAudioMixerBurstCount = std::bind(&BpModule::getAAudioMixerBurstCount, this, _1);
+    m_getAAudioHardwareBurstMinUsec = std::bind(&BpModule::getAAudioHardwareBurstMinUsec, this, _1);
+    m_prepareToDisconnectExternalDevice = std::bind(&BpModule::prepareToDisconnectExternalDevice, this, _1);
+    m_getInterfaceVersion = std::bind(&BpModule::getInterfaceVersion, this, _1);
+    m_getInterfaceHash = std::bind(&BpModule::getInterfaceHash, this, _1);
+#endif // _MSC_VER
+}
 BpModule::~BpModule() {}
 
 ::ndk::ScopedAStatus BpModule::setModuleDebug(const ::aidl::android::hardware::audio::core::ModuleDebug& in_debug) {
@@ -2367,9 +2414,22 @@ BpModule::~BpModule() {}
   return _aidl_status;
 }
 // Source for BnModule
-BnModule::BnModule() {}
+BnModule::BnModule() {
+#ifdef _MSC_VER
+    setBinderCreater(std::bind(&BnModule::createBinderDetail,this));
+    m_getInterfaceVersion = std::bind(&BnModule::getInterfaceVersion, this, std::placeholders::_1);
+    m_getInterfaceHash = std::bind(&BnModule::getInterfaceHash, this, std::placeholders::_1);
+#endif
+}
 BnModule::~BnModule() {}
+#ifdef _MSC_VER
 ::ndk::SpAIBinder BnModule::createBinder() {
+    return createBinderDetail();
+}
+::ndk::SpAIBinder BnModule::createBinderDetail() {
+#else
+::ndk::SpAIBinder BnModule::createBinder() {
+#endif
   AIBinder* binder = AIBinder_new(_g_aidl_android_hardware_audio_core_IModule_clazz, static_cast<void*>(this));
   #ifdef BINDER_STABILITY_SUPPORT
   AIBinder_markVintfStability(binder);

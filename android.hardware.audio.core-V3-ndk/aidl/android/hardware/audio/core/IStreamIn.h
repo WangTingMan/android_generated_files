@@ -24,6 +24,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 namespace aidl::android::hardware::audio::common {
 class SinkMetadata;
 }  // namespace aidl::android::hardware::audio::common
@@ -40,7 +42,7 @@ namespace audio {
 namespace core {
 class IStreamInDelegator;
 
-class IStreamIn : public ::ndk::ICInterface {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IStreamIn : public ::ndk::ICInterface {
 public:
   typedef IStreamInDelegator DefaultDelegator;
   static const char* descriptor;
@@ -90,7 +92,7 @@ public:
 private:
   static std::shared_ptr<IStreamIn> default_impl;
 };
-class IStreamInDefault : public IStreamIn {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IStreamInDefault : public IStreamIn {
 public:
   ::ndk::ScopedAStatus getStreamCommon(std::shared_ptr<::aidl::android::hardware::audio::core::IStreamCommon>* _aidl_return) override;
   ::ndk::ScopedAStatus getActiveMicrophones(std::vector<::aidl::android::media::audio::common::MicrophoneDynamicInfo>* _aidl_return) override;

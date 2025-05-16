@@ -13,6 +13,8 @@
 #include <android/binder_ibinder.h>
 #include <cassert>
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 #ifndef __BIONIC__
 #ifndef __assert2
 #define __assert2(a,b,c,d) ((void)0)
@@ -24,7 +26,7 @@ namespace android {
 namespace hardware {
 namespace audio {
 namespace core {
-class BnModule : public ::ndk::BnCInterface<IModule> {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API BnModule : public ::ndk::BnCInterface<IModule> {
 public:
   BnModule();
   virtual ~BnModule();
@@ -32,9 +34,10 @@ public:
   ::ndk::ScopedAStatus getInterfaceHash(std::string* _aidl_return) final;
 protected:
   ::ndk::SpAIBinder createBinder() override;
+  ::ndk::SpAIBinder createBinderDetail();
 private:
 };
-class IModuleDelegator : public BnModule {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IModuleDelegator : public BnModule {
 public:
   explicit IModuleDelegator(const std::shared_ptr<IModule> &impl) : _impl(impl) {
      int32_t _impl_ver = 0;

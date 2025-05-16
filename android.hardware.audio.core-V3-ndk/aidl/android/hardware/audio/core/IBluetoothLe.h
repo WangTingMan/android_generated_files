@@ -19,6 +19,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 namespace aidl::android::hardware::audio::core {
 class VendorParameter;
 }  // namespace aidl::android::hardware::audio::core
@@ -29,7 +31,7 @@ namespace audio {
 namespace core {
 class IBluetoothLeDelegator;
 
-class IBluetoothLe : public ::ndk::ICInterface {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IBluetoothLe : public ::ndk::ICInterface {
 public:
   typedef IBluetoothLeDelegator DefaultDelegator;
   static const char* descriptor;
@@ -57,7 +59,7 @@ public:
 private:
   static std::shared_ptr<IBluetoothLe> default_impl;
 };
-class IBluetoothLeDefault : public IBluetoothLe {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IBluetoothLeDefault : public IBluetoothLe {
 public:
   ::ndk::ScopedAStatus isEnabled(bool* _aidl_return) override;
   ::ndk::ScopedAStatus setEnabled(bool in_enabled) override;

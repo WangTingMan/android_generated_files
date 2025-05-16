@@ -21,6 +21,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 namespace aidl::android::hardware::common {
 class Ashmem;
 }  // namespace aidl::android::hardware::common
@@ -29,7 +31,7 @@ namespace android {
 namespace hardware {
 namespace audio {
 namespace core {
-class MmapBufferDescriptor {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API MmapBufferDescriptor {
 public:
   typedef std::false_type fixed_size;
   static const char* descriptor;

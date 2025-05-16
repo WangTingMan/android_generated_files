@@ -24,7 +24,7 @@ namespace android {
 namespace hardware {
 namespace audio {
 namespace core {
-class BnStreamIn : public ::ndk::BnCInterface<IStreamIn> {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API BnStreamIn : public ::ndk::BnCInterface<IStreamIn> {
 public:
   BnStreamIn();
   virtual ~BnStreamIn();
@@ -34,7 +34,7 @@ protected:
   ::ndk::SpAIBinder createBinder() override;
 private:
 };
-class IStreamInDelegator : public BnStreamIn {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IStreamInDelegator : public BnStreamIn {
 public:
   explicit IStreamInDelegator(const std::shared_ptr<IStreamIn> &impl) : _impl(impl) {
      int32_t _impl_ver = 0;

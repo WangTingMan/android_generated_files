@@ -12,12 +12,14 @@
 
 #include <android/binder_ibinder.h>
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace audio {
 namespace core {
-class BpStreamIn : public ::ndk::BpCInterface<IStreamIn> {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API BpStreamIn : public ::ndk::BpCInterface<IStreamIn> {
 public:
   explicit BpStreamIn(const ::ndk::SpAIBinder& binder);
   virtual ~BpStreamIn();

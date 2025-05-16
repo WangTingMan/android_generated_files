@@ -20,6 +20,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 namespace aidl::android::hardware::audio::core {
 class VendorParameter;
 }  // namespace aidl::android::hardware::audio::core
@@ -33,7 +35,7 @@ namespace audio {
 namespace core {
 class IStreamCommonDelegator;
 
-class IStreamCommon : public ::ndk::ICInterface {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IStreamCommon : public ::ndk::ICInterface {
 public:
   typedef IStreamCommonDelegator DefaultDelegator;
   static const char* descriptor;
@@ -67,7 +69,7 @@ public:
 private:
   static std::shared_ptr<IStreamCommon> default_impl;
 };
-class IStreamCommonDefault : public IStreamCommon {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IStreamCommonDefault : public IStreamCommon {
 public:
   ::ndk::ScopedAStatus close() override;
   ::ndk::ScopedAStatus prepareToClose() override;

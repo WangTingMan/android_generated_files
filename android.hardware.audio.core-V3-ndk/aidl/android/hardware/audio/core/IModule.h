@@ -10,6 +10,7 @@
 
 #include <array>
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <string>
@@ -46,6 +47,8 @@
 #ifdef BINDER_STABILITY_SUPPORT
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
+
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
 
 namespace aidl::android::hardware::audio::common {
 class SinkMetadata;
@@ -86,14 +89,14 @@ namespace audio {
 namespace core {
 class IModuleDelegator;
 
-class IModule : public ::ndk::ICInterface {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IModule : public ::ndk::ICInterface {
 public:
   typedef IModuleDelegator DefaultDelegator;
   static const char* descriptor;
   IModule();
   virtual ~IModule();
 
-  class OpenInputStreamArguments {
+  class ANDROIDHARDWAREAUDIOCOREV3NDK_API OpenInputStreamArguments {
   public:
     typedef std::false_type fixed_size;
     static const char* descriptor;
@@ -135,7 +138,7 @@ public:
       return _aidl_os.str();
     }
   };
-  class OpenInputStreamReturn {
+  class ANDROIDHARDWAREAUDIOCOREV3NDK_API OpenInputStreamReturn {
   public:
     typedef std::false_type fixed_size;
     static const char* descriptor;
@@ -175,7 +178,7 @@ public:
       return _aidl_os.str();
     }
   };
-  class OpenOutputStreamArguments {
+  class ANDROIDHARDWAREAUDIOCOREV3NDK_API OpenOutputStreamArguments {
   public:
     typedef std::false_type fixed_size;
     static const char* descriptor;
@@ -223,7 +226,7 @@ public:
       return _aidl_os.str();
     }
   };
-  class OpenOutputStreamReturn {
+  class ANDROIDHARDWAREAUDIOCOREV3NDK_API OpenOutputStreamReturn {
   public:
     typedef std::false_type fixed_size;
     static const char* descriptor;
@@ -263,7 +266,7 @@ public:
       return _aidl_os.str();
     }
   };
-  class SupportedPlaybackRateFactors {
+  class ANDROIDHARDWAREAUDIOCOREV3NDK_API SupportedPlaybackRateFactors {
   public:
     typedef std::false_type fixed_size;
     static const char* descriptor;
@@ -360,6 +363,52 @@ public:
   static constexpr uint32_t TRANSACTION_getAAudioHardwareBurstMinUsec = FIRST_CALL_TRANSACTION + 39;
   static constexpr uint32_t TRANSACTION_prepareToDisconnectExternalDevice = FIRST_CALL_TRANSACTION + 40;
 
+#ifdef _MSC_VER
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::hardware::audio::core::ModuleDebug& in_debug)> m_setModuleDebug = 0;
+  std::function<::ndk::ScopedAStatus(std::shared_ptr<::aidl::android::hardware::audio::core::ITelephony>* _aidl_return)> m_getTelephony = 0;
+  std::function<::ndk::ScopedAStatus(std::shared_ptr<::aidl::android::hardware::audio::core::IBluetooth>* _aidl_return)> m_getBluetooth = 0;
+  std::function<::ndk::ScopedAStatus(std::shared_ptr<::aidl::android::hardware::audio::core::IBluetoothA2dp>* _aidl_return)> m_getBluetoothA2dp = 0;
+  std::function<::ndk::ScopedAStatus(std::shared_ptr<::aidl::android::hardware::audio::core::IBluetoothLe>* _aidl_return)> m_getBluetoothLe = 0;
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::media::audio::common::AudioPort& in_templateIdAndAdditionalData, ::aidl::android::media::audio::common::AudioPort* _aidl_return)> m_connectExternalDevice = 0;
+  std::function<::ndk::ScopedAStatus(int32_t in_portId)> m_disconnectExternalDevice = 0;
+  std::function<::ndk::ScopedAStatus(std::vector<::aidl::android::hardware::audio::core::AudioPatch>* _aidl_return)> m_getAudioPatches = 0;
+  std::function<::ndk::ScopedAStatus(int32_t in_portId, ::aidl::android::media::audio::common::AudioPort* _aidl_return)> m_getAudioPort = 0;
+  std::function<::ndk::ScopedAStatus(std::vector<::aidl::android::media::audio::common::AudioPortConfig>* _aidl_return)> m_getAudioPortConfigs = 0;
+  std::function<::ndk::ScopedAStatus(std::vector<::aidl::android::media::audio::common::AudioPort>* _aidl_return)> m_getAudioPorts = 0;
+  std::function<::ndk::ScopedAStatus(std::vector<::aidl::android::hardware::audio::core::AudioRoute>* _aidl_return)> m_getAudioRoutes = 0;
+  std::function<::ndk::ScopedAStatus(int32_t in_portId, std::vector<::aidl::android::hardware::audio::core::AudioRoute>* _aidl_return)> m_getAudioRoutesForAudioPort = 0;
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::hardware::audio::core::IModule::OpenInputStreamArguments& in_args, ::aidl::android::hardware::audio::core::IModule::OpenInputStreamReturn* _aidl_return)> m_openInputStream = 0;
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::hardware::audio::core::IModule::OpenOutputStreamArguments& in_args, ::aidl::android::hardware::audio::core::IModule::OpenOutputStreamReturn* _aidl_return)> m_openOutputStream = 0;
+  std::function<::ndk::ScopedAStatus(::aidl::android::hardware::audio::core::IModule::SupportedPlaybackRateFactors* _aidl_return)> m_getSupportedPlaybackRateFactors = 0;
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::hardware::audio::core::AudioPatch& in_requested, ::aidl::android::hardware::audio::core::AudioPatch* _aidl_return)> m_setAudioPatch = 0;
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::media::audio::common::AudioPortConfig& in_requested, ::aidl::android::media::audio::common::AudioPortConfig* out_suggested, bool* _aidl_return)> m_setAudioPortConfig = 0;
+  std::function<::ndk::ScopedAStatus(int32_t in_patchId)> m_resetAudioPatch = 0;
+  std::function<::ndk::ScopedAStatus(int32_t in_portConfigId)> m_resetAudioPortConfig = 0;
+  std::function<::ndk::ScopedAStatus(bool* _aidl_return)> m_getMasterMute = 0;
+  std::function<::ndk::ScopedAStatus(bool in_mute)> m_setMasterMute = 0;
+  std::function<::ndk::ScopedAStatus(float* _aidl_return)> m_getMasterVolume = 0;
+  std::function<::ndk::ScopedAStatus(float in_volume)> m_setMasterVolume = 0;
+  std::function<::ndk::ScopedAStatus(bool* _aidl_return)> m_getMicMute = 0;
+  std::function<::ndk::ScopedAStatus(bool in_mute)> m_setMicMute = 0;
+  std::function<::ndk::ScopedAStatus(std::vector<::aidl::android::media::audio::common::MicrophoneInfo>* _aidl_return)> m_getMicrophones = 0;
+  std::function<::ndk::ScopedAStatus(::aidl::android::media::audio::common::AudioMode in_mode)> m_updateAudioMode = 0;
+  std::function<::ndk::ScopedAStatus(::aidl::android::hardware::audio::core::IModule::ScreenRotation in_rotation)> m_updateScreenRotation = 0;
+  std::function<::ndk::ScopedAStatus(bool in_isTurnedOn)> m_updateScreenState = 0;
+  std::function<::ndk::ScopedAStatus(std::shared_ptr<::aidl::android::hardware::audio::core::sounddose::ISoundDose>* _aidl_return)> m_getSoundDose = 0;
+  std::function<::ndk::ScopedAStatus(int32_t* _aidl_return)> m_generateHwAvSyncId = 0;
+  std::function<::ndk::ScopedAStatus(const std::vector<std::string>& in_ids, std::vector<::aidl::android::hardware::audio::core::VendorParameter>* _aidl_return)> m_getVendorParameters = 0;
+  std::function<::ndk::ScopedAStatus(const std::vector<::aidl::android::hardware::audio::core::VendorParameter>& in_parameters, bool in_async)> m_setVendorParameters = 0;
+  std::function<::ndk::ScopedAStatus(int32_t in_portConfigId, const std::shared_ptr<::aidl::android::hardware::audio::effect::IEffect>& in_effect)> m_addDeviceEffect = 0;
+  std::function<::ndk::ScopedAStatus(int32_t in_portConfigId, const std::shared_ptr<::aidl::android::hardware::audio::effect::IEffect>& in_effect)> m_removeDeviceEffect = 0;
+  std::function<::ndk::ScopedAStatus(::aidl::android::media::audio::common::AudioMMapPolicyType in_mmapPolicyType, std::vector<::aidl::android::media::audio::common::AudioMMapPolicyInfo>* _aidl_return)> m_getMmapPolicyInfos = 0;
+  std::function<::ndk::ScopedAStatus(bool* _aidl_return)> m_supportsVariableLatency = 0;
+  std::function<::ndk::ScopedAStatus(int32_t* _aidl_return)> m_getAAudioMixerBurstCount = 0;
+  std::function<::ndk::ScopedAStatus(int32_t* _aidl_return)> m_getAAudioHardwareBurstMinUsec = 0;
+  std::function<::ndk::ScopedAStatus(int32_t in_portId)> m_prepareToDisconnectExternalDevice = 0;
+  std::function<::ndk::ScopedAStatus(int32_t* _aidl_return)> m_getInterfaceVersion = 0;
+  std::function<::ndk::ScopedAStatus(std::string* _aidl_return)> m_getInterfaceHash = 0;
+#endif
+
   static std::shared_ptr<IModule> fromBinder(const ::ndk::SpAIBinder& binder);
   static binder_status_t writeToParcel(AParcel* parcel, const std::shared_ptr<IModule>& instance);
   static binder_status_t readFromParcel(const AParcel* parcel, std::shared_ptr<IModule>* instance);
@@ -411,7 +460,7 @@ public:
 private:
   static std::shared_ptr<IModule> default_impl;
 };
-class IModuleDefault : public IModule {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IModuleDefault : public IModule {
 public:
   ::ndk::ScopedAStatus setModuleDebug(const ::aidl::android::hardware::audio::core::ModuleDebug& in_debug) override;
   ::ndk::ScopedAStatus getTelephony(std::shared_ptr<::aidl::android::hardware::audio::core::ITelephony>* _aidl_return) override;

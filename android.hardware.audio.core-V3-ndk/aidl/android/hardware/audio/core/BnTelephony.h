@@ -24,7 +24,7 @@ namespace android {
 namespace hardware {
 namespace audio {
 namespace core {
-class BnTelephony : public ::ndk::BnCInterface<ITelephony> {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API BnTelephony : public ::ndk::BnCInterface<ITelephony> {
 public:
   BnTelephony();
   virtual ~BnTelephony();
@@ -34,7 +34,7 @@ protected:
   ::ndk::SpAIBinder createBinder() override;
 private:
 };
-class ITelephonyDelegator : public BnTelephony {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API ITelephonyDelegator : public BnTelephony {
 public:
   explicit ITelephonyDelegator(const std::shared_ptr<ITelephony> &impl) : _impl(impl) {
      int32_t _impl_ver = 0;

@@ -9,6 +9,7 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <string>
@@ -39,6 +40,15 @@ public:
   static inline const std::string hash = "7a80d8ba1c4d0e64556f17ed848ce49c28f6f299";
   static constexpr uint32_t TRANSACTION_openedComplete = FIRST_CALL_TRANSACTION + 0;
   static constexpr uint32_t TRANSACTION_close = FIRST_CALL_TRANSACTION + 1;
+
+#ifdef _MSC_VER
+  std::function<::ndk::ScopedAStatus
+    (
+    int64_t, ::aidl::android::hardware::bluetooth::socket::Status, const std::string&)> m_openedComplete = 0;
+  std::function<::ndk::ScopedAStatus(int64_t, const std::string&)> m_close = 0;
+  std::function<::ndk::ScopedAStatus(int32_t*)> m_getInterfaceVersion = 0;
+  std::function<::ndk::ScopedAStatus(std::string*)> m_getInterfaceHash = 0;
+#endif
 
   static std::shared_ptr<IBluetoothSocketCallback> fromBinder(const ::ndk::SpAIBinder& binder);
   static binder_status_t writeToParcel(AParcel* parcel, const std::shared_ptr<IBluetoothSocketCallback>& instance);

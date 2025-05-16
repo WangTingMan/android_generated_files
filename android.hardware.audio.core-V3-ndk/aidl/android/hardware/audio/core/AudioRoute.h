@@ -20,12 +20,14 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace audio {
 namespace core {
-class AudioRoute {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API AudioRoute {
 public:
   typedef std::false_type fixed_size;
   static const char* descriptor;

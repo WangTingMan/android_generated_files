@@ -24,6 +24,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
+
 namespace aidl::android::hardware::audio::common {
 class AudioOffloadMetadata;
 class SourceMetadata;
@@ -41,7 +43,7 @@ namespace audio {
 namespace core {
 class IStreamOutDelegator;
 
-class IStreamOut : public ::ndk::ICInterface {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IStreamOut : public ::ndk::ICInterface {
 public:
   typedef IStreamOutDelegator DefaultDelegator;
   static const char* descriptor;
@@ -92,7 +94,7 @@ public:
 private:
   static std::shared_ptr<IStreamOut> default_impl;
 };
-class IStreamOutDefault : public IStreamOut {
+class ANDROIDHARDWAREAUDIOCOREV3NDK_API IStreamOutDefault : public IStreamOut {
 public:
   ::ndk::ScopedAStatus getStreamCommon(std::shared_ptr<::aidl::android::hardware::audio::core::IStreamCommon>* _aidl_return) override;
   ::ndk::ScopedAStatus updateMetadata(const ::aidl::android::hardware::audio::common::SourceMetadata& in_sourceMetadata) override;
