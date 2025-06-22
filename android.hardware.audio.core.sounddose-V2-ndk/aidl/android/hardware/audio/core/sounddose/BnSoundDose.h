@@ -31,6 +31,7 @@ public:
   ::ndk::ScopedAStatus getInterfaceHash(std::string* _aidl_return) final;
 protected:
   ::ndk::SpAIBinder createBinder() override;
+  ::ndk::SpAIBinder createBinderDetail();
 private:
 };
 class ANDROIDHARDWAREAUDIOCORESOUNDDOSEV2NDK_API ISoundDoseDelegator : public BnSoundDose {

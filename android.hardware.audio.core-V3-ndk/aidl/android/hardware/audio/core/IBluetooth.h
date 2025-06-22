@@ -26,6 +26,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include <functional>
+
 #include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
 
 namespace aidl::android::media::audio::common {
@@ -152,6 +154,14 @@ public:
   static binder_status_t readFromParcel(const AParcel* parcel, std::shared_ptr<IBluetooth>* instance);
   static bool setDefaultImpl(const std::shared_ptr<IBluetooth>& impl);
   static const std::shared_ptr<IBluetooth>& getDefaultImpl();
+
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::hardware::audio::core::IBluetooth::ScoConfig&,
+      ::aidl::android::hardware::audio::core::IBluetooth::ScoConfig*)> m_setScoConfig;
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::hardware::audio::core::IBluetooth::HfpConfig&,
+      ::aidl::android::hardware::audio::core::IBluetooth::HfpConfig*)> m_setHfpConfig;
+  std::function<::ndk::ScopedAStatus(int32_t*)> m_getInterfaceVersion;
+  std::function<::ndk::ScopedAStatus(std::string*)> m_getInterfaceHash;
+
   virtual ::ndk::ScopedAStatus setScoConfig(const ::aidl::android::hardware::audio::core::IBluetooth::ScoConfig& in_config, ::aidl::android::hardware::audio::core::IBluetooth::ScoConfig* _aidl_return) = 0;
   virtual ::ndk::ScopedAStatus setHfpConfig(const ::aidl::android::hardware::audio::core::IBluetooth::HfpConfig& in_config, ::aidl::android::hardware::audio::core::IBluetooth::HfpConfig* _aidl_return) = 0;
   virtual ::ndk::ScopedAStatus getInterfaceVersion(int32_t* _aidl_return) = 0;

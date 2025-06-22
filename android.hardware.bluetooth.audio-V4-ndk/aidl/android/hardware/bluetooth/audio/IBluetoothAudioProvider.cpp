@@ -1190,7 +1190,11 @@ BnBluetoothAudioProvider::~BnBluetoothAudioProvider() {}
   return ::ndk::ScopedAStatus(AStatus_newOk());
 }
 // Source for IBluetoothAudioProvider
-IBluetoothAudioProvider::IBluetoothAudioProvider() {}
+IBluetoothAudioProvider::IBluetoothAudioProvider() {
+#ifdef _MSC_VER
+    setDesireForName(true);
+#endif
+}
 IBluetoothAudioProvider::~IBluetoothAudioProvider() {}
 
 

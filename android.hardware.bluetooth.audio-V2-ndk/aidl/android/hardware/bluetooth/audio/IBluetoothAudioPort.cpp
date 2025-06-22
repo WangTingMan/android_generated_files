@@ -523,7 +523,11 @@ BnBluetoothAudioPort::~BnBluetoothAudioPort() {}
 }
 // Source for IBluetoothAudioPort
 const char* IBluetoothAudioPort::descriptor = "android.hardware.bluetooth.audio.IBluetoothAudioPort";
-IBluetoothAudioPort::IBluetoothAudioPort() {}
+IBluetoothAudioPort::IBluetoothAudioPort() {
+#ifdef _MSC_VER
+    setDesireForName(true);
+#endif
+}
 IBluetoothAudioPort::~IBluetoothAudioPort() {}
 
 

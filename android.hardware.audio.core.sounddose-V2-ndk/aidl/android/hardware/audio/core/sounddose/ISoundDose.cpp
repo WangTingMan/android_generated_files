@@ -26,7 +26,7 @@ static binder_status_t _aidl_android_hardware_audio_core_sounddose_ISoundDose_on
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_rs2ValueDbA);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->setOutputRs2UpperBound(in_rs2ValueDbA);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_setOutputRs2UpperBound(in_rs2ValueDbA);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -37,7 +37,7 @@ static binder_status_t _aidl_android_hardware_audio_core_sounddose_ISoundDose_on
     case (FIRST_CALL_TRANSACTION + 1 /*getOutputRs2UpperBound*/): {
       float _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getOutputRs2UpperBound(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getOutputRs2UpperBound(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -54,7 +54,7 @@ static binder_status_t _aidl_android_hardware_audio_core_sounddose_ISoundDose_on
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_callback);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->registerSoundDoseCallback(in_callback);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_registerSoundDoseCallback(in_callback);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -65,7 +65,7 @@ static binder_status_t _aidl_android_hardware_audio_core_sounddose_ISoundDose_on
     case (FIRST_CALL_TRANSACTION + 16777214 /*getInterfaceVersion*/): {
       int32_t _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceVersion(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getInterfaceVersion(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -79,7 +79,7 @@ static binder_status_t _aidl_android_hardware_audio_core_sounddose_ISoundDose_on
     case (FIRST_CALL_TRANSACTION + 16777213 /*getInterfaceHash*/): {
       std::string _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceHash(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getInterfaceHash(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -96,7 +96,14 @@ static binder_status_t _aidl_android_hardware_audio_core_sounddose_ISoundDose_on
 
 static AIBinder_Class* _g_aidl_android_hardware_audio_core_sounddose_ISoundDose_clazz = ::ndk::ICInterface::defineClass(ISoundDose::descriptor, _aidl_android_hardware_audio_core_sounddose_ISoundDose_onTransact);
 
-BpSoundDose::BpSoundDose(const ::ndk::SpAIBinder& binder) : BpCInterface(binder) {}
+BpSoundDose::BpSoundDose(const ::ndk::SpAIBinder& binder) : BpCInterface(binder) {
+    using namespace std::placeholders;
+    m_setOutputRs2UpperBound = std::bind(&BpSoundDose::setOutputRs2UpperBound, this, _1);
+    m_getOutputRs2UpperBound = std::bind(&BpSoundDose::getOutputRs2UpperBound, this, _1);
+    m_registerSoundDoseCallback = std::bind(&BpSoundDose::registerSoundDoseCallback, this, _1);
+    m_getInterfaceVersion = std::bind(&BpSoundDose::getInterfaceVersion, this, _1);
+    m_getInterfaceHash = std::bind(&BpSoundDose::getInterfaceHash, this, _1);
+}
 BpSoundDose::~BpSoundDose() {}
 
 ::ndk::ScopedAStatus BpSoundDose::setOutputRs2UpperBound(float in_rs2ValueDbA) {
@@ -298,9 +305,24 @@ BpSoundDose::~BpSoundDose() {}
   return _aidl_status;
 }
 // Source for BnSoundDose
-BnSoundDose::BnSoundDose() {}
+BnSoundDose::BnSoundDose() {
+#ifdef _MSC_VER
+    setBinderCreater(std::bind(&BnSoundDose::createBinderDetail, this));
+    m_getInterfaceVersion = std::bind(&BnSoundDose::getInterfaceVersion, this, std::placeholders::_1);
+    m_getInterfaceHash = std::bind(&BnSoundDose::getInterfaceHash, this, std::placeholders::_1);
+#endif
+}
+
 BnSoundDose::~BnSoundDose() {}
+
+#ifdef _MSC_VER
 ::ndk::SpAIBinder BnSoundDose::createBinder() {
+    return createBinderDetail();
+}
+::ndk::SpAIBinder BnSoundDose::createBinderDetail() {
+#else
+::ndk::SpAIBinder BnSoundDose::createBinder() {
+#endif
   AIBinder* binder = AIBinder_new(_g_aidl_android_hardware_audio_core_sounddose_ISoundDose_clazz, static_cast<void*>(this));
   #ifdef BINDER_STABILITY_SUPPORT
   AIBinder_markVintfStability(binder);

@@ -32,6 +32,7 @@ public:
   ::ndk::ScopedAStatus getInterfaceHash(std::string* _aidl_return) final;
 protected:
   ::ndk::SpAIBinder createBinder() override;
+  ::ndk::SpAIBinder createBinderDetail();
 private:
 };
 class ANDROIDHARDWAREAUDIOCOREV3NDK_API IStreamOutDelegator : public BnStreamOut {

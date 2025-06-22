@@ -39,7 +39,7 @@ static binder_status_t _aidl_android_hardware_audio_core_IBluetooth_onTransact(A
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_config);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->setScoConfig(in_config, &_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_setScoConfig(in_config, &_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -57,7 +57,7 @@ static binder_status_t _aidl_android_hardware_audio_core_IBluetooth_onTransact(A
       _aidl_ret_status = ::ndk::AParcel_readData(_aidl_in, &in_config);
       if (_aidl_ret_status != STATUS_OK) break;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->setHfpConfig(in_config, &_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_setHfpConfig(in_config, &_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -71,7 +71,7 @@ static binder_status_t _aidl_android_hardware_audio_core_IBluetooth_onTransact(A
     case (FIRST_CALL_TRANSACTION + 16777214 /*getInterfaceVersion*/): {
       int32_t _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceVersion(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getInterfaceVersion(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -85,7 +85,7 @@ static binder_status_t _aidl_android_hardware_audio_core_IBluetooth_onTransact(A
     case (FIRST_CALL_TRANSACTION + 16777213 /*getInterfaceHash*/): {
       std::string _aidl_return;
 
-      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->getInterfaceHash(&_aidl_return);
+      ::ndk::ScopedAStatus _aidl_status = _aidl_impl->m_getInterfaceHash(&_aidl_return);
       _aidl_ret_status = AParcel_writeStatusHeader(_aidl_out, _aidl_status.get());
       if (_aidl_ret_status != STATUS_OK) break;
 
@@ -103,7 +103,10 @@ static binder_status_t _aidl_android_hardware_audio_core_IBluetooth_onTransact(A
 static const char* _g_aidl_android_hardware_audio_core_IBluetooth_clazz_code_to_function[] = { "setScoConfig","setHfpConfig",};
 static AIBinder_Class* _g_aidl_android_hardware_audio_core_IBluetooth_clazz = ::ndk::ICInterface::defineClass(IBluetooth::descriptor, _aidl_android_hardware_audio_core_IBluetooth_onTransact, _g_aidl_android_hardware_audio_core_IBluetooth_clazz_code_to_function, 2);
 
-BpBluetooth::BpBluetooth(const ::ndk::SpAIBinder& binder) : BpCInterface(binder) {}
+BpBluetooth::BpBluetooth(const ::ndk::SpAIBinder& binder) : BpCInterface(binder) {
+    m_setScoConfig = std::bind(&BpBluetooth::setScoConfig, this, std::placeholders::_1, std::placeholders::_2);
+    m_setHfpConfig = std::bind(&BpBluetooth::setHfpConfig, this, std::placeholders::_1, std::placeholders::_2);
+}
 BpBluetooth::~BpBluetooth() {}
 
 ::ndk::ScopedAStatus BpBluetooth::setScoConfig(const ::aidl::android::hardware::audio::core::IBluetooth::ScoConfig& in_config, ::aidl::android::hardware::audio::core::IBluetooth::ScoConfig* _aidl_return) {
@@ -274,9 +277,18 @@ BpBluetooth::~BpBluetooth() {}
   return _aidl_status;
 }
 // Source for BnBluetooth
-BnBluetooth::BnBluetooth() {}
+BnBluetooth::BnBluetooth() {
+#ifdef _MSC_VER
+    setBinderCreater(std::bind(&BnBluetooth::createBinderDetail, this));
+    m_getInterfaceVersion = std::bind(&BnBluetooth::getInterfaceVersion, this, std::placeholders::_1);
+    m_getInterfaceHash = std::bind(&BnBluetooth::getInterfaceHash, this, std::placeholders::_1);
+#endif
+}
 BnBluetooth::~BnBluetooth() {}
 ::ndk::SpAIBinder BnBluetooth::createBinder() {
+    return createBinderDetail();
+}
+::ndk::SpAIBinder BnBluetooth::createBinderDetail() {
   AIBinder* binder = AIBinder_new(_g_aidl_android_hardware_audio_core_IBluetooth_clazz, static_cast<void*>(this));
   #ifdef BINDER_STABILITY_SUPPORT
   AIBinder_markVintfStability(binder);

@@ -882,9 +882,23 @@ BpStreamOut::~BpStreamOut() {}
   return _aidl_status;
 }
 // Source for BnStreamOut
-BnStreamOut::BnStreamOut() {}
+BnStreamOut::BnStreamOut() {
+#ifdef _MSC_VER
+    setBinderCreater(std::bind(&BnStreamOut::createBinderDetail, this));
+    m_getInterfaceVersion = std::bind(&BnStreamOut::getInterfaceVersion, this, std::placeholders::_1);
+    m_getInterfaceHash = std::bind(&BnStreamOut::getInterfaceHash, this, std::placeholders::_1);
+#endif
+}
 BnStreamOut::~BnStreamOut() {}
+#ifdef _MSC_VER
+::ndk::SpAIBinder BnStreamOut::createBinder()
+{
+    return createBinderDetail();
+}
+::ndk::SpAIBinder BnStreamOut::createBinderDetail() {
+#else
 ::ndk::SpAIBinder BnStreamOut::createBinder() {
+#endif
   AIBinder* binder = AIBinder_new(_g_aidl_android_hardware_audio_core_IStreamOut_clazz, static_cast<void*>(this));
   #ifdef BINDER_STABILITY_SUPPORT
   AIBinder_markVintfStability(binder);

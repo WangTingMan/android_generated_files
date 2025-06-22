@@ -19,6 +19,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include <functional>
+
 #include "ANDROIDHARDWAREAUDIOCORESOUNDDOSEV2NDK_EXPORTS_.h"
 
 namespace aidl::android::media::audio::common {
@@ -144,6 +146,14 @@ public:
   static constexpr uint32_t TRANSACTION_setOutputRs2UpperBound = FIRST_CALL_TRANSACTION + 0;
   static constexpr uint32_t TRANSACTION_getOutputRs2UpperBound = FIRST_CALL_TRANSACTION + 1;
   static constexpr uint32_t TRANSACTION_registerSoundDoseCallback = FIRST_CALL_TRANSACTION + 2;
+
+#ifdef _MSC_VER
+  std::function<::ndk::ScopedAStatus(float)> m_setOutputRs2UpperBound;
+  std::function<::ndk::ScopedAStatus(float* _aidl_return)> m_getOutputRs2UpperBound;
+  std::function<::ndk::ScopedAStatus(const std::shared_ptr<::aidl::android::hardware::audio::core::sounddose::ISoundDose::IHalSoundDoseCallback>&)> m_registerSoundDoseCallback;
+  std::function<::ndk::ScopedAStatus(int32_t*)> m_getInterfaceVersion;
+  std::function<::ndk::ScopedAStatus(std::string*)> m_getInterfaceHash;
+#endif
 
   static std::shared_ptr<ISoundDose> fromBinder(const ::ndk::SpAIBinder& binder);
   static binder_status_t writeToParcel(AParcel* parcel, const std::shared_ptr<ISoundDose>& instance);

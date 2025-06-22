@@ -24,6 +24,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include <functional>
+
 #include "ANDROIDHARDWAREAUDIOCOREV3NDK_EXPORTS_.h"
 
 namespace aidl::android::hardware::audio::common {
@@ -75,6 +77,25 @@ public:
   static binder_status_t readFromParcel(const AParcel* parcel, std::shared_ptr<IStreamOut>* instance);
   static bool setDefaultImpl(const std::shared_ptr<IStreamOut>& impl);
   static const std::shared_ptr<IStreamOut>& getDefaultImpl();
+#ifdef _MSC_VER
+  std::function<::ndk::ScopedAStatus(std::shared_ptr<::aidl::android::hardware::audio::core::IStreamCommon>*)> m_getStreamCommon;
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::hardware::audio::common::SourceMetadata&)> m_updateMetadata;
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::hardware::audio::common::AudioOffloadMetadata&)> m_updateOffloadMetadata;
+  std::function<::ndk::ScopedAStatus(std::vector<float>*)> m_getHwVolume;
+  std::function<::ndk::ScopedAStatus(const std::vector<float>&)> m_setHwVolume;
+  std::function<::ndk::ScopedAStatus(float*)> m_getAudioDescriptionMixLevel;
+  std::function<::ndk::ScopedAStatus(float)> m_setAudioDescriptionMixLevel;
+  std::function<::ndk::ScopedAStatus(::aidl::android::media::audio::common::AudioDualMonoMode*)> m_getDualMonoMode;
+  std::function<::ndk::ScopedAStatus(::aidl::android::media::audio::common::AudioDualMonoMode)> m_setDualMonoMode;
+  std::function<::ndk::ScopedAStatus(std::vector<::aidl::android::media::audio::common::AudioLatencyMode>*)> m_getRecommendedLatencyModes;
+  std::function<::ndk::ScopedAStatus(::aidl::android::media::audio::common::AudioLatencyMode)> m_setLatencyMode;
+  std::function<::ndk::ScopedAStatus(::aidl::android::media::audio::common::AudioPlaybackRate*)> m_getPlaybackRateParameters;
+  std::function<::ndk::ScopedAStatus(const ::aidl::android::media::audio::common::AudioPlaybackRate&)> m_setPlaybackRateParameters;
+  std::function<::ndk::ScopedAStatus(int32_t, int32_t)> m_selectPresentation;
+  std::function<::ndk::ScopedAStatus(int32_t*)> m_getInterfaceVersion;
+  std::function<::ndk::ScopedAStatus(std::string*)> m_getInterfaceHash;
+#endif
+
   virtual ::ndk::ScopedAStatus getStreamCommon(std::shared_ptr<::aidl::android::hardware::audio::core::IStreamCommon>* _aidl_return) = 0;
   virtual ::ndk::ScopedAStatus updateMetadata(const ::aidl::android::hardware::audio::common::SourceMetadata& in_sourceMetadata) = 0;
   virtual ::ndk::ScopedAStatus updateOffloadMetadata(const ::aidl::android::hardware::audio::common::AudioOffloadMetadata& in_offloadMetadata) = 0;
