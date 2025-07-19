@@ -27,6 +27,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_EXPORTS.h"
+
 namespace aidl::android::hardware::bluetooth::ranging {
 class Config;
 class DeviceAddress;
@@ -39,7 +41,7 @@ namespace bluetooth {
 namespace ranging {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-class BluetoothChannelSoundingParameters {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API BluetoothChannelSoundingParameters {
 public:
   typedef std::false_type fixed_size;
   static const char* descriptor;
@@ -48,7 +50,7 @@ public:
   int32_t aclHandle = 0;
   int32_t l2capCid = 0;
   int32_t realTimeProcedureDataAttHandle = 0;
-  ::aidl::android::hardware::bluetooth::ranging::Role __attribute__((deprecated("use the role in Config.aidl"))) role = ::aidl::android::hardware::bluetooth::ranging::Role(0);
+  ::aidl::android::hardware::bluetooth::ranging::Role /*__attribute__((deprecated("use the role in Config.aidl")))*/ role = ::aidl::android::hardware::bluetooth::ranging::Role(0);
   bool localSupportsSoundingPhaseBasedRanging = false;
   bool remoteSupportsSoundingPhaseBaseRanging = false;
   ::aidl::android::hardware::bluetooth::ranging::Config config;

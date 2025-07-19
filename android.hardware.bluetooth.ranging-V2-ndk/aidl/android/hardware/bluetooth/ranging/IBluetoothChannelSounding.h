@@ -24,6 +24,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_EXPORTS.h"
+
 namespace aidl::android::hardware::bluetooth::ranging {
 class BluetoothChannelSoundingParameters;
 class IBluetoothChannelSoundingSession;
@@ -37,7 +39,7 @@ namespace bluetooth {
 namespace ranging {
 class IBluetoothChannelSoundingDelegator;
 
-class IBluetoothChannelSounding : public ::ndk::ICInterface {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API IBluetoothChannelSounding : public ::ndk::ICInterface {
 public:
   typedef IBluetoothChannelSoundingDelegator DefaultDelegator;
   static const char* descriptor;
@@ -59,7 +61,7 @@ public:
   static const std::shared_ptr<IBluetoothChannelSounding>& getDefaultImpl();
   virtual ::ndk::ScopedAStatus getVendorSpecificData(std::optional<std::vector<std::optional<::aidl::android::hardware::bluetooth::ranging::VendorSpecificData>>>* _aidl_return) = 0;
   virtual ::ndk::ScopedAStatus getSupportedSessionTypes(std::optional<std::vector<::aidl::android::hardware::bluetooth::ranging::SessionType>>* _aidl_return) = 0;
-  virtual ::ndk::ScopedAStatus getMaxSupportedCsSecurityLevel(::aidl::android::hardware::bluetooth::ranging::CsSecurityLevel* _aidl_return) __attribute__((deprecated("use getSupportedCsSecurityLevels() instead"))) = 0;
+  virtual ::ndk::ScopedAStatus getMaxSupportedCsSecurityLevel(::aidl::android::hardware::bluetooth::ranging::CsSecurityLevel* _aidl_return) /*__attribute__((deprecated("use getSupportedCsSecurityLevels() instead")))*/ = 0;
   virtual ::ndk::ScopedAStatus openSession(const ::aidl::android::hardware::bluetooth::ranging::BluetoothChannelSoundingParameters& in_params, const std::shared_ptr<::aidl::android::hardware::bluetooth::ranging::IBluetoothChannelSoundingSessionCallback>& in_callback, std::shared_ptr<::aidl::android::hardware::bluetooth::ranging::IBluetoothChannelSoundingSession>* _aidl_return) = 0;
   virtual ::ndk::ScopedAStatus getSupportedCsSecurityLevels(std::vector<::aidl::android::hardware::bluetooth::ranging::CsSecurityLevel>* _aidl_return) = 0;
   virtual ::ndk::ScopedAStatus getInterfaceVersion(int32_t* _aidl_return) = 0;
@@ -67,11 +69,11 @@ public:
 private:
   static std::shared_ptr<IBluetoothChannelSounding> default_impl;
 };
-class IBluetoothChannelSoundingDefault : public IBluetoothChannelSounding {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API IBluetoothChannelSoundingDefault : public IBluetoothChannelSounding {
 public:
   ::ndk::ScopedAStatus getVendorSpecificData(std::optional<std::vector<std::optional<::aidl::android::hardware::bluetooth::ranging::VendorSpecificData>>>* _aidl_return) override;
   ::ndk::ScopedAStatus getSupportedSessionTypes(std::optional<std::vector<::aidl::android::hardware::bluetooth::ranging::SessionType>>* _aidl_return) override;
-  ::ndk::ScopedAStatus getMaxSupportedCsSecurityLevel(::aidl::android::hardware::bluetooth::ranging::CsSecurityLevel* _aidl_return) override __attribute__((deprecated("use getSupportedCsSecurityLevels() instead")));
+  ::ndk::ScopedAStatus getMaxSupportedCsSecurityLevel(::aidl::android::hardware::bluetooth::ranging::CsSecurityLevel* _aidl_return) override /*__attribute__((deprecated("use getSupportedCsSecurityLevels() instead")))*/;
   ::ndk::ScopedAStatus openSession(const ::aidl::android::hardware::bluetooth::ranging::BluetoothChannelSoundingParameters& in_params, const std::shared_ptr<::aidl::android::hardware::bluetooth::ranging::IBluetoothChannelSoundingSessionCallback>& in_callback, std::shared_ptr<::aidl::android::hardware::bluetooth::ranging::IBluetoothChannelSoundingSession>* _aidl_return) override;
   ::ndk::ScopedAStatus getSupportedCsSecurityLevels(std::vector<::aidl::android::hardware::bluetooth::ranging::CsSecurityLevel>* _aidl_return) override;
   ::ndk::ScopedAStatus getInterfaceVersion(int32_t* _aidl_return) override;

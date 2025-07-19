@@ -13,6 +13,8 @@
 #include <android/binder_ibinder.h>
 #include <cassert>
 
+#include "ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_EXPORTS.h"
+
 #ifndef __BIONIC__
 #ifndef __assert2
 #define __assert2(a,b,c,d) ((void)0)
@@ -24,7 +26,7 @@ namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace ranging {
-class BnBluetoothChannelSoundingSessionCallback : public ::ndk::BnCInterface<IBluetoothChannelSoundingSessionCallback> {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API BnBluetoothChannelSoundingSessionCallback : public ::ndk::BnCInterface<IBluetoothChannelSoundingSessionCallback> {
 public:
   BnBluetoothChannelSoundingSessionCallback();
   virtual ~BnBluetoothChannelSoundingSessionCallback();
@@ -34,7 +36,7 @@ protected:
   ::ndk::SpAIBinder createBinder() override;
 private:
 };
-class IBluetoothChannelSoundingSessionCallbackDelegator : public BnBluetoothChannelSoundingSessionCallback {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API IBluetoothChannelSoundingSessionCallbackDelegator : public BnBluetoothChannelSoundingSessionCallback {
 public:
   explicit IBluetoothChannelSoundingSessionCallbackDelegator(const std::shared_ptr<IBluetoothChannelSoundingSessionCallback> &impl) : _impl(impl) {
      int32_t _impl_ver = 0;

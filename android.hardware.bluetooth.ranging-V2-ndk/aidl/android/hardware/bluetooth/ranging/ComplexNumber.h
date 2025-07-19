@@ -20,12 +20,14 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_EXPORTS.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace ranging {
-class __attribute__((deprecated("use PctIQSample instead for V2 and above."))) ComplexNumber {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API /*__attribute__((deprecated("use PctIQSample instead for V2 and above.")))*/ ComplexNumber {
 public:
   typedef std::false_type fixed_size;
   static const char* descriptor;

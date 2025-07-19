@@ -22,6 +22,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_EXPORTS.h"
+
 namespace aidl::android::hardware::bluetooth::ranging {
 class ChannelSoundingSingleSideData;
 }  // namespace aidl::android::hardware::bluetooth::ranging
@@ -30,7 +32,7 @@ namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace ranging {
-class __attribute__((deprecated("use ChannelSoundingProcedureData"))) ChannelSoudingRawData {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API /*__attribute__((deprecated("use ChannelSoundingProcedureData")))*/ ChannelSoudingRawData {
 public:
   typedef std::false_type fixed_size;
   static const char* descriptor;

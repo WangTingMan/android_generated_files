@@ -13,6 +13,8 @@
 #include <android/binder_ibinder.h>
 #include <cassert>
 
+#include "ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_EXPORTS.h"
+
 #ifndef __BIONIC__
 #ifndef __assert2
 #define __assert2(a,b,c,d) ((void)0)
@@ -24,7 +26,7 @@ namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace ranging {
-class BnBluetoothChannelSounding : public ::ndk::BnCInterface<IBluetoothChannelSounding> {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API BnBluetoothChannelSounding : public ::ndk::BnCInterface<IBluetoothChannelSounding> {
 public:
   BnBluetoothChannelSounding();
   virtual ~BnBluetoothChannelSounding();
@@ -34,7 +36,7 @@ protected:
   ::ndk::SpAIBinder createBinder() override;
 private:
 };
-class IBluetoothChannelSoundingDelegator : public BnBluetoothChannelSounding {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API IBluetoothChannelSoundingDelegator : public BnBluetoothChannelSounding {
 public:
   explicit IBluetoothChannelSoundingDelegator(const std::shared_ptr<IBluetoothChannelSounding> &impl) : _impl(impl) {
      int32_t _impl_ver = 0;
@@ -52,7 +54,7 @@ public:
   ::ndk::ScopedAStatus getSupportedSessionTypes(std::optional<std::vector<::aidl::android::hardware::bluetooth::ranging::SessionType>>* _aidl_return) override {
     return _impl->getSupportedSessionTypes(_aidl_return);
   }
-  ::ndk::ScopedAStatus getMaxSupportedCsSecurityLevel(::aidl::android::hardware::bluetooth::ranging::CsSecurityLevel* _aidl_return) override __attribute__((deprecated("use getSupportedCsSecurityLevels() instead"))) {
+  ::ndk::ScopedAStatus getMaxSupportedCsSecurityLevel(::aidl::android::hardware::bluetooth::ranging::CsSecurityLevel* _aidl_return) override /*__attribute__((deprecated("use getSupportedCsSecurityLevels() instead")))*/ {
     return _impl->getMaxSupportedCsSecurityLevel(_aidl_return);
   }
   ::ndk::ScopedAStatus openSession(const ::aidl::android::hardware::bluetooth::ranging::BluetoothChannelSoundingParameters& in_params, const std::shared_ptr<::aidl::android::hardware::bluetooth::ranging::IBluetoothChannelSoundingSessionCallback>& in_callback, std::shared_ptr<::aidl::android::hardware::bluetooth::ranging::IBluetoothChannelSoundingSession>* _aidl_return) override {

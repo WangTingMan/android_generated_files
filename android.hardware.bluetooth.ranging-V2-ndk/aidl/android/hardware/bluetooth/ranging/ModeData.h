@@ -34,6 +34,8 @@
 #define __assert2(a,b,c,d) ((void)0)
 #endif
 
+#include "ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_EXPORTS.h"
+
 namespace aidl::android::hardware::bluetooth::ranging {
 class ModeOneData;
 class ModeThreeData;
@@ -45,7 +47,7 @@ namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace ranging {
-class ModeData {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API ModeData {
 public:
   typedef std::false_type fixed_size;
   static const char* descriptor;

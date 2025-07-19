@@ -27,12 +27,14 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_EXPORTS.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace ranging {
-class Config {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API Config {
 public:
   typedef std::false_type fixed_size;
   static const char* descriptor;

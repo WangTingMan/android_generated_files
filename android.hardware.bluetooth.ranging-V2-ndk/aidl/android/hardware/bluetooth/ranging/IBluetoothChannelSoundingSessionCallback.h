@@ -20,6 +20,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_EXPORTS.h"
+
 namespace aidl::android::hardware::bluetooth::ranging {
 class RangingResult;
 }  // namespace aidl::android::hardware::bluetooth::ranging
@@ -30,7 +32,7 @@ namespace bluetooth {
 namespace ranging {
 class IBluetoothChannelSoundingSessionCallbackDelegator;
 
-class IBluetoothChannelSoundingSessionCallback : public ::ndk::ICInterface {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API IBluetoothChannelSoundingSessionCallback : public ::ndk::ICInterface {
 public:
   typedef IBluetoothChannelSoundingSessionCallbackDelegator DefaultDelegator;
   static const char* descriptor;
@@ -60,7 +62,7 @@ public:
 private:
   static std::shared_ptr<IBluetoothChannelSoundingSessionCallback> default_impl;
 };
-class IBluetoothChannelSoundingSessionCallbackDefault : public IBluetoothChannelSoundingSessionCallback {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API IBluetoothChannelSoundingSessionCallbackDefault : public IBluetoothChannelSoundingSessionCallback {
 public:
   ::ndk::ScopedAStatus onOpened(::aidl::android::hardware::bluetooth::ranging::Reason in_reason) override;
   ::ndk::ScopedAStatus onOpenFailed(::aidl::android::hardware::bluetooth::ranging::Reason in_reason) override;

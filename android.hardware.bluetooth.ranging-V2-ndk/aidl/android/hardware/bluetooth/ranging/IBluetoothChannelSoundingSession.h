@@ -25,6 +25,8 @@
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
 
+#include "ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_EXPORTS.h"
+
 namespace aidl::android::hardware::bluetooth::ranging {
 class ChannelSoudingRawData;
 class ChannelSoundingProcedureData;
@@ -39,7 +41,7 @@ namespace bluetooth {
 namespace ranging {
 class IBluetoothChannelSoundingSessionDelegator;
 
-class IBluetoothChannelSoundingSession : public ::ndk::ICInterface {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API IBluetoothChannelSoundingSession : public ::ndk::ICInterface {
 public:
   typedef IBluetoothChannelSoundingSessionDelegator DefaultDelegator;
   static const char* descriptor;
@@ -77,7 +79,7 @@ public:
 private:
   static std::shared_ptr<IBluetoothChannelSoundingSession> default_impl;
 };
-class IBluetoothChannelSoundingSessionDefault : public IBluetoothChannelSoundingSession {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API IBluetoothChannelSoundingSessionDefault : public IBluetoothChannelSoundingSession {
 public:
   ::ndk::ScopedAStatus getVendorSpecificReplies(std::optional<std::vector<std::optional<::aidl::android::hardware::bluetooth::ranging::VendorSpecificData>>>* _aidl_return) override;
   ::ndk::ScopedAStatus getSupportedResultTypes(std::vector<::aidl::android::hardware::bluetooth::ranging::ResultType>* _aidl_return) override;

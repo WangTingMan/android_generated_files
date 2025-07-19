@@ -12,12 +12,14 @@
 
 #include <android/binder_ibinder.h>
 
+#include "ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_EXPORTS.h"
+
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace ranging {
-class BpBluetoothChannelSoundingSession : public ::ndk::BpCInterface<IBluetoothChannelSoundingSession> {
+class ANDROIDHARDWAREBLUETOOTHRANGINGV2NDK_API BpBluetoothChannelSoundingSession : public ::ndk::BpCInterface<IBluetoothChannelSoundingSession> {
 public:
   explicit BpBluetoothChannelSoundingSession(const ::ndk::SpAIBinder& binder);
   virtual ~BpBluetoothChannelSoundingSession();
