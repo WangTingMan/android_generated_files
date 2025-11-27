@@ -5,6 +5,7 @@
 #include <cutils/trace.h>
 #include <future>
 #include <android/hardware/bluetooth/a2dp/1.0/IBluetoothAudioOffload.h>
+#include "ANDROIDHARDWAREBLUETOOTHA2DP10_EXPORTS_HEADER.h"
 
 #include <hidl/HidlPassthroughSupport.h>
 #include <hidl/TaskRunner.h>
@@ -14,7 +15,7 @@ namespace bluetooth {
 namespace a2dp {
 namespace V1_0 {
 
-struct BsBluetoothAudioOffload : IBluetoothAudioOffload, ::android::hardware::details::HidlInstrumentor {
+struct ANDROIDHARDWAREBLUETOOTHA2DP10_API BsBluetoothAudioOffload : IBluetoothAudioOffload, ::android::hardware::details::HidlInstrumentor {
     explicit BsBluetoothAudioOffload(const ::android::sp<IBluetoothAudioOffload> impl);
 
     /**

@@ -3,6 +3,8 @@
 
 #include <android/hardware/bluetooth/a2dp/1.0/IHwBluetoothAudioHost.h>
 
+#include "ANDROIDHARDWAREBLUETOOTHA2DP10_EXPORTS_HEADER.h"
+
 namespace android {
 namespace hardware {
 namespace bluetooth {

@@ -2,6 +2,7 @@
 #define HIDL_GENERATED_ANDROID_HARDWARE_BLUETOOTH_A2DP_V1_0_BNHWBLUETOOTHAUDIOOFFLOAD_H
 
 #include <android/hardware/bluetooth/a2dp/1.0/IHwBluetoothAudioOffload.h>
+#include "ANDROIDHARDWAREBLUETOOTHA2DP10_EXPORTS_HEADER.h"
 
 namespace android {
 namespace hardware {
@@ -9,7 +10,7 @@ namespace bluetooth {
 namespace a2dp {
 namespace V1_0 {
 
-struct BnHwBluetoothAudioOffload : public ::android::hidl::base::V1_0::BnHwBase {
+struct ANDROIDHARDWAREBLUETOOTHA2DP10_API BnHwBluetoothAudioOffload : public ::android::hidl::base::V1_0::BnHwBase {
     explicit BnHwBluetoothAudioOffload(const ::android::sp<IBluetoothAudioOffload> &_hidl_impl);
     explicit BnHwBluetoothAudioOffload(const ::android::sp<IBluetoothAudioOffload> &_hidl_impl, const std::string& HidlInstrumentor_package, const std::string& HidlInstrumentor_interface);
 

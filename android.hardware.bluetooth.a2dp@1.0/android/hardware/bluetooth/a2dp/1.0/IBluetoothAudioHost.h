@@ -4,6 +4,7 @@
 #include <android/hidl/base/1.0/IBase.h>
 
 #include <android/hidl/manager/1.0/IServiceNotification.h>
+#include "ANDROIDHARDWAREBLUETOOTHA2DP10_EXPORTS_HEADER.h"
 
 #include <hidl/HidlSupport.h>
 #include <hidl/MQDescriptor.h>
@@ -30,7 +31,7 @@ namespace V1_0 {
  * calls return immediately and the results, if any, are send over
  * the IBluetoothAudioOffload interface.
  */
-struct IBluetoothAudioHost : public ::android::hidl::base::V1_0::IBase {
+struct ANDROIDHARDWAREBLUETOOTHA2DP10_API IBluetoothAudioHost : public ::android::hidl::base::V1_0::IBase {
     /**
      * Type tag for use in template logic that indicates this is a 'pure' class.
      */
@@ -259,7 +260,7 @@ struct IBluetoothAudioHost : public ::android::hidl::base::V1_0::IBase {
      * Registers a service with the service manager. For Trebilized devices, the service
      * must also be in the VINTF manifest.
      */
-    __attribute__ ((warn_unused_result))::android::status_t registerAsService(const std::string &serviceName="default");
+    /*__attribute__ ((warn_unused_result))*/::android::status_t registerAsService(const std::string &serviceName="default");
     /**
      * Registers for notifications for when a service is registered.
      */

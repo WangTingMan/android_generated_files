@@ -4,6 +4,7 @@
 #include <hidl/HidlTransportSupport.h>
 
 #include <android/hardware/bluetooth/a2dp/1.0/IHwBluetoothAudioHost.h>
+#include "ANDROIDHARDWAREBLUETOOTHA2DP10_EXPORTS_HEADER.h"
 
 #include <mutex>
 namespace android {
@@ -12,7 +13,7 @@ namespace bluetooth {
 namespace a2dp {
 namespace V1_0 {
 
-struct BpHwBluetoothAudioHost : public ::android::hardware::BpInterface<IBluetoothAudioHost>, public ::android::hardware::details::HidlInstrumentor {
+struct ANDROIDHARDWAREBLUETOOTHA2DP10_API BpHwBluetoothAudioHost : public ::android::hardware::BpInterface<IBluetoothAudioHost>, public ::android::hardware::details::HidlInstrumentor {
     explicit BpHwBluetoothAudioHost(const ::android::sp<::android::hardware::IBinder> &_hidl_impl);
 
     /**

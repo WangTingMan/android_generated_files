@@ -14,6 +14,14 @@
 #include <android/hidl/base/1.0/BpHwBase.h>
 #include <hidl/ServiceManagement.h>
 
+#include <utils/AutoHolder.h>
+
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 namespace android {
 namespace hardware {
 namespace bluetooth {
@@ -37,6 +45,8 @@ __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IBluetoothAudioOffload::descriptor);
     ::android::hardware::details::getBsConstructorMap().erase(IBluetoothAudioOffload::descriptor);
 }
+
+static AutoHolder holder( static_constructor, static_destructor );
 
 // Methods from ::android::hardware::bluetooth::a2dp::V1_0::IBluetoothAudioOffload follow.
 // no default implementation for: ::android::hardware::Return<::android::hardware::bluetooth::a2dp::V1_0::Status> IBluetoothAudioOffload::startSession(const ::android::sp<::android::hardware::bluetooth::a2dp::V1_0::IBluetoothAudioHost>& hostIf, const ::android::hardware::bluetooth::a2dp::V1_0::CodecConfiguration& codecConfig)
@@ -65,9 +75,28 @@ __attribute__((destructor))static void static_destructor() {
 }
 
 ::android::hardware::Return<void> IBluetoothAudioOffload::getHashChain(getHashChain_cb _hidl_cb){
-    _hidl_cb({
-        (uint8_t[32]){255,75,230,77,121,146,248,190,201,125,255,55,243,84,80,231,155,52,48,198,31,133,245,67,34,206,69,190,242,41,220,59} /* ff4be64d7992f8bec97dff37f35450e79b3430c61f85f54322ce45bef229dc3b */,
-        (uint8_t[32]){236,127,215,158,208,45,250,133,188,73,148,38,173,174,62,190,35,239,5,36,243,205,105,87,19,147,36,184,59,24,202,76} /* ec7fd79ed02dfa85bc499426adae3ebe23ef0524f3cd6957139324b83b18ca4c */});
+    ::android::hardware::hidl_array<uint8_t, 32> v1;
+    ::android::hardware::hidl_array<uint8_t, 32> v2;
+
+    uint8_t v1Detailes[] = { 255,75,230,77,121,146,248,190,201,125,255,55,243,84,80,231,155,52,48,198,31,133,245,67,34,206,69,190,242,41,220,59 };
+    for (auto i = 0; i < 32; ++i)
+    {
+        v1[i] = v1Detailes[i];
+    }
+
+    uint8_t v2Detailes[] = { 236,127,215,158,208,45,250,133,188,73,148,38,173,174,62,190,35,239,5,36,243,205,105,87,19,147,36,184,59,24,202,76 };
+    for (auto i = 0; i < 32; ++i)
+    {
+        v2[i] = v2Detailes[i];
+    }
+
+    std::vector<::android::hardware::hidl_array<uint8_t, 32>> vecs;
+    vecs.push_back( v1 );
+    vecs.push_back( v2 );
+
+    ::android::hardware::hidl_vec<::android::hardware::hidl_array<uint8_t, 32>> paras( vecs );
+    _hidl_cb( paras );
+
     return ::android::hardware::Void();
 }
 
@@ -804,7 +833,7 @@ bool IBluetoothAudioOffload::registerForNotifications(
     return success.isOk() && success;
 }
 
-static_assert(sizeof(::android::hardware::MQDescriptor<char, ::android::hardware::kSynchronizedReadWrite>) == 32, "wrong size");
+static_assert(sizeof(::android::hardware::MQDescriptor<char, ::android::hardware::kSynchronizedReadWrite>) == 32 + sizeof( std::string ), "wrong size");
 static_assert(sizeof(::android::hardware::hidl_handle) == 16, "wrong size");
 static_assert(sizeof(::android::hardware::hidl_memory) == 40, "wrong size");
 static_assert(sizeof(::android::hardware::hidl_string) == 16, "wrong size");

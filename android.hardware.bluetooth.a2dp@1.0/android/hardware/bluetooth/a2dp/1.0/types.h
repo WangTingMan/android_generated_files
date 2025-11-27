@@ -6,6 +6,12 @@
 #include <utils/NativeHandle.h>
 #include <utils/misc.h>
 
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 namespace android {
 namespace hardware {
 namespace bluetooth {
@@ -799,6 +805,12 @@ static inline void PrintTo(const ::android::hardware::bluetooth::a2dp::V1_0::Cod
 }  // namespace bluetooth
 }  // namespace hardware
 }  // namespace android
+
+#ifdef _MSC_VER
+#ifdef __attribute__
+#undef __attribute__
+#endif
+#endif
 
 //
 // global type declarations for package

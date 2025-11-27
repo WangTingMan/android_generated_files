@@ -14,6 +14,14 @@
 #include <android/hidl/base/1.0/BpHwBase.h>
 #include <hidl/ServiceManagement.h>
 
+#include <utils/AutoHolder.h>
+
+#ifdef _MSC_VER
+#ifndef __attribute__
+#define __attribute__(...)
+#endif
+#endif
+
 namespace android {
 namespace hardware {
 namespace bluetooth {
@@ -37,6 +45,8 @@ __attribute__((destructor))static void static_destructor() {
     ::android::hardware::details::getBnConstructorMap().erase(IBluetoothAudioHost::descriptor);
     ::android::hardware::details::getBsConstructorMap().erase(IBluetoothAudioHost::descriptor);
 }
+
+static AutoHolder holder( static_constructor, static_destructor );
 
 // Methods from ::android::hardware::bluetooth::a2dp::V1_0::IBluetoothAudioHost follow.
 // no default implementation for: ::android::hardware::Return<void> IBluetoothAudioHost::startStream()
@@ -64,9 +74,28 @@ __attribute__((destructor))static void static_destructor() {
 }
 
 ::android::hardware::Return<void> IBluetoothAudioHost::getHashChain(getHashChain_cb _hidl_cb){
-    _hidl_cb({
-        (uint8_t[32]){50,204,80,204,42,118,88,236,97,60,12,45,210,172,203,246,160,81,19,183,73,133,40,121,232,24,184,183,180,56,219,25} /* 32cc50cc2a7658ec613c0c2dd2accbf6a05113b749852879e818b8b7b438db19 */,
-        (uint8_t[32]){236,127,215,158,208,45,250,133,188,73,148,38,173,174,62,190,35,239,5,36,243,205,105,87,19,147,36,184,59,24,202,76} /* ec7fd79ed02dfa85bc499426adae3ebe23ef0524f3cd6957139324b83b18ca4c */});
+    ::android::hardware::hidl_array<uint8_t, 32> v1;
+    ::android::hardware::hidl_array<uint8_t, 32> v2;
+
+    uint8_t v1Detailes[] = { 50,204,80,204,42,118,88,236,97,60,12,45,210,172,203,246,160,81,19,183,73,133,40,121,232,24,184,183,180,56,219,25 };
+    for (auto i = 0; i < 32; ++i)
+    {
+        v1[i] = v1Detailes[i];
+    }
+
+    uint8_t v2Detailes[] = { 236,127,215,158,208,45,250,133,188,73,148,38,173,174,62,190,35,239,5,36,243,205,105,87,19,147,36,184,59,24,202,76 };
+    for (auto i = 0; i < 32; ++i)
+    {
+        v2[i] = v2Detailes[i];
+    }
+
+    std::vector<::android::hardware::hidl_array<uint8_t, 32>> vecs;
+    vecs.push_back( v1 );
+    vecs.push_back( v2 );
+
+    ::android::hardware::hidl_vec<::android::hardware::hidl_array<uint8_t, 32>> paras( vecs );
+    _hidl_cb( paras );
+
     return ::android::hardware::Void();
 }
 
@@ -623,7 +652,7 @@ bool IBluetoothAudioHost::registerForNotifications(
     return success.isOk() && success;
 }
 
-static_assert(sizeof(::android::hardware::MQDescriptor<char, ::android::hardware::kSynchronizedReadWrite>) == 32, "wrong size");
+static_assert(sizeof(::android::hardware::MQDescriptor<char, ::android::hardware::kSynchronizedReadWrite>) == 32 + sizeof( std::string ), "wrong size");
 static_assert(sizeof(::android::hardware::hidl_handle) == 16, "wrong size");
 static_assert(sizeof(::android::hardware::hidl_memory) == 40, "wrong size");
 static_assert(sizeof(::android::hardware::hidl_string) == 16, "wrong size");

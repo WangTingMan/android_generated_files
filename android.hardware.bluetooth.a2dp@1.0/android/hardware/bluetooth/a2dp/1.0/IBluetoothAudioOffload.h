@@ -12,6 +12,7 @@
 #include <hidl/Status.h>
 #include <utils/NativeHandle.h>
 #include <utils/misc.h>
+#include "ANDROIDHARDWAREBLUETOOTHA2DP10_EXPORTS_HEADER.h"
 
 namespace android {
 namespace hardware {
@@ -35,7 +36,7 @@ namespace V1_0 {
  * these commands. Once the device becomes inactive, the HAL client must
  * call the endSession to terminate the session with the HAL server.
  */
-struct IBluetoothAudioOffload : public ::android::hidl::base::V1_0::IBase {
+struct ANDROIDHARDWAREBLUETOOTHA2DP10_API IBluetoothAudioOffload : public ::android::hidl::base::V1_0::IBase {
     /**
      * Type tag for use in template logic that indicates this is a 'pure' class.
      */
@@ -284,7 +285,7 @@ struct IBluetoothAudioOffload : public ::android::hidl::base::V1_0::IBase {
      * Registers a service with the service manager. For Trebilized devices, the service
      * must also be in the VINTF manifest.
      */
-    __attribute__ ((warn_unused_result))::android::status_t registerAsService(const std::string &serviceName="default");
+    ::android::status_t registerAsService(const std::string &serviceName="default");
     /**
      * Registers for notifications for when a service is registered.
      */
