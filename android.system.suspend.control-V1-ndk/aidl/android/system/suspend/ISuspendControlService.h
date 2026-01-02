@@ -19,7 +19,7 @@
 #ifdef BINDER_STABILITY_SUPPORT
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
-
+#include "ANDROIDSYSTEMSUSPENDCONTROLV1NDK_EXPORTS_.h"
 namespace aidl::android::system::suspend {
 class ISuspendCallback;
 class IWakelockCallback;
@@ -30,7 +30,7 @@ namespace system {
 namespace suspend {
 class ISuspendControlServiceDelegator;
 
-class ISuspendControlService : public ::ndk::ICInterface {
+class ANDROIDSYSTEMSUSPENDCONTROLV1NDK_API ISuspendControlService : public ::ndk::ICInterface {
 public:
   typedef ISuspendControlServiceDelegator DefaultDelegator;
   static const char* descriptor;
@@ -54,7 +54,7 @@ public:
 private:
   static std::shared_ptr<ISuspendControlService> default_impl;
 };
-class ISuspendControlServiceDefault : public ISuspendControlService {
+class ANDROIDSYSTEMSUSPENDCONTROLV1NDK_API ISuspendControlServiceDefault : public ISuspendControlService {
 public:
   ::ndk::ScopedAStatus registerCallback(const std::shared_ptr<::aidl::android::system::suspend::ISuspendCallback>& in_callback, bool* _aidl_return) override;
   ::ndk::ScopedAStatus registerWakelockCallback(const std::shared_ptr<::aidl::android::system::suspend::IWakelockCallback>& in_callback, const std::string& in_name, bool* _aidl_return) override;

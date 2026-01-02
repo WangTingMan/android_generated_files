@@ -17,14 +17,14 @@
 #ifdef BINDER_STABILITY_SUPPORT
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
-
+#include "ANDROIDSYSTEMSUSPENDCONTROLV1NDK_EXPORTS_.h"
 namespace aidl {
 namespace android {
 namespace system {
 namespace suspend {
 class ISuspendCallbackDelegator;
 
-class ISuspendCallback : public ::ndk::ICInterface {
+class ANDROIDSYSTEMSUSPENDCONTROLV1NDK_API ISuspendCallback : public ::ndk::ICInterface {
 public:
   typedef ISuspendCallbackDelegator DefaultDelegator;
   static const char* descriptor;
@@ -46,7 +46,7 @@ public:
 private:
   static std::shared_ptr<ISuspendCallback> default_impl;
 };
-class ISuspendCallbackDefault : public ISuspendCallback {
+class ANDROIDSYSTEMSUSPENDCONTROLV1NDK_API ISuspendCallbackDefault : public ISuspendCallback {
 public:
   ::ndk::ScopedAStatus notifyWakeup(bool in_success, const std::vector<std::string>& in_wakeupReasons) override;
   ::ndk::ScopedAStatus getInterfaceVersion(int32_t* _aidl_return) override;

@@ -17,14 +17,14 @@
 #ifdef BINDER_STABILITY_SUPPORT
 #include <android/binder_stability.h>
 #endif  // BINDER_STABILITY_SUPPORT
-
+#include "ANDROIDSYSTEMSUSPENDCONTROLV1NDK_EXPORTS_.h"
 namespace aidl {
 namespace android {
 namespace system {
 namespace suspend {
 class IWakelockCallbackDelegator;
 
-class IWakelockCallback : public ::ndk::ICInterface {
+class ANDROIDSYSTEMSUSPENDCONTROLV1NDK_API IWakelockCallback : public ::ndk::ICInterface {
 public:
   typedef IWakelockCallbackDelegator DefaultDelegator;
   static const char* descriptor;
@@ -48,7 +48,7 @@ public:
 private:
   static std::shared_ptr<IWakelockCallback> default_impl;
 };
-class IWakelockCallbackDefault : public IWakelockCallback {
+class ANDROIDSYSTEMSUSPENDCONTROLV1NDK_API IWakelockCallbackDefault : public IWakelockCallback {
 public:
   ::ndk::ScopedAStatus notifyAcquired() override;
   ::ndk::ScopedAStatus notifyReleased() override;

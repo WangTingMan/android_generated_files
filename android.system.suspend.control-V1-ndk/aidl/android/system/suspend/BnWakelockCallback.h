@@ -18,12 +18,12 @@
 #define __assert2(a,b,c,d) ((void)0)
 #endif
 #endif
-
+#include "ANDROIDSYSTEMSUSPENDCONTROLV1NDK_EXPORTS_.h"
 namespace aidl {
 namespace android {
 namespace system {
 namespace suspend {
-class BnWakelockCallback : public ::ndk::BnCInterface<IWakelockCallback> {
+class ANDROIDSYSTEMSUSPENDCONTROLV1NDK_API BnWakelockCallback : public ::ndk::BnCInterface<IWakelockCallback> {
 public:
   BnWakelockCallback();
   virtual ~BnWakelockCallback();

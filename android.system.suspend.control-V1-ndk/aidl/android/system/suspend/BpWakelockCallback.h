@@ -11,12 +11,12 @@
 #include "aidl/android/system/suspend/IWakelockCallback.h"
 
 #include <android/binder_ibinder.h>
-
+#include "ANDROIDSYSTEMSUSPENDCONTROLV1NDK_EXPORTS_.h"
 namespace aidl {
 namespace android {
 namespace system {
 namespace suspend {
-class BpWakelockCallback : public ::ndk::BpCInterface<IWakelockCallback> {
+class ANDROIDSYSTEMSUSPENDCONTROLV1NDK_API BpWakelockCallback : public ::ndk::BpCInterface<IWakelockCallback> {
 public:
   explicit BpWakelockCallback(const ::ndk::SpAIBinder& binder);
   virtual ~BpWakelockCallback();

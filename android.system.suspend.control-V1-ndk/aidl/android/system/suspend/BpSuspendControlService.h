@@ -11,12 +11,12 @@
 #include "aidl/android/system/suspend/ISuspendControlService.h"
 
 #include <android/binder_ibinder.h>
-
+#include "ANDROIDSYSTEMSUSPENDCONTROLV1NDK_EXPORTS_.h"
 namespace aidl {
 namespace android {
 namespace system {
 namespace suspend {
-class BpSuspendControlService : public ::ndk::BpCInterface<ISuspendControlService> {
+class ANDROIDSYSTEMSUSPENDCONTROLV1NDK_API BpSuspendControlService : public ::ndk::BpCInterface<ISuspendControlService> {
 public:
   explicit BpSuspendControlService(const ::ndk::SpAIBinder& binder);
   virtual ~BpSuspendControlService();
