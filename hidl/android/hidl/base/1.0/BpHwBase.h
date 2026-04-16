@@ -6,6 +6,7 @@
 #include <android/hidl/base/1.0/IHwBase.h>
 
 #include <hwbinder/libhidl_export.h>
+#include <mutex>
 
 namespace android {
 namespace hidl {
