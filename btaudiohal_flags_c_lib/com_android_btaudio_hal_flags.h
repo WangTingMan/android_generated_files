@@ -24,7 +24,9 @@ inline bool dsa_lea() {
 inline bool leaudio_report_broadcast_ac_to_hal() {
     return true;
 }
-
+inline bool leaudio_sw_offload() {
+    return true;
+}
 }
 
 extern "C" {
